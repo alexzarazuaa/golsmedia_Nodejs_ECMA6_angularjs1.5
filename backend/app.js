@@ -12,7 +12,7 @@ var http = require('http'),
     swaggerUi = require('swagger-ui-express');
 
     //// Swagger ////
-    var swaggerDocument = require('./swagger.json');
+    var swaggerDocument = require('../swagger.json');
     swaggerDocument.host="localhost:3000"
 
 var isProduction = process.env.NODE_ENV === 'production';
