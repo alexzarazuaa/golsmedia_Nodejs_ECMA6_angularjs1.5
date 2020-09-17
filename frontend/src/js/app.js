@@ -27,7 +27,7 @@ const requires = [
   // 'app.components', // descomentar quan arribe
   'app.home',
   'app.profile',
-  'app.listanews',   // add first model news, carregara cuando den click en el menu
+  'app.news',   // add first model news, carregara cuando den click en el menu
   'app.services',
   'app.auth',
   'app.settings',

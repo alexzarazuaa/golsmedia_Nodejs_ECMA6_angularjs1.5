@@ -26,6 +26,21 @@ export default class News {
       }) //.then(res => res.data.hotel); //recibo 1 hotel
         .then(res => res.data.hotel);
     }
+
+     //botón favoritos
+  favorite(slug) {
+    return this._$http({
+      url: this._AppConstants.api + "/news/" + slug + "/favorite",
+      method: "POST"
+    });
+  }
+  //botón favoritos
+  unfavorite(slug) {
+    return this._$http({
+      url: this._AppConstants.api + "/news/" + slug + "/favorite",
+      method: "DELETE"
+    });
+  }
     
   }
   
