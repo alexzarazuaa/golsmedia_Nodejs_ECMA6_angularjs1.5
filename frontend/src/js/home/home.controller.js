@@ -1,30 +1,29 @@
+import Newss from "../services/news.service";
+
 class HomeCtrl {
-  constructor(User, Tags, AppConstants, $scope) {
+  constructor(AppConstants, $scope,News) {
     'ngInject';
 
     this.appName = AppConstants.appName;
+    // console.log(this.appName);
     this._$scope = $scope;
+    console.log();
 
-    // Get list of all tags
-    Tags
-      .getAll()
-      .then(
-        (tags) => {
-          this.tagsLoaded = true;
-          this.tags = tags
-        }
-      );
+    this.News = News;
+  
 
-    // Set current list to either feed or all, depending on auth status.
-    this.listConfig = {
-      type: User.current ? 'feed' : 'all'
-    };
+    News
+    .getNews()
+    .then(
+      (news) => {
+       
+        return news;
+      }
+    );
 
   }
 
-  changeList(newList) {
-    this._$scope.$broadcast('setListTo', newList);
-  }
+
 
 
 }

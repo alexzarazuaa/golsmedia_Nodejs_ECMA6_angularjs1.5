@@ -10,23 +10,23 @@
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
-                ng-model="$ctrl.article.title"
+                ng-model="$ctrl.news.title"
                 type="text"
-                placeholder="Article Title" />
+                placeholder="News Title" />
             </fieldset>
 
             <fieldset class="form-group">
               <input class="form-control"
-                ng-model="$ctrl.article.description"
+                ng-model="$ctrl.news.description"
                 type="text"
-                placeholder="What's this article about?" />
+                placeholder="What's this news about?" />
             </fieldset>
 
             <fieldset class="form-group">
               <textarea class="form-control"
                 rows="8"
-                ng-model="$ctrl.article.body"
-                placeholder="Write your article (in markdown)">
+                ng-model="$ctrl.news.body"
+                placeholder="Write your news (in markdown)">
               </textarea>
             </fieldset>
 
@@ -38,7 +38,7 @@
                 ng-keyup="$event.keyCode == 13 && $ctrl.addTag()" />
 
               <div class="tag-list">
-                <span ng-repeat="tag in $ctrl.article.tagList"
+                <span ng-repeat="tag in $ctrl.news.tagList"
                   class="tag-default tag-pill">
                   <i class="ion-close-round" ng-click="$ctrl.removeTag(tag)"></i>
                   {{ tag }}
@@ -47,7 +47,7 @@
             </fieldset>
 
             <button class="btn btn-lg pull-xs-right btn-primary" type="button" ng-click="$ctrl.submit()">
-              Publish Article
+              Publish News
             </button>
 
           </fieldset>

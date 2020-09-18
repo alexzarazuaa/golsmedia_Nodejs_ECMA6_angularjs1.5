@@ -11,8 +11,8 @@ profileModule.config(ProfileConfig);
 import ProfileCtrl from './profile.controller';
 profileModule.controller('ProfileCtrl', ProfileCtrl);
 
-import ProfileArticlesCtrl from './profile-articles.controller';
-profileModule.controller('ProfileArticlesCtrl', ProfileArticlesCtrl);
+import ProfileNewsCtrl from './profile-news.controller';
+profileModule.controller('ProfileNewsCtrl', ProfileNewsCtrl);
 
 
 export default profileModule;

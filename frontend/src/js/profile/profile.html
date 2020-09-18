@@ -29,15 +29,15 @@
 
       <div class="col-xs-12 col-md-10 offset-md-1">
 
-        <!-- Tabs for switching between author articles & favorites -->
-        <div class="articles-toggle">
+        <!-- Tabs for switching between author news & favorites -->
+        <div class="news-toggle">
           <ul class="nav nav-pills outline-active">
 
             <li class="nav-item">
               <a class="nav-link active"
                 ui-sref-active="active"
                 ui-sref="app.profile.main({username: $ctrl.profile.username})">
-                My Articles
+                My News
               </a>
             </li>
 
@@ -45,14 +45,14 @@
               <a class="nav-link"
                 ui-sref-active="active"
                 ui-sref="app.profile.favorites({username: $ctrl.profile.username})">
-                Favorited Articles
+                Favorited News
               </a>
             </li>
 
           </ul>
         </div>
 
-        <!-- List of articles -->
+        <!-- List of News -->
         <div ui-view></div>
 
 

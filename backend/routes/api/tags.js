@@ -5,6 +5,7 @@ var News = mongoose.model('News');
 // return a list of tags
 router.get('/', function(req, res, next) {
   News.find().distinct('tagList').then(function(tags){
+    console.log(tags);
     return res.json({tags: tags});
   }).catch(next);
 });

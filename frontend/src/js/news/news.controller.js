@@ -1,25 +1,26 @@
 class News_Ctrl {
-    constructor(news, $state, $scope, $stateParams) {
+    constructor(newss, $state, $scope, $stateParams) {
       "ngInject";
   
       this._$scope = $scope;
-      //this.news = news.hotel; SI VAMOS POR GRAPHQL
+   
   
-      this.news=news;
+      this.newss=newss;
+      console.log(newss);
   
-      //this.filter = $stateParams.filter;
+      this.filter = $stateParams.filter;
      
   
-    //   var hotelesFiltrados = new Array();
-    //   this.news.forEach(hotel => {
-    //     if (hotel.category == this.filter) {
-    //       hotelesFiltrados.push(hotel);
-    //     }
-    //   });
-    //   $scope.hotelesFiltrados = hotelesFiltrados;
+      // var noticiasfiltradas = new Array();
+      // this.new.forEach(news => {
+      //   if (news.category == this.filter) {
+      //     noticiasfiltradas.push(news);
+      //   }
+      // });
+      // $scope.noticiasfiltradas = noticiasfiltradas;
   
       this._$scope.openNew = function () {
-        $state.go("app.detailsNews", { slug: this.hotel["slug"] });
+        $state.go("app.detailsNews", { slug: this.news["slug"] });
       };
     }
   }

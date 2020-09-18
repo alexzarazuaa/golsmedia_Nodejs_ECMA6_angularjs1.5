@@ -1,46 +1,71 @@
-export default class News {
-    constructor(AppConstants, $http, $q,GraphQLClient) {
-      "ngInject";
-  
-      this._AppConstants = AppConstants;
-      this._$http = $http;
-      this._$q = $q;
-      this._GQL = GraphQLClient;
-    }
- 
-    //LIST 
-    getNews() {
-      return this._$http({
-        url: this._AppConstants.api + "/news/",
-        method: "GET"
-      }).then(res => {
-        return res.data.hotels;
-      });
-    }
-     
-    //DETAILS
-    getHotel(slug) {
-      return this._$http({
-        url: this._AppConstants.api + "/news/" + slug,
-        method: "GET"
-      }) //.then(res => res.data.hotel); //recibo 1 hotel
-        .then(res => res.data.hotel);
-    }
+export default class Newss {
+  constructor(AppConstants, $http, $q) {
+    'ngInject';
 
-     //botón favoritos
-  favorite(slug) {
+    this._AppConstants = AppConstants;
+    this._$http = $http;
+    this._$q = $q;
+
+
+  }
+  //DEVULVE TODAS LAS NOTICIAS
+  getNews(){
     return this._$http({
-      url: this._AppConstants.api + "/news/" + slug + "/favorite",
-      method: "POST"
+      url: this._AppConstants.api + "/news",
+      method: "GET"
+    }).then(res => {
+      console.log(res.data.newss);
+      return res.data.newss;
+     
     });
   }
-  //botón favoritos
-  unfavorite(slug) {
-    return this._$http({
-      url: this._AppConstants.api + "/news/" + slug + "/favorite",
-      method: "DELETE"
-    });
-  }
-    
-  }
-  
+
+  // query(config) {
+  //   // Create the $http object for this request
+  //   let request = {
+  //     url: this._AppConstants.api + '/news' + ((config.type === 'feed') ? '/feed' : ''),
+  //     method: 'GET',
+  //     params: config.filters ? config.filters : null
+  //   };
+  //   return this._$http(request).then((res) => res.data);
+  // }
+
+  //DEVULVE SOLO UNA NOTICIA
+  // getNews(slug) {
+  //   let deferred = this._$q.defer();
+
+  //   if (!slug.replace(" ", "")) {
+  //     deferred.reject("news slug is empty");
+  //     return deferred.promise;
+  //   }
+
+  //   this._$http({
+  //     url: this._AppConstants.api + '/news/' + slug,
+  //     method: 'GET'
+  //   }).then(
+  //     (res) => deferred.resolve(res.data.news),
+  //     (err) => deferred.reject(err)
+  //   );
+
+  //   return deferred.promise;
+  // }
+
+
+
+
+  // favorite(slug) {
+  //   return this._$http({
+  //     url: this._AppConstants.api + '/news/' + slug + '/favorite',
+  //     method: 'POST'
+  //   })
+  // }
+
+  // unfavorite(slug) {
+  //   return this._$http({
+  //     url: this._AppConstants.api + '/news/' + slug + '/favorite',
+  //     method: 'DELETE'
+  //   })
+  // }
+
+
+}
