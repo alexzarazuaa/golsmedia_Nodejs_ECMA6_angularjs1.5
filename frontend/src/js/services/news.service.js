@@ -14,10 +14,21 @@ export default class Newss {
       url: this._AppConstants.api + "/news",
       method: "GET"
     }).then(res => {
-      console.log(res.data.newss);
+      //console.log(res.data.newss);
+     
       return res.data.newss;
      
     });
+  }
+
+  //RECIBIR UNA NOTICIA
+
+  getNeui(slug) {
+    return this._$http({
+      url: this._AppConstants.api + "/news/" + slug,
+      method: "GET"
+    }) 
+      .then(res => res.data.news);
   }
 
   // query(config) {

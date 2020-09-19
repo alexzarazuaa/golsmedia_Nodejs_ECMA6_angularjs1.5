@@ -1,25 +1,27 @@
-import Newss from "../services/news.service";
 
 class HomeCtrl {
   constructor(AppConstants, $scope,News) {
     'ngInject';
+    //COMPROBAR PRIMERO ESTE CONSOLE LOG DE NEWS
+
+    this.News=News;
+
 
     this.appName = AppConstants.appName;
-    // console.log(this.appName);
     this._$scope = $scope;
     console.log();
-
-    this.News = News;
-  
-
+   
     News
     .getNews()
     .then(
       (news) => {
-       
-        return news;
+       $scope.news = news;
+        console.log(news)
       }
     );
+      
+
+    
 
   }
 

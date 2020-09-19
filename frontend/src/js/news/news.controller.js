@@ -19,9 +19,7 @@ class News_Ctrl {
       // });
       // $scope.noticiasfiltradas = noticiasfiltradas;
   
-      this._$scope.openNew = function () {
-        $state.go("app.detailsNews", { slug: this.news["slug"] });
-      };
+     
     }
   }
   

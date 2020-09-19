@@ -1,14 +1,14 @@
 class DetailsNews_Ctrl {
-    constructor(news, $scope) {
-      //esto se llama desde news.config (resolve)
+  constructor(news, $scope) {
       
       "ngInject";
+      console.log(news)
+      console.log("controller details")
       this._$scope = $scope;
+      this.news = news;
       $scope.news = news;
   
-      this._$scope.atras = function() {
-        $state.go("app.news", { filter: this.hotel.category });
-      };
+  
     }
   }
   export default DetailsNews_Ctrl;

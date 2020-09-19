@@ -12,8 +12,8 @@ newsModule.config(NewsConfig);
 import Newsctrl from './news.controller';
 newsModule.controller('Newsctrl', Newsctrl);
 
-import Detailsctrl from './detailsnews.controller';
-newsModule.controller('Detailsctrl',Detailsctrl);
+import DetailsNews_Ctrl from './detailsnews.controller';
+newsModule.controller('DetailsNews_Ctrl',DetailsNews_Ctrl);
 
 
 export default newsModule;

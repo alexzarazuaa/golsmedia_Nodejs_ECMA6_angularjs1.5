@@ -41460,11 +41460,11 @@ angular.module("templates", []).run(["$templateCache", function ($templateCache)
   $templateCache.put("auth/auth.html", "<div class=\"auth-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n        <h1 class=\"text-xs-center\" ng-bind=\"::$ctrl.title\"></h1>\n        <p class=\"text-xs-center\">\n          <a ui-sref=\"app.login\"\n            ng-show=\"$ctrl.authType === \'register\'\">\n            Have an account?\n          </a>\n          <a ui-sref=\"app.register\"\n            ng-show=\"$ctrl.authType === \'login\'\">\n            Need an account?\n          </a>\n        </p>\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\" ng-show=\"$ctrl.authType === \'register\'\">\n              <input class=\"form-control form-control-lg\"\n                type=\"text\"\n                placeholder=\"Username\"\n                ng-model=\"$ctrl.formData.username\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"email\"\n                placeholder=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"password\"\n                placeholder=\"Password\"\n                ng-model=\"$ctrl.formData.password\" />\n            </fieldset>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\"\n              type=\"submit\"\n              ng-bind=\"::$ctrl.title\">\n            </button>\n\n          </fieldset>\n        </form>\n      </div>\n\n    </div>\n  </div>\n</div>\n");
   $templateCache.put("editor/editor.html", "<div class=\"editor-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n      <div class=\"col-md-10 offset-md-1 col-xs-12\">\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form>\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                ng-model=\"$ctrl.news.title\"\n                type=\"text\"\n                placeholder=\"News Title\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                ng-model=\"$ctrl.news.description\"\n                type=\"text\"\n                placeholder=\"What\'s this news about?\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <textarea class=\"form-control\"\n                rows=\"8\"\n                ng-model=\"$ctrl.news.body\"\n                placeholder=\"Write your news (in markdown)\">\n              </textarea>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                type=\"text\"\n                placeholder=\"Enter tags\"\n                ng-model=\"$ctrl.tagField\"\n                ng-keyup=\"$event.keyCode == 13 && $ctrl.addTag()\" />\n\n              <div class=\"tag-list\">\n                <span ng-repeat=\"tag in $ctrl.news.tagList\"\n                  class=\"tag-default tag-pill\">\n                  <i class=\"ion-close-round\" ng-click=\"$ctrl.removeTag(tag)\"></i>\n                  {{ tag }}\n                </span>\n              </div>\n            </fieldset>\n\n            <button class=\"btn btn-lg pull-xs-right btn-primary\" type=\"button\" ng-click=\"$ctrl.submit()\">\n              Publish News\n            </button>\n\n          </fieldset>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</div>\n");
   $templateCache.put("home/home copy.html", " <div class=\"home-page\">\n\n  <!-- Splash banner that only shows when not logged in -->\n  <div class=\"banner\" show-authed=\"false\">\n    <div class=\"container\">\n      <h1 class=\"logo-font\" ng-bind=\"::$ctrl.appName | lowercase\"></h1>\n      <p>A place to share your knowledge.</p>\n    </div>\n  </div>\n\n  <div class=\"container page\">\n    <div class=\"row\">\n\n\n      <!-- Main view - contains tabs & news list -->\n      <div class=\"col-md-9\">\n        <!-- Tabs for toggling between feed, news lists -->\n        <div class=\"feed-toggle\">\n          <ul class=\"nav nav-pills outline-active\">\n\n            <li class=\"nav-item\" show-authed=\"true\">\n              <a href=\"\" class=\"nav-link\"\n                ng-class=\"{ active: $ctrl.listConfig.type === \'feed\' }\"\n                ng-click=\"$ctrl.changeList({ type: \'feed\' })\">\n                Your Feed\n              </a>\n            </li>\n\n            <li class=\"nav-item\">\n              <a href=\"\" class=\"nav-link\"\n                ng-class=\"{ active: $ctrl.listConfig.type === \'all\' && !$ctrl.listConfig.filters }\"\n                ng-click=\"$ctrl.changeList({ type: \'all\' })\">\n                Global Feed\n              </a>\n            </li>\n\n            <li class=\"nav-item\" ng-show=\"$ctrl.listConfig.filters.tag\">\n              <a href=\"\" class=\"nav-link active\">\n                <i class=\"ion-pound\"></i> {{$ctrl.listConfig.filters.tag}}\n              </a>\n            </li>\n\n          </ul>\n        </div>\n\n        <!-- List the current news -->\n        <news-list limit=\"10\" list-config=\"$ctrl.listConfig\"></news-list>\n\n      </div>\n\n      <!-- Sidebar where popular tags are listed -->\n      <div class=\"col-md-3\">\n        <div class=\"sidebar\">\n\n          <p>Popular Tags</p>\n\n          <div class=\"tag-list\" ng-show=\"$ctrl.tags\">\n            <a href=\"\" class=\"tag-default tag-pill\"\n              ng-click=\"$ctrl.changeList({ type: \'all\', filters: { tag: tagName } })\"\n              ng-repeat=\"tagName in $ctrl.tags\"\n              ng-bind=\"tagName\">\n            </a>\n          </div>\n\n          <div ng-show=\"!$ctrl.tagsLoaded\">\n            Loading tags...\n          </div>\n\n          <div class=\"post-preview\"\n            ng-show=\"$ctrl.tagsLoaded && !$ctrl.tags.length\">\n            No tags are here... yet.\n          </div>\n\n        </div>\n      </div>\n\n      <!-- End the row & container divs -->\n    </div>\n  </div>\n\n</div>\n");
-  $templateCache.put("home/home.html", "<h1>YA PINTA EN HTML </h1>\n\n\n<a ui-sref=\"app.home\"> HOme");
+  $templateCache.put("home/home.html", "\n<div class=\"home-page\">\n\n    <!-- Splash banner that only shows when not logged in -->\n    <div class=\"banner\" show-authed=\"false\">\n      <div class=\"container\">\n        <h1 class=\"logo-font\" ng-bind=\"::$ctrl.appName | lowercase\"></h1>\n        <p>A place to share your knowledge.</p>\n      </div>\n    </div>\n  \n    <div class=\"container page\">\n      <div class=\"row\">\n  \n  \n        <!-- Main view - contains tabs & news list -->\n        <div class=\"col-md-9\">\n          <!-- Tabs for toggling between feed, news lists -->\n          <div class=\"feed-toggle\">\n            <ul class=\"nav nav-pills outline-active\">\n  \n              <li class=\"nav-item\" show-authed=\"true\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'feed\' }\"\n                  ng-click=\"$ctrl.changeList({ type: \'feed\' })\">\n                  Your Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'all\' && !$ctrl.listConfig.filters }\"\n                  ng-click=\"$ctrl.changeList({ type: \'all\' })\">\n                  Global Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\" ng-show=\"$ctrl.listConfig.filters.tag\">\n                <a href=\"\" class=\"nav-link active\">\n                  <i class=\"ion-pound\"></i> {{$ctrl.listConfig.filters.tag}}\n                </a>\n              </li>\n  \n            </ul>\n          </div>\n  \n          <!-- List the current news -->\n          \n            <div class=\"news\" ng-repeat=\"news in news\">\n                    <h2 > {{news.title}}</h2>\n                    <p id=\"body\">{{news.body}}</p>\n                <button ui-sref=\"app.detailsNews({slug:news.slug})\">READ MORE</button>\n                </div>\n  \n        </div>\n  \n        <!-- Sidebar where popular tags are listed -->\n        <div class=\"col-md-3\">\n          <div class=\"sidebar\">\n  \n            <p>Popular Tags</p>\n  \n            <div class=\"tag-list\" ng-show=\"$ctrl.tags\">\n              <a href=\"\" class=\"tag-default tag-pill\"\n                ng-click=\"$ctrl.changeList({ type: \'all\', filters: { tag: tagName } })\"\n                ng-repeat=\"tagName in $ctrl.tags\"\n                ng-bind=\"tagName\">\n              </a>\n            </div>\n  \n            <div ng-show=\"!$ctrl.tagsLoaded\">\n              Loading tags...\n            </div>\n  \n            <div class=\"post-preview\"\n              ng-show=\"$ctrl.tagsLoaded && !$ctrl.tags.length\">\n              No tags are here... yet.\n            </div>\n  \n          </div>\n        </div>\n  \n        <!-- End the row & container divs -->\n      </div>\n    </div>\n  \n  </div>\n  ");
   $templateCache.put("layout/app-view.html", "<app-header></app-header>\n\n<div ui-view></div>\n\n<app-footer></app-footer>\n");
   $templateCache.put("layout/footer.html", "");
-  $templateCache.put("layout/header.html", "");
-  $templateCache.put("news/detailsnews.html", "<div class=\"news\">\n    <h2>{{news.title}}</h2>\n    <p>{{news.description}}</p>\n    <p>{{news.body}}</p>\n    <!-- <button ui-sref=\"app.hotels({filter:hotel.category})\">Atrás </button> -->\n    </div>\n    \n    \n    \n    ");
+  $templateCache.put("layout/header.html", "<nav class=\"navbar navbar-light\">\n    <div class=\"container\">\n  \n      <a class=\"navbar-brand\"\n        ui-sref=\"app.home\"\n        ng-bind=\"::$ctrl.appName | lowercase\">\n      </a>\n  \n      <!-- Show this for logged out users -->\n      <ul show-authed=\"false\"\n        class=\"nav navbar-nav pull-xs-right\">\n  \n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            ui-sref-active=\"active\"\n            ui-sref=\"app.home\">\n            Home\n          </a>\n        </li>\n  \n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            ui-sref-active=\"active\"\n            ui-sref=\"app.login\">\n            Sign in\n          </a>\n        </li>\n  \n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            ui-sref-active=\"active\"\n            ui-sref=\"app.register\">\n            Sign up\n          </a>\n        </li>\n  \n      </ul>\n  \n      <!-- Show this for logged in users -->\n      <ul show-authed=\"true\"\n        class=\"nav navbar-nav pull-xs-right\">\n  \n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            ui-sref-active=\"active\"\n            ui-sref=\"app.home\">\n            Home\n          </a>\n        </li>\n  \n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            ui-sref-active=\"active\"\n            ui-sref=\"app.editor\">\n            <i class=\"ion-compose\"></i>&nbsp;New Article\n          </a>\n        </li>\n  \n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            ui-sref-active=\"active\"\n            ui-sref=\"app.settings\">\n            <i class=\"ion-gear-a\"></i>&nbsp;Settings\n          </a>\n        </li>\n  \n        <li class=\"nav-item\">\n          <a class=\"nav-link\"\n            ui-sref-active=\"active\"\n            ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username})\">\n            <img ng-src=\"{{$ctrl.currentUser.image}}\" class=\"user-pic\" />\n            {{ $ctrl.currentUser.username }}\n          </a>\n        </li>\n  \n      </ul>\n  \n  \n    </div>\n  </nav>\n  ");
+  $templateCache.put("news/detailsnews.html", "<div class=\"detailsnews\">\n  <a>{{ news.title}}</a>\n  <br>\n  <span>{{ news.description}}</span>\n  <br>\n  <h3>{{ news.body}}</h3>\n  <p class=\"author\">AUTHOR : {{ news.author.username}}</p>\n    <button ui-sref=\"app.home\">VOLVER AL INCIO</button>\n    </div>\n    \n    \n    \n    ");
   $templateCache.put("news/news.html", "<div class=\"new\" ng-repeat=\"new in newss\">\n    <h2 > NOTICIAS</h2>\n    \n</div>");
   $templateCache.put("profile/profile.html", "<div class=\"profile-page\">\n\n  <!-- User\'s basic info & action buttons -->\n  <div class=\"user-info\">\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-xs-12 col-md-10 offset-md-1\">\n\n          <img ng-src=\"{{::$ctrl.profile.image}}\" class=\"user-img\" />\n          <h4 ng-bind=\"::$ctrl.profile.username\"></h4>\n          <p ng-bind=\"::$ctrl.profile.bio\"></p>\n\n          <a ui-sref=\"app.settings\"\n            class=\"btn btn-sm btn-outline-secondary action-btn\"\n            ng-show=\"$ctrl.isUser\">\n            <i class=\"ion-gear-a\"></i> Edit Profile Settings\n          </a>\n\n          <follow-btn user=\"$ctrl.profile\" ng-hide=\"$ctrl.isUser\"></follow-btn>\n\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <!-- Container where User\'s posts & favs are list w/ toggle tabs -->\n  <div class=\"container\">\n    <div class=\"row\">\n\n      <div class=\"col-xs-12 col-md-10 offset-md-1\">\n\n        <!-- Tabs for switching between author news & favorites -->\n        <div class=\"news-toggle\">\n          <ul class=\"nav nav-pills outline-active\">\n\n            <li class=\"nav-item\">\n              <a class=\"nav-link active\"\n                ui-sref-active=\"active\"\n                ui-sref=\"app.profile.main({username: $ctrl.profile.username})\">\n                My News\n              </a>\n            </li>\n\n            <li class=\"nav-item\">\n              <a class=\"nav-link\"\n                ui-sref-active=\"active\"\n                ui-sref=\"app.profile.favorites({username: $ctrl.profile.username})\">\n                Favorited News\n              </a>\n            </li>\n\n          </ul>\n        </div>\n\n        <!-- List of News -->\n        <div ui-view></div>\n\n\n      </div>\n\n    <!-- End row & container divs -->\n    </div>\n  </div>\n\n</div>\n");
   $templateCache.put("settings/settings.html", "<div class=\"settings-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n\n        <h1 class=\"text-xs-center\">Your Settings</h1>\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                type=\"text\"\n                placeholder=\"URL of profile picture\"\n                ng-model=\"$ctrl.formData.image\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"text\"\n                placeholder=\"Username\"\n                ng-model=\"$ctrl.formData.username\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <textarea class=\"form-control form-control-lg\"\n                rows=\"8\"\n                placeholder=\"Short bio about you\"\n                ng-model=\"$ctrl.formData.bio\">\n              </textarea>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"email\"\n                placeholder=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"password\"\n                placeholder=\"New Password\"\n                ng-model=\"$ctrl.formData.password\" />\n            </fieldset>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\"\n              type=\"submit\">\n              Update Settings\n            </button>\n\n          </fieldset>\n        </form>\n\n        <!-- Line break for logout button -->\n        <hr />\n\n        <button class=\"btn btn-outline-danger\"\n          ng-click=\"$ctrl.logout()\">\n          Or click here to logout.\n        </button>\n\n      </div>\n    </div>\n  </div>\n</div>\n");
@@ -41673,42 +41673,36 @@ function HomeConfig($stateProvider) {
 exports.default = HomeConfig;
 
 },{}],17:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _news = require("../services/news.service");
-
-var _news2 = _interopRequireDefault(_news);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var HomeCtrl = function HomeCtrl(AppConstants, $scope, News) {
   'ngInject';
+  //COMPROBAR PRIMERO ESTE CONSOLE LOG DE NEWS
 
   _classCallCheck(this, HomeCtrl);
 
+  this.News = News;
+
   this.appName = AppConstants.appName;
-  // console.log(this.appName);
   this._$scope = $scope;
   console.log();
 
-  this.News = News;
-
   News.getNews().then(function (news) {
-
-    return news;
+    $scope.news = news;
+    console.log(news);
   });
 };
 HomeCtrl.$inject = ["AppConstants", "$scope", "News"];
 
 exports.default = HomeCtrl;
 
-},{"../services/news.service":33}],18:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41844,18 +41838,16 @@ Object.defineProperty(exports, "__esModule", {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var DetailsNews_Ctrl = function DetailsNews_Ctrl(news, $scope) {
-  //esto se llama desde news.config (resolve)
 
   "ngInject";
 
   _classCallCheck(this, DetailsNews_Ctrl);
 
+  console.log(news);
+  console.log("controller details");
   this._$scope = $scope;
+  this.news = news;
   $scope.news = news;
-
-  this._$scope.atras = function () {
-    $state.go("app.news", { filter: this.hotel.category });
-  };
 };
 DetailsNews_Ctrl.$inject = ["news", "$scope"];
 
@@ -41897,7 +41889,7 @@ newsModule.config(_news2.default);
 
 newsModule.controller('Newsctrl', _news4.default);
 
-newsModule.controller('Detailsctrl', _detailsnews2.default);
+newsModule.controller('DetailsNews_Ctrl', _detailsnews2.default);
 
 exports.default = newsModule;
 
@@ -41914,35 +41906,9 @@ function NewsConfig($stateProvider) {
 
   $stateProvider
 
-  // .state("app.news", {
-  //   url: "/news:filter",
-  //   controller: "News_Ctrl",
-  //   controllerAs: "$ctrl",
-  //   templateUrl: "new/news.html",
-  //   title: "News",
-  //   resolve: {
-  //     news: function(news) {
-  //       return news.getnews().then(news =>news);
-  //     }
-  //   }
-  // })
-
   //MAS ADELANTE LA FILTRACION DE NOTICIAS
 
-  .state("app.news", {
-    url: "/news",
-    controller: "News_Ctrl",
-    controllerAs: "$ctrl",
-    templateUrl: "news/news.html",
-    title: "Lista de Noticias",
-    resolve: {
-      newss: ["News", function newss(News) {
-        return News.getNews().then(function (news) {
-          return news;
-        });
-      }]
-    }
-  }).state("app.detailsNews", {
+  .state("app.detailsNews", {
     url: "/news/:slug",
     controller: "DetailsNews_Ctrl", //name of class inside controller js
     controllerAs: "$ctrl",
@@ -41950,10 +41916,39 @@ function NewsConfig($stateProvider) {
     title: "Details News",
     resolve: {
       news: ["News", "$stateParams", function news(News, $stateParams) {
-        //este nombre es el que recibe el controlador
-        return News.getNewss($stateParams.slug).then(function (news) {
+        console.log("RESOLVE DE UNA NOTICIA");
+        console.log(News);
+        return News.getNeui($stateParams.slug).then(function (news) {
           return news;
         }); //recibo 1 news
+      }]
+    }
+  }).state("app.detailsHotels", {
+    url: "/hotels/:slug",
+    controller: "DetailsHotelsCtrl",
+    controllerAs: "$ctrl",
+    templateUrl: "hotels/detailshotels.html",
+    title: "Details Hotels",
+    resolve: {
+      hotel: ["Hotels", "$stateParams", function hotel(Hotels, $stateParams) {
+        //este nombre es el que recibe el controlador
+        return Hotels.getHotel($stateParams.slug).then(function (hotel) {
+          return hotel;
+        }); //recibo 1 hotel
+      }]
+    }
+  }).state("app.news", {
+    url: "/news",
+    controller: "News_Ctrl",
+    controllerAs: "$ctrl",
+    templateUrl: "news/news.html",
+    title: "Lista de Noticias",
+    resolve: {
+      newss: ["News", function newss(News) {
+        //newss the name that are in json of server
+        return News.getNews().then(function (news) {
+          return news;
+        });
       }]
     }
   });
@@ -41990,9 +41985,6 @@ var News_Ctrl = function News_Ctrl(newss, $state, $scope, $stateParams) {
     // });
     // $scope.noticiasfiltradas = noticiasfiltradas;
 
-    this._$scope.openNew = function () {
-        $state.go("app.detailsNews", { slug: this.news["slug"] });
-    };
 };
 News_Ctrl.$inject = ["newss", "$state", "$scope", "$stateParams"];
 
@@ -42337,8 +42329,22 @@ var Newss = function () {
         url: this._AppConstants.api + "/news",
         method: "GET"
       }).then(function (res) {
-        console.log(res.data.newss);
+        //console.log(res.data.newss);
+
         return res.data.newss;
+      });
+    }
+
+    //RECIBIR UNA NOTICIA
+
+  }, {
+    key: "getNeui",
+    value: function getNeui(slug) {
+      return this._$http({
+        url: this._AppConstants.api + "/news/" + slug,
+        method: "GET"
+      }).then(function (res) {
+        return res.data.news;
       });
     }
 
