@@ -9,7 +9,7 @@ import 'angular-ui-router';
 import './config/app.templates';
 // Import our app functionaity
 import './layout';
-// import './components'; // descomentar quan arribe
+import './components'; //adding components
 import './home';
 import './profile';
 import './news';  // add first model news
@@ -24,7 +24,7 @@ const requires = [
   'ui.router',
   'templates',
   'app.layout',
-  // 'app.components', // descomentar quan arribe
+  'app.components', //adding components
   'app.home',
   'app.profile',
   'app.news', // add first model news, carregara cuando den click en el menu

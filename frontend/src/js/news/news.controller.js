@@ -1,11 +1,13 @@
 class News_Ctrl {
-    constructor(newss, $state, $scope, $stateParams) {
+    constructor(newss, $scope, $stateParams) {
       "ngInject";
   
+      console.log('llega al controler de news')
       this._$scope = $scope;
    
   
       this.newss=newss;
+      $scope.newss = this.newss;
       console.log(newss);
   
       this.filter = $stateParams.filter;

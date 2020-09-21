@@ -21,21 +21,6 @@ function NewsConfig($stateProvider) {
         }
       })
 
-
-      .state("app.detailsHotels", {
-        url: "/hotels/:slug",
-        controller: "DetailsHotelsCtrl",
-        controllerAs: "$ctrl",
-        templateUrl: "hotels/detailshotels.html",
-        title: "Details Hotels",
-        resolve: {
-          hotel: function(Hotels, $stateParams) {
-            //este nombre es el que recibe el controlador
-            return Hotels.getHotel($stateParams.slug).then(hotel => hotel); //recibo 1 hotel
-          }
-        }
-      })
-
       .state("app.news", {
         url: "/news",
         controller: "News_Ctrl",
@@ -43,7 +28,8 @@ function NewsConfig($stateProvider) {
         templateUrl: "news/news.html",
         title: "Lista de Noticias",
         resolve: {
-          newss: function(News) { //newss the name that are in json of server
+          newss: function(News) { 
+            console.log('noticias confign')//newss the name that are in json of server
             return News.getNews().then(news => news);
           }
         }

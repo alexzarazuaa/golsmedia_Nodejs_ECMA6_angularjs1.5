@@ -9,8 +9,8 @@ newsModule.config(NewsConfig);
 
 
 // Controllers
-import Newsctrl from './news.controller';
-newsModule.controller('Newsctrl', Newsctrl);
+import News_Ctrl from './news.controller';
+newsModule.controller('News_Ctrl', News_Ctrl);
 
 import DetailsNews_Ctrl from './detailsnews.controller';
 newsModule.controller('DetailsNews_Ctrl',DetailsNews_Ctrl);

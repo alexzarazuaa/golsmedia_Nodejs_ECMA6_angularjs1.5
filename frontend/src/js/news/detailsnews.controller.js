@@ -6,7 +6,6 @@ class DetailsNews_Ctrl {
       console.log("controller details")
       this._$scope = $scope;
       this.news = news;
-      $scope.news = news;
   
   
     }
