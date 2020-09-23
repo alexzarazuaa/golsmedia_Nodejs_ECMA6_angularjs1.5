@@ -13,13 +13,16 @@ class News_Ctrl {
       this.filter = $stateParams.filter;
      
   
-      // var noticiasfiltradas = new Array();
-      // this.new.forEach(news => {
-      //   if (news.category == this.filter) {
-      //     noticiasfiltradas.push(news);
-      //   }
-      // });
-      // $scope.noticiasfiltradas = noticiasfiltradas;
+      var noticiasfiltradas = new Array();
+      this.newss.forEach(news => {
+        if (news.tagList == this.filter) {
+          noticiasfiltradas.push(news);
+        }
+      });
+
+
+      $scope.noticiasfiltradas = noticiasfiltradas;
+      //console.log(noticiasfiltradas)
   
      
     }

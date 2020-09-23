@@ -151,7 +151,7 @@ router.get('/:news', auth.optional, function(req, res, next) {
   }).catch(next);
 });
 
-// update article
+// update noticia
 router.put('/:news', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user){
     if(req.news.author._id.toString() === req.payload.id.toString()){
@@ -180,7 +180,7 @@ router.put('/:news', auth.required, function(req, res, next) {
   });
 });
 
-// delete article
+// delete noticia
 router.delete('/:news', auth.required, function(req, res, next) {
   User.findById(req.payload.id).then(function(user){
     if (!user) { return res.sendStatus(401); }
@@ -195,7 +195,7 @@ router.delete('/:news', auth.required, function(req, res, next) {
   }).catch(next);
 });
 
-// Favorite an news
+// Favorite a noticia
 router.post('/:news/favorite', auth.required, function(req, res, next) {
   var newsId = req.news._id;
 
@@ -210,7 +210,7 @@ router.post('/:news/favorite', auth.required, function(req, res, next) {
   }).catch(next);
 });
 
-// Unfavorite an article
+// Unfavorite a noticia
 router.delete('/:news/favorite', auth.required, function(req, res, next) {
   var newsId = req.news._id;
 

@@ -2,15 +2,18 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
+// const { type } = require('os');
 var secret = require('../config').secret;
 
 var UserSchema = new mongoose.Schema({
+  idsocial:String,
   username: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
   email: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
   image: String,
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
   hash: String,
-  salt: String
+  salt: String,
+  type : String
 }, {timestamps: true});
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
@@ -39,15 +42,18 @@ UserSchema.methods.generateJWT = function() {
 
 UserSchema.methods.toAuthJSON = function(){
   return {
+    idsocial: this.idsocial,
     username: this.username,
     email: this.email,
     token: this.generateJWT(),
-    image: this.image
+    image: this.image,
+    type: this.type
   };
 };
 
 UserSchema.methods.toProfileJSONFor = function(user){
   return {
+    idsocial:this.idsocial,
     username: this.username,
     image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
   };

@@ -9,8 +9,8 @@ function HomeConfig($stateProvider) {
     templateUrl: 'home/home.html',
     title: 'Home',
       resolve: {
-        newss: function(News) { 
-          console.log('noticias resolve news')//newss the name that are in json of server
+        newss: function(News) { //newss the name that are in json of server
+          console.log('noticias resolve news')
           return News.getNews().then(news => news);
         }//end_resolve_news
     }//end_resolve

@@ -7,8 +7,8 @@ class HomeCtrl {
     console.log(newss)
 
     //scope de neewss
-    this.newss=newss;
-    $scope.news = this.newss;
+      this.newss=newss;
+      $scope.news = this.newss;
 
 
     this.appName = AppConstants.appName;

@@ -1,9 +1,9 @@
 <div class="news">
-  <a>{{ $ctrl.news.title}}</a>
-  <br>
+  <h1>{{ $ctrl.news.title}}</h1>
   <span>{{ $ctrl.news.description}}</span>
   <br>
-  <h3>{{ $ctrl.news.body}}</h3>
-  <p class="author">AUTHOR : {{ $ctrl.news.author.username}}</p>
-    <button ui-sref="app.news">VOLVER A NOTICIAS</button>
-    </div> 
+  <br>
+  <h4>{{ $ctrl.news.body}}</h4>
+  <p class="author">AUTHOR : {{ $ctrl.news.author.username}} <br>  Noticia Creada : {{ $ctrl.news.createdAt}} </p>
+  <button ui-sref="app.news">VOLVER A NOTICIAS</button>
+</div>
