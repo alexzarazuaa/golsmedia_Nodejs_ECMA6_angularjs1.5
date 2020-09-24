@@ -45,7 +45,7 @@ passport.use(new GithubStrategy({
   },
   function(request, accessToken, refreshToken, profile, done) {
     console.log(profile.id.toString())
-    User.findOne({"idsocial" : "56129140"}, function(err, user) {
+    User.findOne({idsocial:profile.id.toString()}, function(err, user) {
         console.log("entra",user);//aqui err es igual a null
         if (err)
           return done(err);

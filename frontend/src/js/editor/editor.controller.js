@@ -32,7 +32,7 @@ class EditorCtrl {
   submit() {
     this.isSubmitting = true;
 
-    this._News.save(this.news).then(
+    this._news.save(this.news).then(
       (newNews) => {
         this._$state.go('app.news', { slug: newNews.slug });
       },

@@ -33,12 +33,12 @@ function AuthConfig($stateProvider, $httpProvider) {
     url: '/auth/sociallogin',
     controller: 'SocialCtrl as $ctrl',
     title: 'Sign up by Social login',
-    //  resolve: {
-    //    auth: function(User) {
-    //     console.log(User);
-    //      return User.ensureAuthIs(false);
-    //    }
-    // }
+     resolve: {
+       auth: function(User) {
+        //console.log(User);
+         return User.ensureAuthIs(false);
+       }
+    }
   });
 
   

@@ -16,13 +16,15 @@ class SocialCtrl {
      
         (res) => {
           //this._toaster.showToastr('success','Successfully Logged In');
-        //   if(res.data.user.type == "admin"){
-        //     this._$state.go('app.adminpanel');
-        //   }else {
-        //     location.reload();
+          if(res.data.user.type == "admin"){
+            this._$state.go('app.adminpanel');
+          }else {
             console.log("redirecto home sociallogin")
-        //     this._$state.go('app.home');
-        //   }
+            location.reload();
+            this._$state.go('app.home');
+           
+      
+        }
         },
         (err) => {
           console.log(err);
