@@ -14,15 +14,17 @@ export default class User {
 
 
   attemptAuth(type, credentials) {
-    //let route = (type === 'login') ? '/login' : '';
+    let route = (type === 'login') ? '/login' : '';
+    route = (type == 'sociallogin') ? '/sociallogin' : '' ;
     return this._$http({
-      url: this._AppConstants.api + '/users' + type,
+      url: this._AppConstants.api + '/users' + route,
       method: 'POST',
       data: {
         user: credentials
       }
     }).then(
       (res) => {
+        //console.log(user)
         this._JWT.save(res.data.user.token);
         this.current = res.data.user;
         return res;

@@ -18,21 +18,21 @@ router.get('/user', auth.required, function(req, res, next){
 //devolvemos el profile de todos los usuarios
 
 // comprobar si esta login o no , not logged json false sino pasar el user
-router.get("/users", auth.optional, function(req, res, next) {
+// router.get("/users", auth.optional, function(req, res, next) {
  
-  Promise.resolve(req.payload ? User.findById(req.payload.id) : null).then(function(currentUser){
+//   Promise.resolve(req.payload ? User.findById(req.payload.id) : null).then(function(currentUser){
 
-    User.find().then(function(users) {
-      if (!users) {
-        return res.sendStatus(401);
-      }
-      return res.json({
-        users:users.map(user => user.toProfileJSONFor(currentUser))
-      });
-    }).catch(next);
-  }).catch(next);
+//     User.find().then(function(users) {
+//       if (!users) {
+//         return res.sendStatus(401);
+//       }
+//       return res.json({
+//         users:users.map(user => user.toProfileJSONFor(currentUser))
+//       });
+//     }).catch(next);
+//   }).catch(next);
   
-});
+// });
 
 router.put('/user', auth.required, function(req, res, next){
   User.findById(req.payload.id).then(function(user){
@@ -71,7 +71,7 @@ router.post('/users/login', function(req, res, next){
     if(err){ return next(err); }
 
     if(user){
-      // user.token = user.generateJWT();
+       user.token = user.generateJWT();
       return res.json({user: user.toAuthJSON()});
     } else {
       return res.status(422).json(info);
@@ -141,13 +141,13 @@ router.post("/users/sociallogin", function(req, res, next) {
   });
 });
 
-//auth github
 
-router.get("/auth/github", passport.authenticate("github"));
+
+router.get("/auth/github", passport.authenticate("github"));//auth github
 router.get(
   "/auth/github/callback",
   passport.authenticate("github", {
-    successRedirect: "http://localhost:3001/#!/auth/sociallogin",
+    successRedirect: "http://localhost:4000/#!/auth/sociallogin",
     failureRedirect: "/"
   })
 );

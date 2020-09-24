@@ -1,6 +1,6 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var GithubStrategy = require('passport-github').Strategy;
+var GithubStrategy = require('passport-github2').Strategy;
 var socialKeys = require('../key/apiKey.json');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -18,7 +18,7 @@ passport.use(new LocalStrategy({
   }).catch(done);
 }));
 
-//serializeUser
+//serializeUser_SOCIAL_LOGIN
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -44,12 +44,15 @@ passport.use(new GithubStrategy({
   passReqToCallback: true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    User.findOne({idsocial:profile.id.toString()}, function(err, user) {
-        console.log(profile);
+    console.log(profile.id.toString())
+    User.findOne({"idsocial" : "56129140"}, function(err, user) {
+        console.log("entra",user);//aqui err es igual a null
         if (err)
           return done(err);
         // if the user is found then log them in
         if (user) {
+          //console.log("exited");
+          console.log(user)
             return done(null, user);
         } else {
           if(!profile.emails[0].value){
@@ -64,7 +67,7 @@ passport.use(new GithubStrategy({
             });
             user.save(function(err) {
                 //if(err){
-                  console.log(err);
+                  console.log('error saves');
                     return done(null, user);
                 //}
             });

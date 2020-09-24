@@ -10,32 +10,35 @@ function AuthConfig($stateProvider, $httpProvider) {
     title: 'Sign in',
     resolve: {
       auth: function(User) {
+        console.log(User);
         return User.ensureAuthIs(false);
       }
     }
   })
 
-  .state('app.register', { //cuando clickamos en register
+  .state('app.register', { //llega aquí cuando clickamos en register
     url: '/register',
     controller: 'AuthCtrl as $ctrl',
     templateUrl: 'auth/auth.html',
     title: 'Regístrate',
     resolve: {
       auth: function(User) {
+        console.log(User);
         return User.ensureAuthIs(false);
       }
     }
   })
 
-  .state('app.sociallogin', {//socialLogin
+  .state('app.sociallogin', {
     url: '/auth/sociallogin',
     controller: 'SocialCtrl as $ctrl',
-    title: 'Sign up with SocialLogin',
-     resolve: {
-       auth: function(User) {
-         return User.ensureAuthIs(false);
-       }
-     }
+    title: 'Sign up by Social login',
+    //  resolve: {
+    //    auth: function(User) {
+    //     console.log(User);
+    //      return User.ensureAuthIs(false);
+    //    }
+    // }
   });
 
   

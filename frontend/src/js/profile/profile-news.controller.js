@@ -7,7 +7,7 @@ class ProfileNewsCtrl {
 
     this.profileState = $state.current.name.replace('app.profile.', '');
 
-    // Both favorites and author news require the 'all' type
+    // Both favorites and author NOTICIAS require the 'all' type
     this.listConfig = { type: 'all' };
 
     // `main` state's filter should be by author
@@ -19,7 +19,7 @@ class ProfileNewsCtrl {
     } else if (this.profileState === 'favorites') {
       this.listConfig.filters = {favorited: this.profile.username};
       // Set page title
-      $rootScope.setPageTitle(`News favorited by ${this.profile.username}`);
+      $rootScope.setPageTitle(`Noticias favorited by ${this.profile.username}`);
     }
 
   }

@@ -1,1 +1,0 @@
-<news-list limit="5" list-config="$ctrl.listConfig"></news-list>
