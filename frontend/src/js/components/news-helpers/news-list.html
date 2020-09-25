@@ -1,7 +1,6 @@
 <div class="news" ng-repeat="news in $ctrl.newss">
     <h2 > {{news.title}}</h2>
     <p id="body">{{news.description}}</p>
-    <p id="body">{{news.tagList}}</p>
      <!-- <button ui-sref="app.detailsNews({id:news.id})">Read More </button> -->
      <button ui-sref="app.detailsNews({slug:news.slug})">READ MORE</button> 
 </div>

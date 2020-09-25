@@ -7,14 +7,14 @@ class AuthCtrl {
 
     this.title = $state.current.title;
     this.authType = $state.current.name.replace('app.', '');
-
   }
 
-  submitForm() {
+  submitForm() { 
     this.isSubmitting = true;
 
     this._User.attemptAuth(this.authType, this.formData).then(
       (res) => {
+        //toastr? 
         this._$state.go('app.home');
       },
       (err) => {

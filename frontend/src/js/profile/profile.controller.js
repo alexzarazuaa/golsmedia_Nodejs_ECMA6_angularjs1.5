@@ -1,7 +1,7 @@
 class ProfileCtrl {
   constructor(profile, User) {
     'ngInject';
-
+      console.log("ENTRA PROFILE CTRL")
     this.profile = profile;
 
     if (User.current) {

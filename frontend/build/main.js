@@ -41205,6 +41205,12 @@ var _app6 = _interopRequireDefault(_app5);
 
 require('angular-ui-router');
 
+var _angularToastr = require('angular-toastr');
+
+var _angularToastr2 = _interopRequireDefault(_angularToastr);
+
+require('angular-messages');
+
 require('./config/app.templates');
 
 require('./layout');
@@ -41236,7 +41242,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Import our app config files
 var requires = ['ui.router', 'templates', 'app.layout', 'app.components', //adding components
 'app.home', 'app.profile', 'app.news', // add first model news, carregara cuando den click en el menu
-'app.services', 'app.auth', 'app.settings', 'app.editor'];
+'app.services', 'app.auth', 'app.settings', 'app.editor', 'ngMessages', _angularToastr2.default];
 
 // Mount on window for testing
 //adding components
@@ -41254,7 +41260,7 @@ _angular2.default.bootstrap(document, ['app'], {
   strictDi: true
 });
 
-},{"./auth":7,"./components":13,"./config/app.config":17,"./config/app.constants":18,"./config/app.run":19,"./config/app.templates":20,"./editor":24,"./home":27,"./layout":30,"./news":32,"./profile":35,"./services":40,"./settings":46,"angular":3,"angular-ui-router":1}],5:[function(require,module,exports){
+},{"./auth":7,"./components":13,"./config/app.config":18,"./config/app.constants":19,"./config/app.run":20,"./config/app.templates":21,"./editor":25,"./home":28,"./layout":31,"./news":33,"./profile":36,"./services":41,"./settings":48,"angular":3,"angular-messages":52,"angular-toastr":54,"angular-ui-router":1}],5:[function(require,module,exports){
 'use strict';
 
 AuthConfig.$inject = ["$stateProvider", "$httpProvider"];
@@ -41334,6 +41340,7 @@ var AuthCtrl = function () {
       this.isSubmitting = true;
 
       this._User.attemptAuth(this.authType, this.formData).then(function (res) {
+        //toastr? 
         _this._$state.go('app.home');
       }, function (err) {
         _this.isSubmitting = false;
@@ -41654,6 +41661,10 @@ var _newsList = require('./news-helpers/news-list.component');
 
 var _newsList2 = _interopRequireDefault(_newsList);
 
+var _listErrors = require('./list-errors.component');
+
+var _listErrors2 = _interopRequireDefault(_listErrors);
+
 var _showAuthed = require('./show-authed.directive');
 
 var _showAuthed2 = _interopRequireDefault(_showAuthed);
@@ -41682,8 +41693,7 @@ componentsModule.component('newsDetail', _newsDetail2.default);
 
 componentsModule.component('newsList', _newsList2.default);
 
-// import ListErrors from './list-errors.component'
-// componentsModule.component('listErrors', ListErrors);
+componentsModule.component('listErrors', _listErrors2.default);
 
 componentsModule.directive('showAuthed', _showAuthed2.default);
 
@@ -41697,7 +41707,22 @@ componentsModule.component('listPagination', _listPagination2.default);
 
 exports.default = componentsModule;
 
-},{"./article-helpers/article-meta.component":9,"./article-helpers/list-pagination.component":10,"./buttons/favorite-btn.component":11,"./buttons/follow-btn.component":12,"./news-helpers/news-detail.component":14,"./news-helpers/news-list.component":15,"./show-authed.directive":16,"angular":3}],14:[function(require,module,exports){
+},{"./article-helpers/article-meta.component":9,"./article-helpers/list-pagination.component":10,"./buttons/favorite-btn.component":11,"./buttons/follow-btn.component":12,"./list-errors.component":14,"./news-helpers/news-detail.component":15,"./news-helpers/news-list.component":16,"./show-authed.directive":17,"angular":3}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var ListErrors = {
+  bindings: {
+    errors: '='
+  },
+  templateUrl: 'components/list-errors.html'
+};
+
+exports.default = ListErrors;
+
+},{}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41725,7 +41750,7 @@ var NewsDetail = {
 
 exports.default = NewsDetail;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41752,7 +41777,7 @@ var NewsList = {
 };
 exports.default = NewsList;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 ShowAuthed.$inject = ["User"];
@@ -41791,7 +41816,7 @@ function ShowAuthed(User) {
 
 exports.default = ShowAuthed;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 AppConfig.$inject = ["$httpProvider", "$stateProvider", "$locationProvider", "$urlRouterProvider"];
@@ -41831,7 +41856,7 @@ function AppConfig($httpProvider, $stateProvider, $locationProvider, $urlRouterP
 
 exports.default = AppConfig;
 
-},{"./auth.interceptor":21}],18:[function(require,module,exports){
+},{"./auth.interceptor":22}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41841,12 +41866,12 @@ var AppConstants = {
   // api: 'https://conduit.productionready.io/api',
   api: 'http://localhost:3000/api',
   jwtKey: 'jwtToken',
-  appName: 'Conduit'
+  appName: 'GolsMedia'
 };
 
 exports.default = AppConstants;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 AppRun.$inject = ["AppConstants", "$rootScope"];
@@ -41875,20 +41900,20 @@ function AppRun(AppConstants, $rootScope) {
 
 exports.default = AppRun;
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 angular.module("templates", []).run(["$templateCache", function ($templateCache) {
-  $templateCache.put("auth/auth.html", "<div class=\"auth-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n        <h1 class=\"text-xs-center\" ng-bind=\"::$ctrl.title\"></h1>\n        <p class=\"text-xs-center\">\n          <a ui-sref=\"app.login\"\n            ng-show=\"$ctrl.authType === \'register\'\">\n            Have an account?\n          </a>\n          <a ui-sref=\"app.register\"\n            ng-show=\"$ctrl.authType === \'login\'\">\n            Need an account?\n          </a>\n        </p>\n        <a href=\"http://localhost:3000/api/auth/github\" style=\"font-size: 25px; color:black\">\n          <i class=\"ion-social-github\">\n          </i>&nbsp;Github</a>\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\" ng-show=\"$ctrl.authType === \'register\'\">\n              <input class=\"form-control form-control-lg\"\n                type=\"text\"\n                placeholder=\"Username\"\n                ng-model=\"$ctrl.formData.username\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"email\"\n                placeholder=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"password\"\n                placeholder=\"Password\"\n                ng-model=\"$ctrl.formData.password\" />\n            </fieldset>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\"\n              type=\"submit\"\n              ng-bind=\"::$ctrl.title\">\n            </button>\n\n          </fieldset>\n        </form>\n      </div>\n\n    </div>\n  </div>\n</div>\n");
+  $templateCache.put("auth/auth.html", "<div class=\"auth-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n        <h1 class=\"text-xs-center\" ng-bind=\"::$ctrl.title\"></h1>\n        <p class=\"text-xs-center\">\n          <a ui-sref=\"app.login\" ng-show=\"$ctrl.authType === \'register\'\">\n            Have an account?\n          </a>\n          <a ui-sref=\"app.register\" ng-show=\"$ctrl.authType === \'login\'\">\n            Need an account?\n          </a>\n        </p>\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\" ng-show=\"$ctrl.authType === \'register\'\">\n              <input required class=\"form-control form-control-lg\" required type=\"text\" placeholder=\"Username\"\n              ng-model=\"$ctrl.formData.username\" ng-minlength=\"3\" ng-maxlength=\"18\"/>\n                <div ng-messages=\"formData.username.$error\" style=\"color: red; font-weight: bold;\">\n                  <p ng-messages=\"required\" ng-show=\"formData.username.$dirty\">Username is required </p>\n                  <p ng-messages=\"minlength\" >Enter more than 3 characters </p>\n                  <p ng-messages=\"maxlength\" >Enter less than 18 characters </p>\n                </div>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\" type=\"email\" placeholder=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n                <div ng-messages=\"formData.email.$error\" style=\"color: red; font-weight: bold;\">\n                  <p ng-messages=\"required\" ng-show=\"formData.email.$dirty\">Email is required </p>\n                  <p ng-messages=\"email\" >Please enter a valid email address </p>\n                </div>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\" type=\"password\" placeholder=\"Password\"\n                ng-model=\"$ctrl.formData.password\" ng-minlength=\"3\" ng-maxlength=\"40\" />\n                <div ng-messages=\"formData.password.$error\" style=\"color: red; font-weight: bold;\">\n                  <p ng-messages=\"required\" ng-show=\"formData.password.$dirty\">Password is required </p>\n                  <p ng-messages=\"minlength\">Enter more than 3 characters </p>\n                  <p ng-messages=\"maxlength\">Enter less than 40 characters </p>\n                </div>\n            </fieldset>\n\n            <a href=\"http://localhost:3000/api/auth/github\" style=\"font-size: 25px; color:black\">\n              <i class=\"ion-social-github\">\n              </i>&nbsp;Github</a>\n            </i>&nbsp;</a>\n            <a href=\"http://localhost:3000/api/auth/google\" style=\"font-size: 25px; color:black\">\n              <i class=\"ion-social-google\">\n              </i>&nbsp;Google</a>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\" type=\"submit\" ng-bind=\"::$ctrl.title\">\n            </button>\n\n          </fieldset>\n        </form>\n      </div>\n\n    </div>\n  </div>\n</div>");
+  $templateCache.put("components/list-errors.html", "<ul class=\"error-messages\" ng-show=\"$ctrl.errors\">\n  <div ng-repeat=\"(field, errors) in $ctrl.errors\">\n    <li ng-repeat=\"error in errors\">\n      {{field}} {{error}}\n    </li>\n  </div>\n</ul>\n");
   $templateCache.put("editor/editor.html", "<div class=\"editor-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n      <div class=\"col-md-10 offset-md-1 col-xs-12\">\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form>\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                ng-model=\"$ctrl.news.title\"\n                type=\"text\"\n                placeholder=\"News Title\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                ng-model=\"$ctrl.news.description\"\n                type=\"text\"\n                placeholder=\"What\'s this news about?\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <textarea class=\"form-control\"\n                rows=\"8\"\n                ng-model=\"$ctrl.news.body\"\n                placeholder=\"Write your news (in markdown)\">\n              </textarea>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                type=\"text\"\n                placeholder=\"Enter tags\"\n                ng-model=\"$ctrl.tagField\"\n                ng-keyup=\"$event.keyCode == 13 && $ctrl.addTag()\" />\n\n              <div class=\"tag-list\">\n                <span ng-repeat=\"tag in $ctrl.news.tagList\"\n                  class=\"tag-default tag-pill\">\n                  <i class=\"ion-close-round\" ng-click=\"$ctrl.removeTag(tag)\"></i>\n                  {{ tag }}\n                </span>\n              </div>\n            </fieldset>\n\n            <button class=\"btn btn-lg pull-xs-right btn-primary\" type=\"button\" ng-click=\"$ctrl.submit()\">\n              Publish News\n            </button>\n\n          </fieldset>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</div>\n");
-  $templateCache.put("home/home copy.html", " <div class=\"home-page\">\n\n  <!-- Splash banner that only shows when not logged in -->\n  <div class=\"banner\" show-authed=\"false\">\n    <div class=\"container\">\n      <h1 class=\"logo-font\" ng-bind=\"::$ctrl.appName | lowercase\"></h1>\n      <p>A place to share your knowledge.</p>\n    </div>\n  </div>\n\n  <div class=\"container page\">\n    <div class=\"row\">\n\n\n      <!-- Main view - contains tabs & news list -->\n      <div class=\"col-md-9\">\n        <!-- Tabs for toggling between feed, news lists -->\n        <div class=\"feed-toggle\">\n          <ul class=\"nav nav-pills outline-active\">\n\n            <li class=\"nav-item\" show-authed=\"true\">\n              <a href=\"\" class=\"nav-link\"\n                ng-class=\"{ active: $ctrl.listConfig.type === \'feed\' }\"\n                ng-click=\"$ctrl.changeList({ type: \'feed\' })\">\n                Your Feed\n              </a>\n            </li>\n\n            <li class=\"nav-item\">\n              <a href=\"\" class=\"nav-link\"\n                ng-class=\"{ active: $ctrl.listConfig.type === \'all\' && !$ctrl.listConfig.filters }\"\n                ng-click=\"$ctrl.changeList({ type: \'all\' })\">\n                Global Feed\n              </a>\n            </li>\n\n            <li class=\"nav-item\" ng-show=\"$ctrl.listConfig.filters.tag\">\n              <a href=\"\" class=\"nav-link active\">\n                <i class=\"ion-pound\"></i> {{$ctrl.listConfig.filters.tag}}\n              </a>\n            </li>\n\n          </ul>\n        </div>\n\n        <!-- List the current news -->\n        <news-list limit=\"10\" list-config=\"$ctrl.listConfig\"></news-list>\n\n      </div>\n\n      <!-- Sidebar where popular tags are listed -->\n      <div class=\"col-md-3\">\n        <div class=\"sidebar\">\n\n          <p>Popular Tags</p>\n\n          <div class=\"tag-list\" ng-show=\"$ctrl.tags\">\n            <a href=\"\" class=\"tag-default tag-pill\"\n              ng-click=\"$ctrl.changeList({ type: \'all\', filters: { tag: tagName } })\"\n              ng-repeat=\"tagName in $ctrl.tags\"\n              ng-bind=\"tagName\">\n            </a>\n          </div>\n\n          <div ng-show=\"!$ctrl.tagsLoaded\">\n            Loading tags...\n          </div>\n\n          <div class=\"post-preview\"\n            ng-show=\"$ctrl.tagsLoaded && !$ctrl.tags.length\">\n            No tags are here... yet.\n          </div>\n\n        </div>\n      </div>\n\n      <!-- End the row & container divs -->\n    </div>\n  </div>\n\n</div>\n");
-  $templateCache.put("home/home.html", "\n<div class=\"home-page\">\n\n    <!-- Splash banner that only shows when not logged in -->\n    <div class=\"banner\" show-authed=\"false\">\n      <div class=\"container\">\n        <h1 class=\"logo-font\" ng-bind=\"::$ctrl.appName | lowercase\"></h1>\n        <p>A place to share your knowledge.</p>\n      </div>\n    </div>\n  \n    <div class=\"container page\">\n      <div class=\"row\">\n  \n  \n        <!-- Main view - contains tabs & news list -->\n        <div class=\"col-md-9\">\n          <!-- Tabs for toggling between feed, news lists -->\n          <div class=\"feed-toggle\">\n            <ul class=\"nav nav-pills outline-active\">\n  \n              <li class=\"nav-item\" show-authed=\"true\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'feed\' }\"\n                  ng-click=\"$ctrl.changeList({ type: \'feed\' })\">\n                  Your Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'all\' && !$ctrl.listConfig.filters }\"\n                  ng-click=\"$ctrl.changeList({ type: \'all\' })\">\n                  Global Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\" ng-show=\"$ctrl.listConfig.filters.tag\">\n                <a href=\"\" class=\"nav-link active\">\n                  <i class=\"ion-pound\"></i> {{$ctrl.listConfig.filters.tag}}\n                </a>\n              </li>\n  \n            </ul>\n          </div>\n  \n          <!-- List the current news -->\n \n              <news-list  limit=\"10\"  newss=\"$ctrl.newss\"></news-list>\n             \n        </div> \n    \n  \n        <!-- Sidebar where popular tags are listed -->\n        <div class=\"col-md-3\">\n          <div class=\"sidebar\">\n  \n            <p>Popular Tags</p>\n  \n            <div class=\"tag-list\" ng-show=\"$ctrl.tags\">\n              <a href=\"\" class=\"tag-default tag-pill\"\n                ng-click=\"$ctrl.changeList({ type: \'all\', filters: { tag: tagName } })\"\n                ng-repeat=\"tagName in $ctrl.tags\"\n                ng-bind=\"tagName\">\n              </a>\n            </div>\n  \n            <div ng-show=\"!$ctrl.tagsLoaded\">\n              Loading tags...\n            </div>\n  \n            <div class=\"post-preview\"\n              ng-show=\"$ctrl.tagsLoaded && !$ctrl.tags.length\">\n              No tags are here... yet.\n            </div>\n  \n          </div>\n        </div>\n  \n        <!-- End the row & container divs -->\n      </div>\n    </div>\n  \n  </div>\n  ");
+  $templateCache.put("home/home.html", "\n<div class=\"home-page\">\n\n    <!-- Splash banner that only shows when not logged in -->\n    <div class=\"banner\" show-authed=\"false\">\n      <div class=\"container\">\n        <h1 class=\"logo-font\" ng-bind=\"::$ctrl.appName | lowercase\"></h1>\n        <p>DIARIO ONLINE LÍDER REGIONAL</p>\n      </div>\n    </div>\n  \n    <div class=\"container page\">\n      <div class=\"row\">\n  \n  \n        <!-- Main view - contains tabs & news list -->\n        <div class=\"col-md-9\">\n          <!-- Tabs for toggling between feed, news lists -->\n          <div class=\"feed-toggle\">\n            <ul class=\"nav nav-pills outline-active\">\n  \n              <li class=\"nav-item\" show-authed=\"true\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'feed\' }\"\n                  ng-click=\"$ctrl.changeList({ type: \'feed\' })\">\n                  Your Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'all\' && !$ctrl.listConfig.filters }\"\n                  ng-click=\"$ctrl.changeList({ type: \'all\' })\">\n                  Global Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\" ng-show=\"$ctrl.listConfig.filters.tag\">\n                <a href=\"\" class=\"nav-link active\">\n                  <i class=\"ion-pound\"></i> {{$ctrl.listConfig.filters.tag}}\n                </a>\n              </li>\n  \n            </ul>\n          </div>\n  \n          <!-- List the current news -->\n \n              <news-list  limit=\"10\"  newss=\"$ctrl.newss\"></news-list>\n             \n        </div> \n    \n  \n        <!-- Sidebar where popular tags are listed -->\n        <div class=\"col-md-3\">\n          <div class=\"sidebar\">\n  \n            <p>Popular Tags</p>\n  \n            <div class=\"tag-list\" ng-show=\"$ctrl.tags\">\n              <a href=\"\" class=\"tag-default tag-pill\"\n                ng-click=\"$ctrl.changeList({ type: \'all\', filters: { tag: tagName } })\"\n                ng-repeat=\"tagName in $ctrl.tags\"\n                ng-bind=\"tagName\">\n              </a>\n            </div>\n  \n            <div ng-show=\"!$ctrl.tagsLoaded\">\n              Loading tags...\n            </div>\n  \n            <div class=\"post-preview\"\n              ng-show=\"$ctrl.tagsLoaded && !$ctrl.tags.length\">\n              No tags are here... yet.\n            </div>\n  \n          </div>\n        </div>\n  \n        <!-- End the row & container divs -->\n      </div>\n    </div>\n  \n  </div>\n  ");
   $templateCache.put("layout/app-view.html", "<app-header></app-header>\n\n<div ui-view></div>\n\n<app-footer></app-footer>\n");
   $templateCache.put("layout/footer.html", "<footer>\n    <div class=\"container\">\n      <a class=\"logo-font\" ui-sref=\"app.home\" ng-bind=\"::$ctrl.appName | lowercase\"></a>\n      <span class=\"attribution\">\n        &copy; {{::$ctrl.date | date:\'yyyy\'}}.\n        An interactive learning project from <a href=\"https://thinkster.io\">Thinkster</a>.\n        Code licensed under MIT.\n      </span>\n    </div>\n  </footer>");
   $templateCache.put("layout/header.html", "<nav class=\"navbar navbar-light\">\n  <div class=\"container\">\n\n    <a class=\"navbar-brand\"\n      ui-sref=\"app.home\"\n      ng-bind=\"::$ctrl.appName | lowercase\">\n    </a>\n\n    <!-- Show this for logged out users -->\n    <ul show-authed=\"false\"\n      class=\"nav navbar-nav pull-xs-right\">\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.home\">\n          Home\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.news\">\n          Noticias\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.login\">\n          Sign in\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.register\">\n          Sign up\n        </a>\n      </li>\n\n    </ul>\n\n    <!-- Show this for logged in users -->\n    <ul show-authed=\"true\"\n      class=\"nav navbar-nav pull-xs-right\">\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.home\">\n          Home\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.editor\">\n          <i class=\"ion-compose\"></i>&nbsp;New Article\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.settings\">\n          <i class=\"ion-gear-a\"></i>&nbsp;Settings\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username})\">\n          <img ng-src=\"{{$ctrl.currentUser.image}}\" class=\"user-pic\" />\n          {{ $ctrl.currentUser.username }}\n        </a>\n      </li>\n\n    </ul>\n\n\n  </div>\n</nav>");
   $templateCache.put("news/detailsnews.html", "\n    <news-detail news=\"$ctrl.news\"></news-detail>\n\n    \n");
   $templateCache.put("news/news.html", "\n<news-list newss=\"$ctrl.newss\"></news-list>\n");
-  $templateCache.put("profile/profile-articles.html", "<article-list limit=\"5\" list-config=\"$ctrl.listConfig\"></article-list>\n");
+  $templateCache.put("profile/profile-news.html", "<article-list limit=\"5\" list-config=\"$ctrl.listConfig\"></article-list>\n");
   $templateCache.put("profile/profile.html", "<div class=\"profile-page\">\n\n  <!-- User\'s basic info & action buttons -->\n  <div class=\"user-info\">\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-xs-12 col-md-10 offset-md-1\">\n\n          <img ng-src=\"{{::$ctrl.profile.image}}\" class=\"user-img\" />\n          <h4 ng-bind=\"::$ctrl.profile.username\"></h4>\n          <p ng-bind=\"::$ctrl.profile.bio\"></p>\n\n          <a ui-sref=\"app.settings\"\n            class=\"btn btn-sm btn-outline-secondary action-btn\"\n            ng-show=\"$ctrl.isUser\">\n            <i class=\"ion-gear-a\"></i> Edit Profile Settings\n          </a>\n\n          <follow-btn user=\"$ctrl.profile\" ng-hide=\"$ctrl.isUser\"></follow-btn>\n\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <!-- Container where User\'s posts & favs are list w/ toggle tabs -->\n  <div class=\"container\">\n    <div class=\"row\">\n\n      <div class=\"col-xs-12 col-md-10 offset-md-1\">\n\n        <!-- Tabs for switching between author noticias & favorites -->\n        <div class=\"articles-toggle\">\n          <ul class=\"nav nav-pills outline-active\">\n\n            <li class=\"nav-item\">\n              <a class=\"nav-link active\"\n                ui-sref-active=\"active\"\n                ui-sref=\"app.profile.main({username: $ctrl.profile.username})\">\n                Mis Noticias\n              </a>\n            </li>\n\n            <li class=\"nav-item\">\n              <a class=\"nav-link\"\n                ui-sref-active=\"active\"\n                ui-sref=\"app.profile.favorites({username: $ctrl.profile.username})\">\n                NOTICIAS  FAVORITAS\n              </a>\n            </li>\n\n          </ul>\n        </div>\n\n        <!-- List of articles -->\n        <div ui-view></div>\n\n\n      </div>\n\n    <!-- End row & container divs -->\n    </div>\n  </div>\n\n</div>\n");
   $templateCache.put("settings/settings.html", "<div class=\"settings-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n\n        <h1 class=\"text-xs-center\">Your Settings</h1>\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                type=\"text\"\n                placeholder=\"URL of profile picture\"\n                ng-model=\"$ctrl.formData.image\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"text\"\n                placeholder=\"Username\"\n                ng-model=\"$ctrl.formData.username\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <textarea class=\"form-control form-control-lg\"\n                rows=\"8\"\n                placeholder=\"Short bio about you\"\n                ng-model=\"$ctrl.formData.bio\">\n              </textarea>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"email\"\n                placeholder=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"password\"\n                placeholder=\"New Password\"\n                ng-model=\"$ctrl.formData.password\" />\n            </fieldset>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\"\n              type=\"submit\">\n              Update Settings\n            </button>\n\n          </fieldset>\n        </form>\n\n        <!-- Line break for logout button -->\n        <hr />\n\n        <button class=\"btn btn-outline-danger\"\n          ng-click=\"$ctrl.logout()\">\n          Or click here to logout.\n        </button>\n\n      </div>\n    </div>\n  </div>\n</div>\n");
   $templateCache.put("components/article-helpers/article-list.html", "<article-preview\n  article=\"article\"\n  ng-repeat=\"article in $ctrl.list\">\n</article-preview>\n\n<div class=\"article-preview\"\n  ng-hide=\"!$ctrl.loading\">\n  Loading articles...\n</div>\n\n<div class=\"article-preview\"\n  ng-show=\"!$ctrl.loading && !$ctrl.list.length\">\n  No articles are here... yet.\n</div>\n\n<list-pagination\n total-pages=\"$ctrl.listConfig.totalPages\"\n current-page=\"$ctrl.listConfig.currentPage\"\n ng-hide=\"$ctrl.listConfig.totalPages <= 1\">\n</list-pagination>\n");
@@ -41898,10 +41923,10 @@ angular.module("templates", []).run(["$templateCache", function ($templateCache)
   $templateCache.put("components/buttons/favorite-btn.html", "<button class=\"btn btn-sm\"\n  ng-class=\"{ \'disabled\' : $ctrl.isSubmitting,\n              \'btn-outline-primary\': !$ctrl.article.favorited,\n              \'btn-primary\': $ctrl.article.favorited }\"\n  ng-click=\"$ctrl.submit()\">\n  <i class=\"ion-heart\"></i> <ng-transclude></ng-transclude>\n</button>\n");
   $templateCache.put("components/buttons/follow-btn.html", "<button\n  class=\"btn btn-sm action-btn\"\n  ng-class=\"{ \'disabled\': $ctrl.isSubmitting,\n              \'btn-outline-secondary\': !$ctrl.user.following,\n              \'btn-secondary\': $ctrl.user.following }\"\n  ng-click=\"$ctrl.submit()\">\n  <i class=\"ion-plus-round\"></i>\n  &nbsp;\n  {{ $ctrl.user.following ? \'Unfollow\' : \'Follow\' }} {{ $ctrl.user.username }}\n</button>\n");
   $templateCache.put("components/news-helpers/news-detail.html", "<div class=\"news\">\n  <h1>{{ $ctrl.news.title}}</h1>\n  <span>{{ $ctrl.news.description}}</span>\n  <br>\n  <br>\n  <h4>{{ $ctrl.news.body}}</h4>\n  <p class=\"author\">AUTHOR : {{ $ctrl.news.author.username}} <br>  Noticia Creada : {{ $ctrl.news.createdAt}} </p>\n  <button ui-sref=\"app.news\">VOLVER A NOTICIAS</button>\n</div>");
-  $templateCache.put("components/news-helpers/news-list.html", "<div class=\"news\" ng-repeat=\"news in $ctrl.newss\">\n    <h2 > {{news.title}}</h2>\n    <p id=\"body\">{{news.description}}</p>\n    <p id=\"body\">{{news.tagList}}</p>\n     <!-- <button ui-sref=\"app.detailsNews({id:news.id})\">Read More </button> -->\n     <button ui-sref=\"app.detailsNews({slug:news.slug})\">READ MORE</button> \n</div>\n\n\n");
+  $templateCache.put("components/news-helpers/news-list.html", "<div class=\"news\" ng-repeat=\"news in $ctrl.newss\">\n    <h2 > {{news.title}}</h2>\n    <p id=\"body\">{{news.description}}</p>\n     <!-- <button ui-sref=\"app.detailsNews({id:news.id})\">Read More </button> -->\n     <button ui-sref=\"app.detailsNews({slug:news.slug})\">READ MORE</button> \n</div>\n\n\n");
 }]);
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 authInterceptor.$inject = ["JWT", "AppConstants", "$window", "$q"];
@@ -41936,7 +41961,7 @@ function authInterceptor(JWT, AppConstants, $window, $q) {
 
 exports.default = authInterceptor;
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 EditorConfig.$inject = ["$stateProvider"];
@@ -41979,7 +42004,7 @@ function EditorConfig($stateProvider) {
 
 exports.default = EditorConfig;
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42048,7 +42073,7 @@ var EditorCtrl = function () {
 
 exports.default = EditorCtrl;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42082,7 +42107,7 @@ editorModule.controller('EditorCtrl', _editor4.default);
 
 exports.default = editorModule;
 
-},{"./editor.config":22,"./editor.controller":23,"angular":3}],25:[function(require,module,exports){
+},{"./editor.config":23,"./editor.controller":24,"angular":3}],26:[function(require,module,exports){
 'use strict';
 
 HomeConfig.$inject = ["$stateProvider"];
@@ -42112,7 +42137,7 @@ function HomeConfig($stateProvider) {
 
 exports.default = HomeConfig;
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42170,7 +42195,7 @@ var HomeCtrl = function () {
 
 exports.default = HomeCtrl;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42204,7 +42229,7 @@ homeModule.controller('HomeCtrl', _home4.default);
 
 exports.default = homeModule;
 
-},{"./home.config":25,"./home.controller":26,"angular":3}],28:[function(require,module,exports){
+},{"./home.config":26,"./home.controller":27,"angular":3}],29:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42232,7 +42257,7 @@ var AppFooter = {
 
 exports.default = AppFooter;
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42264,7 +42289,7 @@ var AppHeader = {
 
 exports.default = AppHeader;
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42296,7 +42321,7 @@ layoutModule.component('appFooter', _footer2.default);
 
 exports.default = layoutModule;
 
-},{"./footer.component":28,"./header.component":29,"angular":3}],31:[function(require,module,exports){
+},{"./footer.component":29,"./header.component":30,"angular":3}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42320,7 +42345,7 @@ DetailsNews_Ctrl.$inject = ["news", "$scope"];
 
 exports.default = DetailsNews_Ctrl;
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42360,7 +42385,7 @@ newsModule.controller('DetailsNews_Ctrl', _detailsnews2.default);
 
 exports.default = newsModule;
 
-},{"./detailsnews.controller":31,"./news.config":33,"./news.controller":34,"angular":3}],33:[function(require,module,exports){
+},{"./detailsnews.controller":32,"./news.config":34,"./news.controller":35,"angular":3}],34:[function(require,module,exports){
 "use strict";
 
 NewsConfig.$inject = ["$stateProvider"];
@@ -42409,7 +42434,7 @@ function NewsConfig($stateProvider) {
 
 exports.default = NewsConfig;
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42449,7 +42474,7 @@ News_Ctrl.$inject = ["newss", "$scope", "$stateParams"];
 
 exports.default = News_Ctrl;
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42489,7 +42514,7 @@ profileModule.controller('ProfileNewsCtrl', _profileNews2.default);
 
 exports.default = profileModule;
 
-},{"./profile-news.controller":36,"./profile.config":37,"./profile.controller":38,"angular":3}],36:[function(require,module,exports){
+},{"./profile-news.controller":37,"./profile.config":38,"./profile.controller":39,"angular":3}],37:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42501,10 +42526,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var ProfileNewsCtrl = function ProfileNewsCtrl(profile, $state, $rootScope) {
   'ngInject';
 
-  // The profile for this page, resolved by UI Router
-
   _classCallCheck(this, ProfileNewsCtrl);
 
+  console.log("ENTRA PROFILE CTRL");
+  // The profile for this page, resolved by UI Router
   this.profile = profile;
 
   this.profileState = $state.current.name.replace('app.profile.', '');
@@ -42527,7 +42552,7 @@ ProfileNewsCtrl.$inject = ["profile", "$state", "$rootScope"];
 
 exports.default = ProfileNewsCtrl;
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 'use strict';
 
 ProfileConfig.$inject = ["$stateProvider"];
@@ -42570,8 +42595,8 @@ function ProfileConfig($stateProvider) {
 
 exports.default = ProfileConfig;
 
-},{}],38:[function(require,module,exports){
-'use strict';
+},{}],39:[function(require,module,exports){
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -42584,6 +42609,7 @@ var ProfileCtrl = function ProfileCtrl(profile, User) {
 
   _classCallCheck(this, ProfileCtrl);
 
+  console.log("ENTRA PROFILE CTRL");
   this.profile = profile;
 
   if (User.current) {
@@ -42597,7 +42623,7 @@ ProfileCtrl.$inject = ["profile", "User"];
 
 exports.default = ProfileCtrl;
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42658,7 +42684,7 @@ var Comments = function () {
 
 exports.default = Comments;
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42693,6 +42719,10 @@ var _tags = require('./tags.service');
 
 var _tags2 = _interopRequireDefault(_tags);
 
+var _toastr = require('./toastr.service');
+
+var _toastr2 = _interopRequireDefault(_toastr);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Create the module where our functionality can attach to
@@ -42710,9 +42740,11 @@ servicesModule.service('Comments', _comments2.default);
 
 servicesModule.service('Tags', _tags2.default);
 
+servicesModule.service('Toastr', _toastr2.default);
+
 exports.default = servicesModule;
 
-},{"./comments.service":39,"./jwt.service":41,"./news.service":42,"./profile.service":43,"./tags.service":44,"./user.service":45,"angular":3}],41:[function(require,module,exports){
+},{"./comments.service":40,"./jwt.service":42,"./news.service":43,"./profile.service":44,"./tags.service":45,"./toastr.service":46,"./user.service":47,"angular":3}],42:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42756,7 +42788,7 @@ var JWT = function () {
 
 exports.default = JWT;
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -42860,7 +42892,7 @@ var Newss = function () {
 
 exports.default = Newss;
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42919,7 +42951,7 @@ var Profile = function () {
 
 exports.default = Profile;
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42959,7 +42991,54 @@ var Tags = function () {
 
 exports.default = Tags;
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Toastr = function () {
+  Toastr.$inject = ["toastr"];
+  function Toastr(toastr) {
+    'ngInject';
+
+    _classCallCheck(this, Toastr);
+
+    this._toastr = toastr;
+  }
+
+  _createClass(Toastr, [{
+    key: 'showToastr',
+    value: function showToastr(type, message) {
+      console.log("entra en showToastr");
+      switch (type) {
+        case 'success':
+          this._toastr.success(message);
+          break;
+        case 'error':
+          this._toastr.error(message);
+          break;
+        case 'info':
+          this._toastr.info(message);
+          break;
+        case 'warning':
+          this._toastr.warning(message);
+          break;
+      }
+    }
+  }]);
+
+  return Toastr;
+}();
+
+exports.default = Toastr;
+
+},{}],47:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43085,7 +43164,7 @@ var User = function () {
 
 exports.default = User;
 
-},{}],46:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43118,7 +43197,7 @@ settingsModule.controller('SettingsCtrl', _settings4.default);
 
 exports.default = settingsModule;
 
-},{"./settings.config":47,"./settings.controller":48,"angular":3}],47:[function(require,module,exports){
+},{"./settings.config":49,"./settings.controller":50,"angular":3}],49:[function(require,module,exports){
 'use strict';
 
 SettingsConfig.$inject = ["$stateProvider"];
@@ -43144,7 +43223,7 @@ function SettingsConfig($stateProvider) {
 
 exports.default = SettingsConfig;
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43195,4 +43274,1354 @@ var SettingsCtrl = function () {
 
 exports.default = SettingsCtrl;
 
-},{}]},{},[4]);
+},{}],51:[function(require,module,exports){
+/**
+ * @license AngularJS v1.8.0
+ * (c) 2010-2020 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular) {'use strict';
+
+var forEach;
+var isArray;
+var isString;
+var jqLite;
+
+/**
+ * @ngdoc module
+ * @name ngMessages
+ * @description
+ *
+ * The `ngMessages` module provides enhanced support for displaying messages within templates
+ * (typically within forms or when rendering message objects that return key/value data).
+ * Instead of relying on JavaScript code and/or complex ng-if statements within your form template to
+ * show and hide error messages specific to the state of an input field, the `ngMessages` and
+ * `ngMessage` directives are designed to handle the complexity, inheritance and priority
+ * sequencing based on the order of how the messages are defined in the template.
+ *
+ * Currently, the ngMessages module only contains the code for the `ngMessages`, `ngMessagesInclude`
+ * `ngMessage`, `ngMessageExp` and `ngMessageDefault` directives.
+ *
+ * ## Usage
+ * The `ngMessages` directive allows keys in a key/value collection to be associated with a child element
+ * (or 'message') that will show or hide based on the truthiness of that key's value in the collection. A common use
+ * case for `ngMessages` is to display error messages for inputs using the `$error` object exposed by the
+ * {@link ngModel ngModel} directive.
+ *
+ * The child elements of the `ngMessages` directive are matched to the collection keys by a `ngMessage` or
+ * `ngMessageExp` directive. The value of these attributes must match a key in the collection that is provided by
+ * the `ngMessages` directive.
+ *
+ * Consider the following example, which illustrates a typical use case of `ngMessages`. Within the form `myForm` we
+ * have a text input named `myField` which is bound to the scope variable `field` using the {@link ngModel ngModel}
+ * directive.
+ *
+ * The `myField` field is a required input of type `email` with a maximum length of 15 characters.
+ *
+ * ```html
+ * <form name="myForm">
+ *   <label>
+ *     Enter text:
+ *     <input type="email" ng-model="field" name="myField" required maxlength="15" />
+ *   </label>
+ *   <div ng-messages="myForm.myField.$error" role="alert">
+ *     <div ng-message="required">Please enter a value for this field.</div>
+ *     <div ng-message="email">This field must be a valid email address.</div>
+ *     <div ng-message="maxlength">This field can be at most 15 characters long.</div>
+ *   </div>
+ * </form>
+ * ```
+ *
+ * In order to show error messages corresponding to `myField` we first create an element with an `ngMessages` attribute
+ * set to the `$error` object owned by the `myField` input in our `myForm` form.
+ *
+ * Within this element we then create separate elements for each of the possible errors that `myField` could have.
+ * The `ngMessage` attribute is used to declare which element(s) will appear for which error - for example,
+ * setting `ng-message="required"` specifies that this particular element should be displayed when there
+ * is no value present for the required field `myField` (because the key `required` will be `true` in the object
+ * `myForm.myField.$error`).
+ *
+ * ### Message order
+ *
+ * By default, `ngMessages` will only display one message for a particular key/value collection at any time. If more
+ * than one message (or error) key is currently true, then which message is shown is determined by the order of messages
+ * in the HTML template code (messages declared first are prioritised). This mechanism means the developer does not have
+ * to prioritize messages using custom JavaScript code.
+ *
+ * Given the following error object for our example (which informs us that the field `myField` currently has both the
+ * `required` and `email` errors):
+ *
+ * ```javascript
+ * <!-- keep in mind that ngModel automatically sets these error flags -->
+ * myField.$error = { required : true, email: true, maxlength: false };
+ * ```
+ * The `required` message will be displayed to the user since it appears before the `email` message in the DOM.
+ * Once the user types a single character, the `required` message will disappear (since the field now has a value)
+ * but the `email` message will be visible because it is still applicable.
+ *
+ * ### Displaying multiple messages at the same time
+ *
+ * While `ngMessages` will by default only display one error element at a time, the `ng-messages-multiple` attribute can
+ * be applied to the `ngMessages` container element to cause it to display all applicable error messages at once:
+ *
+ * ```html
+ * <!-- attribute-style usage -->
+ * <div ng-messages="myForm.myField.$error" ng-messages-multiple>...</div>
+ *
+ * <!-- element-style usage -->
+ * <ng-messages for="myForm.myField.$error" multiple>...</ng-messages>
+ * ```
+ *
+ * ## Reusing and Overriding Messages
+ * In addition to prioritization, ngMessages also allows for including messages from a remote or an inline
+ * template. This allows for generic collection of messages to be reused across multiple parts of an
+ * application.
+ *
+ * ```html
+ * <script type="text/ng-template" id="error-messages">
+ *   <div ng-message="required">This field is required</div>
+ *   <div ng-message="minlength">This field is too short</div>
+ * </script>
+ *
+ * <div ng-messages="myForm.myField.$error" role="alert">
+ *   <div ng-messages-include="error-messages"></div>
+ * </div>
+ * ```
+ *
+ * However, including generic messages may not be useful enough to match all input fields, therefore,
+ * `ngMessages` provides the ability to override messages defined in the remote template by redefining
+ * them within the directive container.
+ *
+ * ```html
+ * <!-- a generic template of error messages known as "my-custom-messages" -->
+ * <script type="text/ng-template" id="my-custom-messages">
+ *   <div ng-message="required">This field is required</div>
+ *   <div ng-message="minlength">This field is too short</div>
+ * </script>
+ *
+ * <form name="myForm">
+ *   <label>
+ *     Email address
+ *     <input type="email"
+ *            id="email"
+ *            name="myEmail"
+ *            ng-model="email"
+ *            minlength="5"
+ *            required />
+ *   </label>
+ *   <!-- any ng-message elements that appear BEFORE the ng-messages-include will
+ *        override the messages present in the ng-messages-include template -->
+ *   <div ng-messages="myForm.myEmail.$error" role="alert">
+ *     <!-- this required message has overridden the template message -->
+ *     <div ng-message="required">You did not enter your email address</div>
+ *
+ *     <!-- this is a brand new message and will appear last in the prioritization -->
+ *     <div ng-message="email">Your email address is invalid</div>
+ *
+ *     <!-- and here are the generic error messages -->
+ *     <div ng-messages-include="my-custom-messages"></div>
+ *   </div>
+ * </form>
+ * ```
+ *
+ * In the example HTML code above the message that is set on required will override the corresponding
+ * required message defined within the remote template. Therefore, with particular input fields (such
+ * email addresses, date fields, autocomplete inputs, etc...), specialized error messages can be applied
+ * while more generic messages can be used to handle other, more general input errors.
+ *
+ * ## Dynamic Messaging
+ * ngMessages also supports using expressions to dynamically change key values. Using arrays and
+ * repeaters to list messages is also supported. This means that the code below will be able to
+ * fully adapt itself and display the appropriate message when any of the expression data changes:
+ *
+ * ```html
+ * <form name="myForm">
+ *   <label>
+ *     Email address
+ *     <input type="email"
+ *            name="myEmail"
+ *            ng-model="email"
+ *            minlength="5"
+ *            required />
+ *   </label>
+ *   <div ng-messages="myForm.myEmail.$error" role="alert">
+ *     <div ng-message="required">You did not enter your email address</div>
+ *     <div ng-repeat="errorMessage in errorMessages">
+ *       <!-- use ng-message-exp for a message whose key is given by an expression -->
+ *       <div ng-message-exp="errorMessage.type">{{ errorMessage.text }}</div>
+ *     </div>
+ *   </div>
+ * </form>
+ * ```
+ *
+ * The `errorMessage.type` expression can be a string value or it can be an array so
+ * that multiple errors can be associated with a single error message:
+ *
+ * ```html
+ *   <label>
+ *     Email address
+ *     <input type="email"
+ *            ng-model="data.email"
+ *            name="myEmail"
+ *            ng-minlength="5"
+ *            ng-maxlength="100"
+ *            required />
+ *   </label>
+ *   <div ng-messages="myForm.myEmail.$error" role="alert">
+ *     <div ng-message-exp="'required'">You did not enter your email address</div>
+ *     <div ng-message-exp="['minlength', 'maxlength']">
+ *       Your email must be between 5 and 100 characters long
+ *     </div>
+ *   </div>
+ * ```
+ *
+ * Feel free to use other structural directives such as ng-if and ng-switch to further control
+ * what messages are active and when. Be careful, if you place ng-message on the same element
+ * as these structural directives, AngularJS may not be able to determine if a message is active
+ * or not. Therefore it is best to place the ng-message on a child element of the structural
+ * directive.
+ *
+ * ```html
+ * <div ng-messages="myForm.myEmail.$error" role="alert">
+ *   <div ng-if="showRequiredError">
+ *     <div ng-message="required">Please enter something</div>
+ *   </div>
+ * </div>
+ * ```
+ *
+ * ## Animations
+ * If the `ngAnimate` module is active within the application then the `ngMessages`, `ngMessage` and
+ * `ngMessageExp` directives will trigger animations whenever any messages are added and removed from
+ * the DOM by the `ngMessages` directive.
+ *
+ * Whenever the `ngMessages` directive contains one or more visible messages then the `.ng-active` CSS
+ * class will be added to the element. The `.ng-inactive` CSS class will be applied when there are no
+ * messages present. Therefore, CSS transitions and keyframes as well as JavaScript animations can
+ * hook into the animations whenever these classes are added/removed.
+ *
+ * Let's say that our HTML code for our messages container looks like so:
+ *
+ * ```html
+ * <div ng-messages="myMessages" class="my-messages" role="alert">
+ *   <div ng-message="alert" class="some-message">...</div>
+ *   <div ng-message="fail" class="some-message">...</div>
+ * </div>
+ * ```
+ *
+ * Then the CSS animation code for the message container looks like so:
+ *
+ * ```css
+ * .my-messages {
+ *   transition:1s linear all;
+ * }
+ * .my-messages.ng-active {
+ *   // messages are visible
+ * }
+ * .my-messages.ng-inactive {
+ *   // messages are hidden
+ * }
+ * ```
+ *
+ * Whenever an inner message is attached (becomes visible) or removed (becomes hidden) then the enter
+ * and leave animation is triggered for each particular element bound to the `ngMessage` directive.
+ *
+ * Therefore, the CSS code for the inner messages looks like so:
+ *
+ * ```css
+ * .some-message {
+ *   transition:1s linear all;
+ * }
+ *
+ * .some-message.ng-enter {}
+ * .some-message.ng-enter.ng-enter-active {}
+ *
+ * .some-message.ng-leave {}
+ * .some-message.ng-leave.ng-leave-active {}
+ * ```
+ *
+ * {@link ngAnimate See the ngAnimate docs} to learn how to use JavaScript animations or to learn
+ * more about ngAnimate.
+ *
+ * ## Displaying a default message
+ * If the ngMessages renders no inner ngMessage directive (i.e. when none of the truthy
+ * keys are matched by a defined message), then it will render a default message
+ * using the {@link ngMessageDefault} directive.
+ * Note that matched messages will always take precedence over unmatched messages. That means
+ * the default message will not be displayed when another message is matched. This is also
+ * true for `ng-messages-multiple`.
+ *
+ * ```html
+ * <div ng-messages="myForm.myField.$error" role="alert">
+ *   <div ng-message="required">This field is required</div>
+ *   <div ng-message="minlength">This field is too short</div>
+ *   <div ng-message-default>This field has an input error</div>
+ * </div>
+ * ```
+ *
+
+ */
+angular.module('ngMessages', [], function initAngularHelpers() {
+  // Access helpers from AngularJS core.
+  // Do it inside a `config` block to ensure `window.angular` is available.
+  forEach = angular.forEach;
+  isArray = angular.isArray;
+  isString = angular.isString;
+  jqLite = angular.element;
+})
+  .info({ angularVersion: '1.8.0' })
+
+  /**
+   * @ngdoc directive
+   * @module ngMessages
+   * @name ngMessages
+   * @restrict AE
+   *
+   * @description
+   * `ngMessages` is a directive that is designed to show and hide messages based on the state
+   * of a key/value object that it listens on. The directive itself complements error message
+   * reporting with the `ngModel` $error object (which stores a key/value state of validation errors).
+   *
+   * `ngMessages` manages the state of internal messages within its container element. The internal
+   * messages use the `ngMessage` directive and will be inserted/removed from the page depending
+   * on if they're present within the key/value object. By default, only one message will be displayed
+   * at a time and this depends on the prioritization of the messages within the template. (This can
+   * be changed by using the `ng-messages-multiple` or `multiple` attribute on the directive container.)
+   *
+   * A remote template can also be used (With {@link ngMessagesInclude}) to promote message
+   * reusability and messages can also be overridden.
+   *
+   * A default message can also be displayed when no `ngMessage` directive is inserted, using the
+   * {@link ngMessageDefault} directive.
+   *
+   * {@link module:ngMessages Click here} to learn more about `ngMessages` and `ngMessage`.
+   *
+   * @usage
+   * ```html
+   * <!-- using attribute directives -->
+   * <ANY ng-messages="expression" role="alert">
+   *   <ANY ng-message="stringValue">...</ANY>
+   *   <ANY ng-message="stringValue1, stringValue2, ...">...</ANY>
+   *   <ANY ng-message-exp="expressionValue">...</ANY>
+   *   <ANY ng-message-default>...</ANY>
+   * </ANY>
+   *
+   * <!-- or by using element directives -->
+   * <ng-messages for="expression" role="alert">
+   *   <ng-message when="stringValue">...</ng-message>
+   *   <ng-message when="stringValue1, stringValue2, ...">...</ng-message>
+   *   <ng-message when-exp="expressionValue">...</ng-message>
+   *   <ng-message-default>...</ng-message-default>
+   * </ng-messages>
+   * ```
+   *
+   * @param {string} ngMessages an AngularJS expression evaluating to a key/value object
+   *                 (this is typically the $error object on an ngModel instance).
+   * @param {string=} ngMessagesMultiple|multiple when set, all messages will be displayed with true
+   *
+   * @example
+   * <example name="ngMessages-directive" module="ngMessagesExample"
+   *          deps="angular-messages.js"
+   *          animations="true" fixBase="true">
+   *   <file name="index.html">
+   *     <form name="myForm">
+   *       <label>
+   *         Enter your name:
+   *         <input type="text"
+   *                name="myName"
+   *                ng-model="name"
+   *                ng-minlength="5"
+   *                ng-maxlength="20"
+   *                required />
+   *       </label>
+   *       <pre>myForm.myName.$error = {{ myForm.myName.$error | json }}</pre>
+   *
+   *       <div ng-messages="myForm.myName.$error" style="color:maroon" role="alert">
+   *         <div ng-message="required">You did not enter a field</div>
+   *         <div ng-message="minlength">Your field is too short</div>
+   *         <div ng-message="maxlength">Your field is too long</div>
+   *         <div ng-message-default>This field has an input error</div>
+   *       </div>
+   *     </form>
+   *   </file>
+   *   <file name="script.js">
+   *     angular.module('ngMessagesExample', ['ngMessages']);
+   *   </file>
+   * </example>
+   */
+  .directive('ngMessages', ['$animate', function($animate) {
+    var ACTIVE_CLASS = 'ng-active';
+    var INACTIVE_CLASS = 'ng-inactive';
+
+    return {
+      require: 'ngMessages',
+      restrict: 'AE',
+      controller: ['$element', '$scope', '$attrs', function NgMessagesCtrl($element, $scope, $attrs) {
+        var ctrl = this;
+        var latestKey = 0;
+        var nextAttachId = 0;
+
+        this.getAttachId = function getAttachId() { return nextAttachId++; };
+
+        var messages = this.messages = {};
+        var renderLater, cachedCollection;
+
+        this.render = function(collection) {
+          collection = collection || {};
+
+          renderLater = false;
+          cachedCollection = collection;
+
+          // this is true if the attribute is empty or if the attribute value is truthy
+          var multiple = isAttrTruthy($scope, $attrs.ngMessagesMultiple) ||
+                         isAttrTruthy($scope, $attrs.multiple);
+
+          var unmatchedMessages = [];
+          var matchedKeys = {};
+          var truthyKeys = 0;
+          var messageItem = ctrl.head;
+          var messageFound = false;
+          var totalMessages = 0;
+
+          // we use != instead of !== to allow for both undefined and null values
+          while (messageItem != null) {
+            totalMessages++;
+            var messageCtrl = messageItem.message;
+
+            var messageUsed = false;
+            if (!messageFound) {
+              forEach(collection, function(value, key) {
+                if (truthy(value) && !messageUsed) {
+                  truthyKeys++;
+
+                  if (messageCtrl.test(key)) {
+                    // this is to prevent the same error name from showing up twice
+                    if (matchedKeys[key]) return;
+                    matchedKeys[key] = true;
+
+                    messageUsed = true;
+                    messageCtrl.attach();
+                  }
+                }
+              });
+            }
+
+            if (messageUsed) {
+              // unless we want to display multiple messages then we should
+              // set a flag here to avoid displaying the next message in the list
+              messageFound = !multiple;
+            } else {
+              unmatchedMessages.push(messageCtrl);
+            }
+
+            messageItem = messageItem.next;
+          }
+
+          forEach(unmatchedMessages, function(messageCtrl) {
+            messageCtrl.detach();
+          });
+
+          var messageMatched = unmatchedMessages.length !== totalMessages;
+          var attachDefault = ctrl.default && !messageMatched && truthyKeys > 0;
+
+          if (attachDefault) {
+            ctrl.default.attach();
+          } else if (ctrl.default) {
+            ctrl.default.detach();
+          }
+
+          if (messageMatched || attachDefault) {
+            $animate.setClass($element, ACTIVE_CLASS, INACTIVE_CLASS);
+          } else {
+            $animate.setClass($element, INACTIVE_CLASS, ACTIVE_CLASS);
+          }
+        };
+
+        $scope.$watchCollection($attrs.ngMessages || $attrs['for'], ctrl.render);
+
+        this.reRender = function() {
+          if (!renderLater) {
+            renderLater = true;
+            $scope.$evalAsync(function() {
+              if (renderLater && cachedCollection) {
+                ctrl.render(cachedCollection);
+              }
+            });
+          }
+        };
+
+        this.register = function(comment, messageCtrl, isDefault) {
+          if (isDefault) {
+            ctrl.default = messageCtrl;
+          } else {
+            var nextKey = latestKey.toString();
+            messages[nextKey] = {
+              message: messageCtrl
+            };
+            insertMessageNode($element[0], comment, nextKey);
+            comment.$$ngMessageNode = nextKey;
+            latestKey++;
+          }
+
+          ctrl.reRender();
+        };
+
+        this.deregister = function(comment, isDefault) {
+          if (isDefault) {
+            delete ctrl.default;
+          } else {
+            var key = comment.$$ngMessageNode;
+            delete comment.$$ngMessageNode;
+            removeMessageNode($element[0], comment, key);
+            delete messages[key];
+          }
+          ctrl.reRender();
+        };
+
+        function findPreviousMessage(parent, comment) {
+          var prevNode = comment;
+          var parentLookup = [];
+
+          while (prevNode && prevNode !== parent) {
+            var prevKey = prevNode.$$ngMessageNode;
+            if (prevKey && prevKey.length) {
+              return messages[prevKey];
+            }
+
+            // dive deeper into the DOM and examine its children for any ngMessage
+            // comments that may be in an element that appears deeper in the list
+            if (prevNode.childNodes.length && parentLookup.indexOf(prevNode) === -1) {
+              parentLookup.push(prevNode);
+              prevNode = prevNode.childNodes[prevNode.childNodes.length - 1];
+            } else if (prevNode.previousSibling) {
+              prevNode = prevNode.previousSibling;
+            } else {
+              prevNode = prevNode.parentNode;
+              parentLookup.push(prevNode);
+            }
+          }
+        }
+
+        function insertMessageNode(parent, comment, key) {
+          var messageNode = messages[key];
+          if (!ctrl.head) {
+            ctrl.head = messageNode;
+          } else {
+            var match = findPreviousMessage(parent, comment);
+            if (match) {
+              messageNode.next = match.next;
+              match.next = messageNode;
+            } else {
+              messageNode.next = ctrl.head;
+              ctrl.head = messageNode;
+            }
+          }
+        }
+
+        function removeMessageNode(parent, comment, key) {
+          var messageNode = messages[key];
+
+          // This message node may have already been removed by a call to deregister()
+          if (!messageNode) return;
+
+          var match = findPreviousMessage(parent, comment);
+          if (match) {
+            match.next = messageNode.next;
+          } else {
+            ctrl.head = messageNode.next;
+          }
+        }
+      }]
+    };
+
+    function isAttrTruthy(scope, attr) {
+     return (isString(attr) && attr.length === 0) || //empty attribute
+            truthy(scope.$eval(attr));
+    }
+
+    function truthy(val) {
+      return isString(val) ? val.length : !!val;
+    }
+  }])
+
+  /**
+   * @ngdoc directive
+   * @name ngMessagesInclude
+   * @restrict AE
+   * @scope
+   *
+   * @description
+   * `ngMessagesInclude` is a directive with the purpose to import existing ngMessage template
+   * code from a remote template and place the downloaded template code into the exact spot
+   * that the ngMessagesInclude directive is placed within the ngMessages container. This allows
+   * for a series of pre-defined messages to be reused and also allows for the developer to
+   * determine what messages are overridden due to the placement of the ngMessagesInclude directive.
+   *
+   * @usage
+   * ```html
+   * <!-- using attribute directives -->
+   * <ANY ng-messages="expression" role="alert">
+   *   <ANY ng-messages-include="remoteTplString">...</ANY>
+   * </ANY>
+   *
+   * <!-- or by using element directives -->
+   * <ng-messages for="expression" role="alert">
+   *   <ng-messages-include src="expressionValue1">...</ng-messages-include>
+   * </ng-messages>
+   * ```
+   *
+   * {@link module:ngMessages Click here} to learn more about `ngMessages` and `ngMessage`.
+   *
+   * @param {string} ngMessagesInclude|src a string value corresponding to the remote template.
+   */
+  .directive('ngMessagesInclude',
+    ['$templateRequest', '$document', '$compile', function($templateRequest, $document, $compile) {
+
+    return {
+      restrict: 'AE',
+      require: '^^ngMessages', // we only require this for validation sake
+      link: function($scope, element, attrs) {
+        var src = attrs.ngMessagesInclude || attrs.src;
+        $templateRequest(src).then(function(html) {
+          if ($scope.$$destroyed) return;
+
+          if (isString(html) && !html.trim()) {
+            // Empty template - nothing to compile
+            replaceElementWithMarker(element, src);
+          } else {
+            // Non-empty template - compile and link
+            $compile(html)($scope, function(contents) {
+              element.after(contents);
+              replaceElementWithMarker(element, src);
+            });
+          }
+        });
+      }
+    };
+
+    // Helpers
+    function replaceElementWithMarker(element, src) {
+      // A comment marker is placed for debugging purposes
+      var comment = $compile.$$createComment ?
+          $compile.$$createComment('ngMessagesInclude', src) :
+          $document[0].createComment(' ngMessagesInclude: ' + src + ' ');
+      var marker = jqLite(comment);
+      element.after(marker);
+
+      // Don't pollute the DOM anymore by keeping an empty directive element
+      element.remove();
+    }
+  }])
+
+  /**
+   * @ngdoc directive
+   * @name ngMessage
+   * @restrict AE
+   * @scope
+   * @priority 1
+   *
+   * @description
+   * `ngMessage` is a directive with the purpose to show and hide a particular message.
+   * For `ngMessage` to operate, a parent `ngMessages` directive on a parent DOM element
+   * must be situated since it determines which messages are visible based on the state
+   * of the provided key/value map that `ngMessages` listens on.
+   *
+   * More information about using `ngMessage` can be found in the
+   * {@link module:ngMessages `ngMessages` module documentation}.
+   *
+   * @usage
+   * ```html
+   * <!-- using attribute directives -->
+   * <ANY ng-messages="expression" role="alert">
+   *   <ANY ng-message="stringValue">...</ANY>
+   *   <ANY ng-message="stringValue1, stringValue2, ...">...</ANY>
+   * </ANY>
+   *
+   * <!-- or by using element directives -->
+   * <ng-messages for="expression" role="alert">
+   *   <ng-message when="stringValue">...</ng-message>
+   *   <ng-message when="stringValue1, stringValue2, ...">...</ng-message>
+   * </ng-messages>
+   * ```
+   *
+   * @param {expression} ngMessage|when a string value corresponding to the message key.
+   */
+  .directive('ngMessage', ngMessageDirectiveFactory())
+
+
+  /**
+   * @ngdoc directive
+   * @name ngMessageExp
+   * @restrict AE
+   * @priority 1
+   * @scope
+   *
+   * @description
+   * `ngMessageExp` is the same as {@link directive:ngMessage `ngMessage`}, but instead of a static
+   * value, it accepts an expression to be evaluated for the message key.
+   *
+   * @usage
+   * ```html
+   * <!-- using attribute directives -->
+   * <ANY ng-messages="expression">
+   *   <ANY ng-message-exp="expressionValue">...</ANY>
+   * </ANY>
+   *
+   * <!-- or by using element directives -->
+   * <ng-messages for="expression">
+   *   <ng-message when-exp="expressionValue">...</ng-message>
+   * </ng-messages>
+   * ```
+   *
+   * {@link module:ngMessages Click here} to learn more about `ngMessages` and `ngMessage`.
+   *
+   * @param {expression} ngMessageExp|whenExp an expression value corresponding to the message key.
+   */
+  .directive('ngMessageExp', ngMessageDirectiveFactory())
+
+  /**
+   * @ngdoc directive
+   * @name ngMessageDefault
+   * @restrict AE
+   * @scope
+   *
+   * @description
+   * `ngMessageDefault` is a directive with the purpose to show and hide a default message for
+   * {@link directive:ngMessages}, when none of provided messages matches.
+   *
+   * More information about using `ngMessageDefault` can be found in the
+   * {@link module:ngMessages `ngMessages` module documentation}.
+   *
+   * @usage
+   * ```html
+   * <!-- using attribute directives -->
+   * <ANY ng-messages="expression" role="alert">
+   *   <ANY ng-message="stringValue">...</ANY>
+   *   <ANY ng-message="stringValue1, stringValue2, ...">...</ANY>
+   *   <ANY ng-message-default>...</ANY>
+   * </ANY>
+   *
+   * <!-- or by using element directives -->
+   * <ng-messages for="expression" role="alert">
+   *   <ng-message when="stringValue">...</ng-message>
+   *   <ng-message when="stringValue1, stringValue2, ...">...</ng-message>
+   *   <ng-message-default>...</ng-message-default>
+   * </ng-messages>
+   *
+  */
+  .directive('ngMessageDefault', ngMessageDirectiveFactory(true));
+
+function ngMessageDirectiveFactory(isDefault) {
+  return ['$animate', function($animate) {
+    return {
+      restrict: 'AE',
+      transclude: 'element',
+      priority: 1, // must run before ngBind, otherwise the text is set on the comment
+      terminal: true,
+      require: '^^ngMessages',
+      link: function(scope, element, attrs, ngMessagesCtrl, $transclude) {
+        var commentNode, records, staticExp, dynamicExp;
+
+        if (!isDefault) {
+          commentNode = element[0];
+          staticExp = attrs.ngMessage || attrs.when;
+          dynamicExp = attrs.ngMessageExp || attrs.whenExp;
+
+          var assignRecords = function(items) {
+            records = items
+                ? (isArray(items)
+                      ? items
+                      : items.split(/[\s,]+/))
+                : null;
+            ngMessagesCtrl.reRender();
+          };
+
+          if (dynamicExp) {
+            assignRecords(scope.$eval(dynamicExp));
+            scope.$watchCollection(dynamicExp, assignRecords);
+          } else {
+            assignRecords(staticExp);
+          }
+        }
+
+        var currentElement, messageCtrl;
+        ngMessagesCtrl.register(commentNode, messageCtrl = {
+          test: function(name) {
+            return contains(records, name);
+          },
+          attach: function() {
+            if (!currentElement) {
+              $transclude(function(elm, newScope) {
+                $animate.enter(elm, null, element);
+                currentElement = elm;
+
+                // Each time we attach this node to a message we get a new id that we can match
+                // when we are destroying the node later.
+                var $$attachId = currentElement.$$attachId = ngMessagesCtrl.getAttachId();
+
+                // in the event that the element or a parent element is destroyed
+                // by another structural directive then it's time
+                // to deregister the message from the controller
+                currentElement.on('$destroy', function() {
+                  // If the message element was removed via a call to `detach` then `currentElement` will be null
+                  // So this handler only handles cases where something else removed the message element.
+                  if (currentElement && currentElement.$$attachId === $$attachId) {
+                    ngMessagesCtrl.deregister(commentNode, isDefault);
+                    messageCtrl.detach();
+                  }
+                  newScope.$destroy();
+                });
+              });
+            }
+          },
+          detach: function() {
+            if (currentElement) {
+              var elm = currentElement;
+              currentElement = null;
+              $animate.leave(elm);
+            }
+          }
+        }, isDefault);
+
+        // We need to ensure that this directive deregisters itself when it no longer exists
+        // Normally this is done when the attached element is destroyed; but if this directive
+        // gets removed before we attach the message to the DOM there is nothing to watch
+        // in which case we must deregister when the containing scope is destroyed.
+        scope.$on('$destroy', function() {
+          ngMessagesCtrl.deregister(commentNode, isDefault);
+        });
+      }
+    };
+  }];
+
+  function contains(collection, key) {
+    if (collection) {
+      return isArray(collection)
+          ? collection.indexOf(key) >= 0
+          : collection.hasOwnProperty(key);
+    }
+  }
+}
+
+
+})(window, window.angular);
+
+},{}],52:[function(require,module,exports){
+require('./angular-messages');
+module.exports = 'ngMessages';
+
+},{"./angular-messages":51}],53:[function(require,module,exports){
+(function() {
+  'use strict';
+
+  angular.module('toastr', [])
+    .factory('toastr', toastr);
+
+  toastr.$inject = ['$animate', '$injector', '$document', '$rootScope', '$sce', 'toastrConfig', '$q'];
+
+  function toastr($animate, $injector, $document, $rootScope, $sce, toastrConfig, $q) {
+    var container;
+    var index = 0;
+    var toasts = [];
+
+    var previousToastMessage = '';
+    var openToasts = {};
+
+    var containerDefer = $q.defer();
+
+    var toast = {
+      active: active,
+      clear: clear,
+      error: error,
+      info: info,
+      remove: remove,
+      success: success,
+      warning: warning,
+      refreshTimer: refreshTimer
+    };
+
+    return toast;
+
+    /* Public API */
+    function active() {
+      return toasts.length;
+    }
+
+    function clear(toast) {
+      // Bit of a hack, I will remove this soon with a BC
+      if (arguments.length === 1 && !toast) { return; }
+
+      if (toast) {
+        remove(toast.toastId);
+      } else {
+        for (var i = 0; i < toasts.length; i++) {
+          remove(toasts[i].toastId);
+        }
+      }
+    }
+
+    function error(message, title, optionsOverride) {
+      var type = _getOptions().iconClasses.error;
+      return _buildNotification(type, message, title, optionsOverride);
+    }
+
+    function info(message, title, optionsOverride) {
+      var type = _getOptions().iconClasses.info;
+      return _buildNotification(type, message, title, optionsOverride);
+    }
+
+    function success(message, title, optionsOverride) {
+      var type = _getOptions().iconClasses.success;
+      return _buildNotification(type, message, title, optionsOverride);
+    }
+
+    function warning(message, title, optionsOverride) {
+      var type = _getOptions().iconClasses.warning;
+      return _buildNotification(type, message, title, optionsOverride);
+    }
+
+    function refreshTimer(toast, newTime) {
+      if (toast && toast.isOpened && toasts.indexOf(toast) >= 0) {
+          toast.scope.refreshTimer(newTime);
+      }
+    }
+
+    function remove(toastId, wasClicked) {
+      var toast = findToast(toastId);
+
+      if (toast && ! toast.deleting) { // Avoid clicking when fading out
+        toast.deleting = true;
+        toast.isOpened = false;
+        $animate.leave(toast.el).then(function() {
+          if (toast.scope.options.onHidden) {
+            toast.scope.options.onHidden(!!wasClicked, toast);
+          }
+          toast.scope.$destroy();
+          var index = toasts.indexOf(toast);
+          delete openToasts[toast.scope.message];
+          toasts.splice(index, 1);
+          var maxOpened = toastrConfig.maxOpened;
+          if (maxOpened && toasts.length >= maxOpened) {
+            toasts[maxOpened - 1].open.resolve();
+          }
+          if (lastToast()) {
+            container.remove();
+            container = null;
+            containerDefer = $q.defer();
+          }
+        });
+      }
+
+      function findToast(toastId) {
+        for (var i = 0; i < toasts.length; i++) {
+          if (toasts[i].toastId === toastId) {
+            return toasts[i];
+          }
+        }
+      }
+
+      function lastToast() {
+        return !toasts.length;
+      }
+    }
+
+    /* Internal functions */
+    function _buildNotification(type, message, title, optionsOverride) {
+      if (angular.isObject(title)) {
+        optionsOverride = title;
+        title = null;
+      }
+
+      return _notify({
+        iconClass: type,
+        message: message,
+        optionsOverride: optionsOverride,
+        title: title
+      });
+    }
+
+    function _getOptions() {
+      return angular.extend({}, toastrConfig);
+    }
+
+    function _createOrGetContainer(options) {
+      if(container) { return containerDefer.promise; }
+
+      container = angular.element('<div></div>');
+      container.attr('id', options.containerId);
+      container.addClass(options.positionClass);
+      container.css({'pointer-events': 'auto'});
+
+      var target = angular.element(document.querySelector(options.target));
+
+      if ( ! target || ! target.length) {
+        throw 'Target for toasts doesn\'t exist';
+      }
+
+      $animate.enter(container, target).then(function() {
+        containerDefer.resolve();
+      });
+
+      return containerDefer.promise;
+    }
+
+    function _notify(map) {
+      var options = _getOptions();
+
+      if (shouldExit()) { return; }
+
+      var newToast = createToast();
+
+      toasts.push(newToast);
+
+      if (ifMaxOpenedAndAutoDismiss()) {
+        var oldToasts = toasts.slice(0, (toasts.length - options.maxOpened));
+        for (var i = 0, len = oldToasts.length; i < len; i++) {
+          remove(oldToasts[i].toastId);
+        }
+      }
+
+      if (maxOpenedNotReached()) {
+        newToast.open.resolve();
+      }
+
+      newToast.open.promise.then(function() {
+        _createOrGetContainer(options).then(function() {
+          newToast.isOpened = true;
+          if (options.newestOnTop) {
+            $animate.enter(newToast.el, container).then(function() {
+              newToast.scope.init();
+            });
+          } else {
+            var sibling = container[0].lastChild ? angular.element(container[0].lastChild) : null;
+            $animate.enter(newToast.el, container, sibling).then(function() {
+              newToast.scope.init();
+            });
+          }
+        });
+      });
+
+      return newToast;
+
+      function ifMaxOpenedAndAutoDismiss() {
+        return options.autoDismiss && options.maxOpened && toasts.length > options.maxOpened;
+      }
+
+      function createScope(toast, map, options) {
+        if (options.allowHtml) {
+          toast.scope.allowHtml = true;
+          toast.scope.title = $sce.trustAsHtml(map.title);
+          toast.scope.message = $sce.trustAsHtml(map.message);
+        } else {
+          toast.scope.title = map.title;
+          toast.scope.message = map.message;
+        }
+
+        toast.scope.toastType = toast.iconClass;
+        toast.scope.toastId = toast.toastId;
+        toast.scope.extraData = options.extraData;
+
+        toast.scope.options = {
+          extendedTimeOut: options.extendedTimeOut,
+          messageClass: options.messageClass,
+          onHidden: options.onHidden,
+          onShown: generateEvent('onShown'),
+          onTap: generateEvent('onTap'),
+          progressBar: options.progressBar,
+          tapToDismiss: options.tapToDismiss,
+          timeOut: options.timeOut,
+          titleClass: options.titleClass,
+          toastClass: options.toastClass
+        };
+
+        if (options.closeButton) {
+          toast.scope.options.closeHtml = options.closeHtml;
+        }
+
+        function generateEvent(event) {
+          if (options[event]) {
+            return function() {
+              options[event](toast);
+            };
+          }
+        }
+      }
+
+      function createToast() {
+        var newToast = {
+          toastId: index++,
+          isOpened: false,
+          scope: $rootScope.$new(),
+          open: $q.defer()
+        };
+        newToast.iconClass = map.iconClass;
+        if (map.optionsOverride) {
+          angular.extend(options, cleanOptionsOverride(map.optionsOverride));
+          newToast.iconClass = map.optionsOverride.iconClass || newToast.iconClass;
+        }
+
+        createScope(newToast, map, options);
+
+        newToast.el = createToastEl(newToast.scope);
+
+        return newToast;
+
+        function cleanOptionsOverride(options) {
+          var badOptions = ['containerId', 'iconClasses', 'maxOpened', 'newestOnTop',
+                            'positionClass', 'preventDuplicates', 'preventOpenDuplicates', 'templates'];
+          for (var i = 0, l = badOptions.length; i < l; i++) {
+            delete options[badOptions[i]];
+          }
+
+          return options;
+        }
+      }
+
+      function createToastEl(scope) {
+        var angularDomEl = angular.element('<div toast></div>'),
+          $compile = $injector.get('$compile');
+        return $compile(angularDomEl)(scope);
+      }
+
+      function maxOpenedNotReached() {
+        return options.maxOpened && toasts.length <= options.maxOpened || !options.maxOpened;
+      }
+
+      function shouldExit() {
+        var isDuplicateOfLast = options.preventDuplicates && map.message === previousToastMessage;
+        var isDuplicateOpen = options.preventOpenDuplicates && openToasts[map.message];
+
+        if (isDuplicateOfLast || isDuplicateOpen) {
+          return true;
+        }
+
+        previousToastMessage = map.message;
+        openToasts[map.message] = true;
+
+        return false;
+      }
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular.module('toastr')
+    .constant('toastrConfig', {
+      allowHtml: false,
+      autoDismiss: false,
+      closeButton: false,
+      closeHtml: '<button>&times;</button>',
+      containerId: 'toast-container',
+      extendedTimeOut: 1000,
+      iconClasses: {
+        error: 'toast-error',
+        info: 'toast-info',
+        success: 'toast-success',
+        warning: 'toast-warning'
+      },
+      maxOpened: 0,
+      messageClass: 'toast-message',
+      newestOnTop: true,
+      onHidden: null,
+      onShown: null,
+      onTap: null,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
+      preventOpenDuplicates: false,
+      progressBar: false,
+      tapToDismiss: true,
+      target: 'body',
+      templates: {
+        toast: 'directives/toast/toast.html',
+        progressbar: 'directives/progressbar/progressbar.html'
+      },
+      timeOut: 5000,
+      titleClass: 'toast-title',
+      toastClass: 'toast'
+    });
+}());
+
+(function() {
+  'use strict';
+
+  angular.module('toastr')
+    .directive('progressBar', progressBar);
+
+  progressBar.$inject = ['toastrConfig'];
+
+  function progressBar(toastrConfig) {
+    return {
+      require: '^toast',
+      templateUrl: function() {
+        return toastrConfig.templates.progressbar;
+      },
+      link: linkFunction
+    };
+
+    function linkFunction(scope, element, attrs, toastCtrl) {
+      var intervalId, currentTimeOut, hideTime;
+
+      toastCtrl.progressBar = scope;
+
+      scope.start = function(duration) {
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+
+        currentTimeOut = parseFloat(duration);
+        hideTime = new Date().getTime() + currentTimeOut;
+        intervalId = setInterval(updateProgress, 10);
+      };
+
+      scope.stop = function() {
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+      };
+
+      function updateProgress() {
+        var percentage = ((hideTime - (new Date().getTime())) / currentTimeOut) * 100;
+        element.css('width', percentage + '%');
+      }
+
+      scope.$on('$destroy', function() {
+        // Failsafe stop
+        clearInterval(intervalId);
+      });
+    }
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular.module('toastr')
+    .controller('ToastController', ToastController);
+
+  function ToastController() {
+    this.progressBar = null;
+
+    this.startProgressBar = function(duration) {
+      if (this.progressBar) {
+        this.progressBar.start(duration);
+      }
+    };
+
+    this.stopProgressBar = function() {
+      if (this.progressBar) {
+        this.progressBar.stop();
+      }
+    };
+  }
+}());
+
+(function() {
+  'use strict';
+
+  angular.module('toastr')
+    .directive('toast', toast);
+
+  toast.$inject = ['$injector', '$interval', 'toastrConfig', 'toastr'];
+
+  function toast($injector, $interval, toastrConfig, toastr) {
+    return {
+      templateUrl: function() {
+        return toastrConfig.templates.toast;
+      },
+      controller: 'ToastController',
+      link: toastLinkFunction
+    };
+
+    function toastLinkFunction(scope, element, attrs, toastCtrl) {
+      var timeout;
+
+      scope.toastClass = scope.options.toastClass;
+      scope.titleClass = scope.options.titleClass;
+      scope.messageClass = scope.options.messageClass;
+      scope.progressBar = scope.options.progressBar;
+
+      if (wantsCloseButton()) {
+        var button = angular.element(scope.options.closeHtml),
+          $compile = $injector.get('$compile');
+        button.addClass('toast-close-button');
+        button.attr('ng-click', 'close(true, $event)');
+        $compile(button)(scope);
+        element.children().prepend(button);
+      }
+
+      scope.init = function() {
+        if (scope.options.timeOut) {
+          timeout = createTimeout(scope.options.timeOut);
+        }
+        if (scope.options.onShown) {
+          scope.options.onShown();
+        }
+      };
+
+      element.on('mouseenter', function() {
+        hideAndStopProgressBar();
+        if (timeout) {
+          $interval.cancel(timeout);
+        }
+      });
+
+      scope.tapToast = function () {
+        if (angular.isFunction(scope.options.onTap)) {
+          scope.options.onTap();
+        }
+        if (scope.options.tapToDismiss) {
+          scope.close(true);
+        }
+      };
+
+      scope.close = function (wasClicked, $event) {
+        if ($event && angular.isFunction($event.stopPropagation)) {
+          $event.stopPropagation();
+        }
+        toastr.remove(scope.toastId, wasClicked);
+      };
+      
+      scope.refreshTimer = function(newTime) {
+        if (timeout) {
+          $interval.cancel(timeout);
+          timeout = createTimeout(newTime || scope.options.timeOut);
+        }
+      };
+
+      element.on('mouseleave', function() {
+        if (scope.options.timeOut === 0 && scope.options.extendedTimeOut === 0) { return; }
+        scope.$apply(function() {
+          scope.progressBar = scope.options.progressBar;
+        });
+        timeout = createTimeout(scope.options.extendedTimeOut);
+      });
+
+      function createTimeout(time) {
+        toastCtrl.startProgressBar(time);
+        return $interval(function() {
+          toastCtrl.stopProgressBar();
+          toastr.remove(scope.toastId);
+        }, time, 1);
+      }
+
+      function hideAndStopProgressBar() {
+        scope.progressBar = false;
+        toastCtrl.stopProgressBar();
+      }
+
+      function wantsCloseButton() {
+        return scope.options.closeHtml;
+      }
+    }
+  }
+}());
+
+angular.module("toastr").run(["$templateCache", function($templateCache) {$templateCache.put("directives/progressbar/progressbar.html","<div class=\"toast-progress\"></div>\n");
+$templateCache.put("directives/toast/toast.html","<div class=\"{{toastClass}} {{toastType}}\" ng-click=\"tapToast()\">\n  <div ng-switch on=\"allowHtml\">\n    <div ng-switch-default ng-if=\"title\" class=\"{{titleClass}}\" aria-label=\"{{title}}\">{{title}}</div>\n    <div ng-switch-default class=\"{{messageClass}}\" aria-label=\"{{message}}\">{{message}}</div>\n    <div ng-switch-when=\"true\" ng-if=\"title\" class=\"{{titleClass}}\" ng-bind-html=\"title\"></div>\n    <div ng-switch-when=\"true\" class=\"{{messageClass}}\" ng-bind-html=\"message\"></div>\n  </div>\n  <progress-bar ng-if=\"progressBar\"></progress-bar>\n</div>\n");}]);
+},{}],54:[function(require,module,exports){
+require('./dist/angular-toastr.tpls.js');
+module.exports = 'toastr';
+
+
+},{"./dist/angular-toastr.tpls.js":53}]},{},[4]);

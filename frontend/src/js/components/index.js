@@ -10,8 +10,8 @@ componentsModule.component('newsDetail', NewsDetail);
 import NewsList from './news-helpers/news-list.component';
 componentsModule.component('newsList', NewsList);
 
-// import ListErrors from './list-errors.component'
-// componentsModule.component('listErrors', ListErrors);
+import ListErrors from './list-errors.component'
+componentsModule.component('listErrors', ListErrors);
 
 import ShowAuthed from './show-authed.directive';
 componentsModule.directive('showAuthed', ShowAuthed);

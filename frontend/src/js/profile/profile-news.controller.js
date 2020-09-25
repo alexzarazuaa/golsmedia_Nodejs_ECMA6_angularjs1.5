@@ -1,7 +1,7 @@
 class ProfileNewsCtrl {
   constructor(profile, $state, $rootScope) {
     'ngInject';
-
+    console.log("ENTRA PROFILE CTRL")
     // The profile for this page, resolved by UI Router
     this.profile = profile;
 
