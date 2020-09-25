@@ -83,6 +83,7 @@ passport.use(new GoogleStrategy({
   clientID: socialKeys.GOOGLE_CLIENT_ID,
   clientSecret: socialKeys.GOOGLE_CLIENT_SECRET,
   callbackURL: socialKeys.GOOGLE_CALLBACK,
+  // scope: 'user:email',
   passReqToCallback: true
   },
   function(request, accessToken, refreshToken, profile, done) {
@@ -91,30 +92,28 @@ passport.use(new GoogleStrategy({
         console.log("entra google",user);//aqui err es igual a null
         if (err)
           return done(err);
+
         // if the user is found then log them in
         if (user) {
           //console.log("exited");
           console.log(user)
             return done(null, user);
-        } else {
-          if(!profile.emails[0].value){
-            return done("The email is private");
-          }else{
+        } else{
             var user = new User({
                 idsocial: profile.id,
-                username: profile.displayName,
+                username: profile.name.givenName,
                 type: "client",
-                email: profile.emails[0].value,
-                image: profile.photos[0].value,
+                email: profile.email,
+                image: profile.picture,
             });
             user.save(function(err) {
-                //if(err){
-                  console.log('error saves');
+                if(err){
+                  console.log('error saves',user);
                     return done(null, user);
-                //}
+                }
             });
           }
-      }
+      
     });  
   }
 ));
