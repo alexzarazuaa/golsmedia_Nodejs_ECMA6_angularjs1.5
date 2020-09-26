@@ -6,7 +6,7 @@
         <h1 class="text-xs-center" ng-bind="::$ctrl.title"></h1>
         <p class="text-xs-center">
           <a ui-sref="app.login" ng-show="$ctrl.authType === 'register'">
-            Have an account?
+            ¿Ya posees una cuenta?
           </a>
           <a ui-sref="app.register" ng-show="$ctrl.authType === 'login'">
             Need an account?
@@ -15,49 +15,38 @@
 
         <list-errors errors="$ctrl.errors"></list-errors>
 
-        <form ng-submit="$ctrl.submitForm()">
+        <form name="formData" ng-submit="$ctrl.submitForm()">
+          <!--llama a submitForm-->
           <fieldset ng-disabled="$ctrl.isSubmitting">
 
             <fieldset class="form-group" ng-show="$ctrl.authType === 'register'">
-              <input required class="form-control form-control-lg" required type="text" placeholder="Username"
-              ng-model="$ctrl.formData.username" ng-minlength="3" ng-maxlength="18"/>
-                <div ng-messages="formData.username.$error" style="color: red; font-weight: bold;">
-                  <p ng-messages="required" ng-show="formData.username.$dirty">Username is required </p>
-                  <p ng-messages="minlength" >Enter more than 3 characters </p>
-                  <p ng-messages="maxlength" >Enter less than 18 characters </p>
-                </div>
+              <input required class="form-control form-control-lg" type="text" placeholder="Username"
+                ng-model="$ctrl.formData.username" />
+              <div ng-messages="formData.Username.$error" style="color: red; font-weight: bold">
+                <p ng-message="required" ng-show="formData.Username.$dirty">Username is required.</p>
+                <p ng-message="minlength">Enter more than 3 characters.</p>
+                <p ng-message="maxlength">Enter less than 20 characters.</p>
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="email" placeholder="Email"
+              <input required class="form-control form-control-lg" type="email" placeholder="Email"
                 ng-model="$ctrl.formData.email" />
-                <div ng-messages="formData.email.$error" style="color: red; font-weight: bold;">
-                  <p ng-messages="required" ng-show="formData.email.$dirty">Email is required </p>
-                  <p ng-messages="email" >Please enter a valid email address </p>
-                </div>
             </fieldset>
 
             <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="password" placeholder="Password"
-                ng-model="$ctrl.formData.password" ng-minlength="3" ng-maxlength="40" />
-                <div ng-messages="formData.password.$error" style="color: red; font-weight: bold;">
-                  <p ng-messages="required" ng-show="formData.password.$dirty">Password is required </p>
-                  <p ng-messages="minlength">Enter more than 3 characters </p>
-                  <p ng-messages="maxlength">Enter less than 40 characters </p>
-                </div>
+              <input required class="form-control form-control-lg" type="password" placeholder="Password"
+                ng-model="$ctrl.formData.password" />
             </fieldset>
-
-            <a href="http://localhost:3000/api/auth/github" style="font-size: 25px; color:black">
-              <i class="ion-social-github">
-              </i>&nbsp;Github</a>
-            </i>&nbsp;</a>
-            <a href="http://localhost:3000/api/auth/google" style="font-size: 25px; color:black">
-              <i class="ion-social-google">
-              </i>&nbsp;Google</a>
 
             <button class="btn btn-lg btn-primary pull-xs-right" type="submit" ng-bind="::$ctrl.title">
             </button>
 
+
+            <a href="http://localhost:3000/api/auth/github" style="font-size: 25px; color:black"><i
+                class="ion-social-github"></i>&nbsp;</a>
+            <a href="http://localhost:3000/api/auth/google" style="font-size: 25px; color:black"><i
+                class="ion-social-google"></i></a>
           </fieldset>
         </form>
       </div>

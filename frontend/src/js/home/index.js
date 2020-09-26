@@ -12,5 +12,9 @@ homeModule.config(HomeConfig);
 import HomeCtrl from './home.controller';
 homeModule.controller('HomeCtrl', HomeCtrl);
 
+//CAROUSEL COMPONENT
+import homeSliderCtrl from './homeSlider.component';
+homeModule.controller('homeSliderCtrl',homeSliderCtrl)
+
 
 export default homeModule;

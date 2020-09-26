@@ -6,3 +6,8 @@ frontend/node_modules
 #CREDENTIALS
 
 backend/key/apiKey.json
+
+
+#IMAGES
+
+frontend/src/images
