@@ -1,7 +1,7 @@
 class AuthCtrl {
   constructor(User, $state, auth, Toastr) {
     'ngInject';
-
+    console.log('entra en auth controller');
     this._User = User;
     this._$state = $state;
     this.title = $state.current.title;
@@ -20,6 +20,7 @@ class AuthCtrl {
 
       },
       (err) => {
+        //console.log(err);
         this._toastr.showToastr('error', 'Error trying to login');
         this.isSubmitting = false;
         this.errors = err.data.errors;

@@ -61,6 +61,23 @@ export default class Newss {
   //   return deferred.promise;
   // }
 
+  save(news) {
+    let request = {};
+
+    if (news.slug) {
+      request.url = `${this._AppConstants.api}/news/${news.slug}`;
+      request.method = 'PUT';
+      delete news.slug;
+
+    } else {
+      request.url = `${this._AppConstants.api}/news`;
+      request.method = 'POST';
+    }
+
+    request.data = { news: news };
+
+    return this._$http(request).then((res) => res.data.news);
+  }
 
 
 

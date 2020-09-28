@@ -1,7 +1,7 @@
 class SocialCtrl {
   constructor(User, $state, $scope, Toastr) {
     'ngInject';
-    console.log('entra log')
+    console.log('entra social controller')
 
     this._User = User;
     this._$state = $state;
@@ -11,13 +11,14 @@ class SocialCtrl {
     this.title = $state.current.title;
     this.authType = $state.current.name.replace('app.', '');
     //console.log("ENTRA CONTROLLER SOCIAL");
-    console.log(this.authType);
+    //console.log(this.authType);
     this._User.attemptAuth(this.authType, null).then(
 
       (res) => {
-        this._toastr.showToastr('success','Successfully Logged In');
-          console.log("redirecto home sociallogin")
+        
+         // alert("redirecto home sociallogin")
           location.reload();
+          this._toastr.showToastr('success','Successfully Logged In');
           this._$state.go('app.home');
       },
       (err) => {

@@ -14,8 +14,17 @@ export default class User {
 
 
   attemptAuth(type, credentials) {
-    let route = (type === 'login') ? '/login' : '';
-    route = (type == 'sociallogin') ? '/sociallogin' : '' ;
+    console.log('route desde services',type);
+       let route = '';
+
+    if (type === 'login') {
+      route = '/login'
+    }
+    if (type === 'sociallogin') {
+      route = '/sociallogin'
+    }
+    console.log(route);
+
     return this._$http({
       url: this._AppConstants.api + '/users' + route,
       method: 'POST',
@@ -24,7 +33,6 @@ export default class User {
       }
     }).then(
       (res) => {
-        //console.log(user)
         this._JWT.save(res.data.user.token);
         this.current = res.data.user;
         return res;

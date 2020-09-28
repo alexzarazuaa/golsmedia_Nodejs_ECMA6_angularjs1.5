@@ -7,7 +7,9 @@ var NewsSchema = new mongoose.Schema({
   slug: {type: String, lowercase: true, unique: true},
   title: String,
   description: String,
+  //PONER TAMBIEN IMAGENES PARA CUANDO SUBA LAS NOTICIAS HAYAN IMAGENES.
   body: String,
+  world:String,
   favoritesCount: {type: Number, default: 0},
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   tagList: [{ type: String }],
@@ -44,6 +46,7 @@ NewsSchema.methods.toJSONFor = function(user){
     title: this.title,
     description: this.description,
     body: this.body,
+    world:String,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
     tagList: this.tagList,

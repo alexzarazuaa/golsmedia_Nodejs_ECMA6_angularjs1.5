@@ -46,6 +46,13 @@ gulp.task('html', function() {
       .pipe(gulp.dest('./build/'));
 });
 
+gulp.task('img', function () {
+  return gulp.src("src/images/*.*")
+    .on('error', interceptErrors)
+    .pipe(gulp.dest('./build/images'))
+});
+
+
 gulp.task('views', function() {
   return gulp.src(viewFiles)
       .pipe(templateCache({
@@ -69,7 +76,7 @@ gulp.task('build', ['html', 'browserify'], function() {
   return merge(html,js);
 });
 
-gulp.task('default', ['html', 'browserify'], function() {
+gulp.task('default', ['html','browserify', 'img'], function() {
 
   browserSync.init(['./build/**/**.**'], {
     server: "./build",
