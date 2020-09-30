@@ -5,9 +5,9 @@ class homeSliderCtrl {
         this.myInterval = 5000;
         this.noWrapSlides = false;
 
-        this.slides = [{ image: 'images/vlcf.jpg', text: "Uros Racic Renueva hasta 2025.", id: 0 },
+        this.slides = [{ image: 'images/vlcf.jpg', text: "Uros Racic Renueva hasta 2024.", id: 0 },
         { image: 'images/hamilton.jpg', text: "Hamilton consigue una pole más.", id: 1 }
-            , { image: 'images/suarez_atm.jpg', text: "Suarez ya jugará contra el Gran", id: 2 }];
+            , { image: 'images/suarez_atm.jpg', text: "Suarez ya brilla con el Atletico", id: 2 }];
 
     }//end_constructor
 }//end_class

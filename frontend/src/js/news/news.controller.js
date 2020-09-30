@@ -1,32 +1,35 @@
 class News_Ctrl {
-    constructor(newss, $scope, $stateParams) {
-      "ngInject";
-  
-      console.log('llega al controler de news')
-      this._$scope = $scope;
-   
-  
-      this.newss=newss;
-      $scope.newss = this.newss;
-      console.log(newss);
-  
-      this.filter = $stateParams.filter;
-     
-  
-      var noticiasfiltradas = new Array();
-      this.newss.forEach(news => {
-        if (news.tagList == this.filter) {
-          noticiasfiltradas.push(news);
-        }
-      });
+  constructor(newss, $scope, $stateParams, $filter) {
+    "ngInject";
+
+    console.log('llega al controler de news')
+    this._$scope = $scope;
 
 
-      $scope.noticiasfiltradas = noticiasfiltradas;
-      //console.log(noticiasfiltradas)
-  
-     
-    }
-  }
-  
-  export default News_Ctrl;
-  
+    this.newss = newss;
+ 
+    console.log(newss);
+
+    this.filter = $stateParams.filter;
+
+    if (newss) {
+      if ($stateParams.filter) {
+        this.showFilter = true;
+        this.filter = $stateParams.filter;
+        this.infoWorld = $filter('filter')(newss.this.filter);
+      } else {
+        this.infoWorld = newss;
+        this.showFilter = false;
+      }
+
+
+    } else {
+
+        this.infoWorld = "error";
+    }//end_if_newss
+
+
+  }//end_constructor
+}//end_classs
+
+export default News_Ctrl;

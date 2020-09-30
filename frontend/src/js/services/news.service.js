@@ -31,6 +31,18 @@ export default class Newss {
       .then(res => res.data.news);
   }
 
+  getWorld(){
+    return this._$http({
+      url: this._AppConstants.api + "/news",
+      method: "GET"
+    }).then(res => {
+      console.log(res.data.world);
+     
+      return res.data.world;
+     
+    });
+  }
+
   // query(config) {
   //   // Create the $http object for this request
   //   let request = {
@@ -80,6 +92,17 @@ export default class Newss {
   }
 
 
+
+    //DEVULEVO LOS MUNDOS DE CADA NOTICIA PARA EL FILTRO
+    // getWorld(){
+    //   return this._$http({
+    //     url: this._AppConstants.api + '/news',
+    //     method: "GET"
+    //   }).then(res => {
+    //     console.log(res.data.newss);
+    //     return res.data.newss;
+    //   });
+    // }
 
   // favorite(slug) {
   //   return this._$http({

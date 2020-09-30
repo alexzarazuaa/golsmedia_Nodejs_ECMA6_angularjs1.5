@@ -50483,9 +50483,10 @@ var AuthCtrl = function () {
   function AuthCtrl(User, $state, auth, Toastr) {
     'ngInject';
 
+    //console.log('entra en auth controller');
+
     _classCallCheck(this, AuthCtrl);
 
-    console.log('entra en auth controller');
     this._User = User;
     this._$state = $state;
     this.title = $state.current.title;
@@ -51064,14 +51065,14 @@ exports.default = AppRun;
 "use strict";
 
 angular.module("templates", []).run(["$templateCache", function ($templateCache) {
-  $templateCache.put("auth/auth.html", "<div class=\"auth-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n        <h1 class=\"text-xs-center\" ng-bind=\"::$ctrl.title\"></h1>\n        <p class=\"text-xs-center\">\n          <a ui-sref=\"app.login\"\n            ng-show=\"$ctrl.authType === \'register\'\">\n            Have an account?\n          </a>\n          <a ui-sref=\"app.register\"\n            ng-show=\"$ctrl.authType === \'login\'\">\n            Need an account?\n          </a>\n        </p>\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\" ng-show=\"$ctrl.authType === \'register\'\">\n              <input class=\"form-control form-control-lg\"\n                type=\"text\"\n                placeholder=\"Username\"\n                ng-model=\"$ctrl.formData.username\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"email\"\n                placeholder=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"password\"\n                placeholder=\"Password\"\n                ng-model=\"$ctrl.formData.password\" />\n            </fieldset>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\"\n              type=\"submit\"\n              ng-bind=\"::$ctrl.title\">\n            </button>\n\n\n\n            <a href=\"http://localhost:3000/api/auth/github\" style=\"font-size: 25px; color:black\"><i\n              class=\"ion-social-github\"></i>&nbsp;</a>\n          <a href=\"http://localhost:3000/api/auth/google\" style=\"font-size: 25px; color:black\"><i\n              class=\"ion-social-google\"></i></a>\n\n          </fieldset>\n        </form>\n      </div>\n\n    </div>\n  </div>\n</div>\n");
+  $templateCache.put("auth/auth.html", "<div class=\"auth-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n        <h1 class=\"text-xs-center\" ng-bind=\"::$ctrl.title\"></h1>\n        <p class=\"text-xs-center\">\n          <a ui-sref=\"app.login\" ng-show=\"$ctrl.authType === \'register\'\">\n            Have an account?\n          </a>\n          <a ui-sref=\"app.register\" ng-show=\"$ctrl.authType === \'login\'\">\n            Need an account?\n          </a>\n        </p>\n        <div class=\"error\" ng-show=\"$ctrl.error\">\n        </div>\n        <!-- <list-errors errors=\"$ctrl.errors\"></list-errors> -->\n\n        <form name=\"formData\" ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\" ng-show=\"$ctrl.authType === \'register\'\">\n              <input required class=\"form-control form-control-lg\" type=\"text\" placeholder=\"Username\"\n                ng-model=\"$ctrl.formData.username\" name=\"Username\" ng-minlength=\"4\" ng-maxlength=\"20\"\n                autocomplete=false />\n              <div ng-messages=\"formData.Username.$error\">\n                <p ng-message=\"required\" ng-show=\"formData.Username.$dirty\">Username required</p>\n                <p ng-message=\"minlength\">Username more than 4 char</p>\n                <p ng-message=\"maxlength\">Username less than 20 char</p>\n              </div>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input required class=\"form-control form-control-lg\" type=\"email\" placeholder=\"Email\" name=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n              <div ng-messages=\"formData.Email.$error\">\n                <p ng-message=\"required\" ng-show=\"formData.Email.$dirty\">Email required</p>\n              </div>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input required class=\"form-control form-control-lg\" type=\"password\" placeholder=\"Password\"\n                ng-model=\"$ctrl.formData.password\" name=\"Password\" ng-minlength=\"6\" ng-maxlength=\"40\" />\n              <div ng-messages=\"formData.Password.$error\">\n                <p ng-message=\"required\" ng-show=\"formData.Password.$dirty\">Password required</p>\n                <p ng-message=\"minlength\">Password more than 6 char</p>\n                <p ng-message=\"maxlength\">Password less than 40 char</p>\n              </div>\n            </fieldset>\n\n            <a href=\"http://localhost:3000/api/auth/google\" style=\"font-size: 25px; color:black\"><i\n                class=\"ion-social-google\"></i>&nbsp;Google</a>\n            <a href=\"http://localhost:3000/api/auth/github\" style=\"font-size: 25px; color:black\"><i\n                class=\"ion-social-github\"></i>&nbsp;Github</a>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\" type=\"submit\" ng-bind=\"::$ctrl.title\">\n            </button>\n\n          </fieldset>\n        </form>\n      </div>\n\n    </div>\n  </div>\n</div>");
   $templateCache.put("components/list-errors.html", "<ul class=\"error-messages\" ng-show=\"$ctrl.errors\">\n  <div ng-repeat=\"(field, errors) in $ctrl.errors\">\n    <li ng-repeat=\"error in errors\">\n      {{field}} {{error}}\n    </li>\n  </div>\n</ul>\n");
   $templateCache.put("editor/editor.html", "<div class=\"editor-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n      <div class=\"col-md-10 offset-md-1 col-xs-12\">\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form>\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                ng-model=\"$ctrl.news.title\"\n                type=\"text\"\n                placeholder=\"News Title\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                ng-model=\"$ctrl.news.description\"\n                type=\"text\"\n                placeholder=\"What\'s this news about?\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <textarea class=\"form-control\"\n                rows=\"8\"\n                ng-model=\"$ctrl.news.body\"\n                placeholder=\"Write your news (in markdown)\">\n              </textarea>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                type=\"text\"\n                placeholder=\"Enter tags\"\n                ng-model=\"$ctrl.tagField\"\n                ng-keyup=\"$event.keyCode == 13 && $ctrl.addTag()\" />\n\n              <div class=\"tag-list\">\n                <span ng-repeat=\"tag in $ctrl.news.tagList\"\n                  class=\"tag-default tag-pill\">\n                  <i class=\"ion-close-round\" ng-click=\"$ctrl.removeTag(tag)\"></i>\n                  {{ tag }}\n                </span>\n              </div>\n            </fieldset>\n\n            <button class=\"btn btn-lg pull-xs-right btn-primary\" type=\"button\" ng-click=\"$ctrl.submit()\">\n              Publish News\n            </button>\n\n          </fieldset>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</div>\n");
   $templateCache.put("home/home.html", "\n<div class=\"home-page\">\n  <home-slider></home-slider>\n    <!-- Splash banner that only shows when not logged in -->\n    <div class=\"banner\" show-authed=\"false\">\n      <div class=\"container\">\n        <h1 class=\"logo-font\" ng-bind=\"::$ctrl.appName | lowercase\"></h1>\n        <p>DIARIO ONLINE LÍDER REGIONAL</p>\n      </div>\n    </div>\n  \n    <div class=\"container page\">\n      <div class=\"row\">\n  \n  \n        <!-- Main view - contains tabs & news list -->\n        <div class=\"col-md-9\">\n          <!-- Tabs for toggling between feed, news lists -->\n          <div class=\"feed-toggle\">\n            <ul class=\"nav nav-pills outline-active\">\n  \n              <li class=\"nav-item\" show-authed=\"true\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'feed\' }\"\n                  ng-click=\"$ctrl.changeList({ type: \'feed\' })\">\n                  Your Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\">\n                <a href=\"\" class=\"nav-link\"\n                  ng-class=\"{ active: $ctrl.listConfig.type === \'all\' && !$ctrl.listConfig.filters }\"\n                  ng-click=\"$ctrl.changeList({ type: \'all\' })\">\n                  Global Feed\n                </a>\n              </li>\n  \n              <li class=\"nav-item\" ng-show=\"$ctrl.listConfig.filters.tag\">\n                <a href=\"\" class=\"nav-link active\">\n                  <i class=\"ion-pound\"></i> {{$ctrl.listConfig.filters.tag}}\n                </a>\n              </li>\n  \n            </ul>\n          </div>\n  \n          <!-- List the current news -->\n \n              <news-list  limit=\"10\"  newss=\"$ctrl.newss\"></news-list>\n             \n        </div> \n    \n  \n        <!-- Sidebar where popular tags are listed -->\n        <div class=\"col-md-3\">\n          <div class=\"sidebar\">\n  \n            <p>Popular Tags</p>\n  \n            <div class=\"tag-list\" ng-show=\"$ctrl.tags\">\n              <a href=\"\" class=\"tag-default tag-pill\"\n                ng-click=\"$ctrl.changeList({ type: \'all\', filters: { tag: tagName } })\"\n                ng-repeat=\"tagName in $ctrl.tags\"\n                ng-bind=\"tagName\">\n              </a>\n            </div>\n  \n            <div ng-show=\"!$ctrl.tagsLoaded\">\n              Loading tags...\n            </div>\n  \n            <div class=\"post-preview\"\n              ng-show=\"$ctrl.tagsLoaded && !$ctrl.tags.length\">\n              No tags are here... yet.\n            </div>\n  \n          </div>\n        </div>\n  \n        <!-- End the row & container divs -->\n      </div>\n    </div>\n  \n  </div>\n  ");
   $templateCache.put("home/homeSlider.html", "\n<div style = \"height: 400px;\">\n    <div uib-carousel active = \"active\" interval = \"$ctrl.myInterval\" no-wrap = \"$ctrl.noWrapSlides\">\n        <div uib-slide ng-repeat = \"slide in $ctrl.slides track by slide.id\" index = \"slide.id\" style = \"height: 400px;\">\n            <img ng-src = \"{{slide.image}}\" class = \"img-fluid\" style = \"filter:blur(2px);\">\n            <div class = \"carousel-caption\" style = \"padding-bottom: 100px;\">\n                <h2>{{slide.text}}</h2>\n            </div>\n        </div>\n    </div>\n</div>");
   $templateCache.put("layout/app-view.html", "<app-header></app-header>\n\n<div ui-view></div>\n\n<app-footer></app-footer>\n");
   $templateCache.put("layout/footer.html", "<footer>\n    <div class=\"container\">\n      <a class=\"logo-font\" ui-sref=\"app.home\" ng-bind=\"::$ctrl.appName | lowercase\"></a>\n      <span class=\"attribution\">\n        &copy; {{::$ctrl.date | date:\'yyyy\'}}.\n        An interactive learning project from <a href=\"https://thinkster.io\">Thinkster</a>.\n        Code licensed under MIT.\n      </span>\n    </div>\n  </footer>");
-  $templateCache.put("layout/header.html", "<nav class=\"navbar navbar-light\">\n  <div class=\"container\">\n\n    <a class=\"navbar-brand\"\n      ui-sref=\"app.home\"\n      ng-bind=\"::$ctrl.appName | lowercase\">\n    </a>\n\n    <!-- Show this for logged out users -->\n    <ul show-authed=\"false\"\n      class=\"nav navbar-nav pull-xs-right\">\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.home\">\n          Home\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.news\">\n          Noticias\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.login\">\n          Sign in\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.register\">\n          Sign up\n        </a>\n      </li>\n\n    </ul>\n\n    <!-- Show this for logged in users -->\n    <ul show-authed=\"true\"\n      class=\"nav navbar-nav pull-xs-right\">\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.home\">\n          Home\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.editor\">\n          <i class=\"ion-compose\"></i>&nbsp;New Article\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.settings\">\n          <i class=\"ion-gear-a\"></i>&nbsp;Settings\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username})\">\n          <img ng-src=\"{{$ctrl.currentUser.image}}\" class=\"user-pic\" />\n          {{ $ctrl.currentUser.username }}\n        </a>\n      </li>\n\n    </ul>\n\n\n  </div>\n</nav>");
+  $templateCache.put("layout/header.html", "<nav class=\"navbar navbar-light\">\n  <div class=\"container\">\n\n    <a class=\"navbar-brand\"\n      ui-sref=\"app.home\"\n      ng-bind=\"::$ctrl.appName | lowercase\">\n    </a>\n\n    <!-- Show this for logged out users -->\n    <ul show-authed=\"false\"\n      class=\"nav navbar-nav pull-xs-right\">\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.home\">\n          Home\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.news\">\n          Noticias\n        </a>\n      </li>\n\n\n\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.login\">\n          Sign in\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.register\">\n          Sign up\n        </a>\n      </li>\n\n    </ul>\n\n    <!-- Show this for logged in users -->\n    <ul show-authed=\"true\"\n      class=\"nav navbar-nav pull-xs-right\">\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.home\">\n          Home\n        </a>\n      </li>\n\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.editor\">\n          <i class=\"ion-compose\"></i>&nbsp;New Article\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.news\">\n          Noticias\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.settings\">\n          <i class=\"ion-gear-a\"></i>&nbsp;Settings\n        </a>\n      </li>\n\n      <li class=\"nav-item\">\n        <a class=\"nav-link\"\n          ui-sref-active=\"active\"\n          ui-sref=\"app.profile.main({ username: $ctrl.currentUser.username})\">\n          <img ng-src=\"{{$ctrl.currentUser.image}}\" class=\"user-pic\" />\n          {{ $ctrl.currentUser.username }}\n        </a>\n      </li>\n\n    </ul>\n\n\n  </div>\n</nav>");
   $templateCache.put("news/detailsnews.html", "\n    <news-detail news=\"$ctrl.news\"></news-detail>\n\n    \n");
   $templateCache.put("news/news.html", "\n<news-list newss=\"$ctrl.newss\"></news-list>\n");
   $templateCache.put("profile/profile-news.html", "<article-list limit=\"5\" list-config=\"$ctrl.listConfig\"></article-list>\n");
@@ -51310,8 +51311,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var HomeCtrl = function () {
-  HomeCtrl.$inject = ["AppConstants", "$scope", "newss", "Tags", "User"];
-  function HomeCtrl(AppConstants, $scope, newss, Tags, User) {
+  HomeCtrl.$inject = ["AppConstants", "$scope", "world", "Tags", "User"];
+  function HomeCtrl(AppConstants, $scope, world, Tags, User) {
     'ngInject';
 
     //COMPROBAR PRIMERO ESTE CONSOLE LOG DE NEWS
@@ -51320,11 +51321,10 @@ var HomeCtrl = function () {
 
     _classCallCheck(this, HomeCtrl);
 
-    console.log(newss);
+    console.log(world);
 
     //scope de neewss
-    this.newss = newss;
-    $scope.news = this.newss;
+    this.world = world;
 
     this.appName = AppConstants.appName;
     this._$scope = $scope;
@@ -51335,11 +51335,17 @@ var HomeCtrl = function () {
       _this.tags = tags;
     });
 
+    if (world) {
+      $scope.infoWorld = world.slice(0, 3);
+    } else {
+      $scope.infoWorld = 'error';
+    }
+
     // Set current list to either feed or all, depending on auth status.
     this.listConfig = {
       type: User.current ? 'feed' : 'all'
     };
-  }
+  } //end_constructor
 
   _createClass(HomeCtrl, [{
     key: 'changeList',
@@ -51371,7 +51377,7 @@ var homeSliderCtrl = function homeSliderCtrl() {
     this.myInterval = 5000;
     this.noWrapSlides = false;
 
-    this.slides = [{ image: 'images/vlcf.jpg', text: "Uros Racic Renueva hasta 2025.", id: 0 }, { image: 'images/hamilton.jpg', text: "Hamilton consigue una pole más.", id: 1 }, { image: 'images/suarez_atm.jpg', text: "Suarez ya jugará contra el Gran", id: 2 }];
+    this.slides = [{ image: 'images/vlcf.jpg', text: "Uros Racic Renueva hasta 2024.", id: 0 }, { image: 'images/hamilton.jpg', text: "Hamilton consigue una pole más.", id: 1 }, { image: 'images/suarez_atm.jpg', text: "Suarez ya brilla con el Atletico", id: 2 }];
 } //end_constructor
 ; //end_class
 
@@ -51406,6 +51412,8 @@ var _homeSlider = require('./homeSlider.component');
 var _homeSlider2 = _interopRequireDefault(_homeSlider);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//import de inifiti scroll
 
 // Create the module where our functionality can attach to
 var homeModule = _angular2.default.module('app.home', []);
@@ -51611,7 +51619,7 @@ function NewsConfig($stateProvider) {
       }]
     }
   }).state("app.news", {
-    url: "/news",
+    url: "/news/:filter",
     controller: "News_Ctrl",
     controllerAs: "$ctrl",
     templateUrl: "news/news.html",
@@ -51630,42 +51638,45 @@ function NewsConfig($stateProvider) {
 exports.default = NewsConfig;
 
 },{}],42:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var News_Ctrl = function News_Ctrl(newss, $scope, $stateParams) {
-    "ngInject";
+var News_Ctrl = function News_Ctrl(newss, $scope, $stateParams, $filter) {
+  "ngInject";
 
-    var _this = this;
+  _classCallCheck(this, News_Ctrl);
 
-    _classCallCheck(this, News_Ctrl);
+  console.log('llega al controler de news');
+  this._$scope = $scope;
 
-    console.log('llega al controler de news');
-    this._$scope = $scope;
+  this.newss = newss;
 
-    this.newss = newss;
-    $scope.newss = this.newss;
-    console.log(newss);
+  console.log(newss);
 
-    this.filter = $stateParams.filter;
+  this.filter = $stateParams.filter;
 
-    var noticiasfiltradas = new Array();
-    this.newss.forEach(function (news) {
-        if (news.tagList == _this.filter) {
-            noticiasfiltradas.push(news);
-        }
-    });
+  if (newss) {
+    if ($stateParams.filter) {
+      this.showFilter = true;
+      this.filter = $stateParams.filter;
+      this.infoWorld = $filter('filter')(newss.this.filter);
+    } else {
+      this.infoWorld = newss;
+      this.showFilter = false;
+    }
+  } else {
 
-    $scope.noticiasfiltradas = noticiasfiltradas;
-    //console.log(noticiasfiltradas)
+    this.infoWorld = "error";
+  } //end_if_newss
 
-};
-News_Ctrl.$inject = ["newss", "$scope", "$stateParams"];
+} //end_constructor
+;
+News_Ctrl.$inject = ["newss", "$scope", "$stateParams", "$filter"]; //end_classs
 
 exports.default = News_Ctrl;
 
@@ -52033,6 +52044,18 @@ var Newss = function () {
         return res.data.news;
       });
     }
+  }, {
+    key: "getWorld",
+    value: function getWorld() {
+      return this._$http({
+        url: this._AppConstants.api + "/news",
+        method: "GET"
+      }).then(function (res) {
+        console.log(res.data.world);
+
+        return res.data.world;
+      });
+    }
 
     // query(config) {
     //   // Create the $http object for this request
@@ -52084,6 +52107,17 @@ var Newss = function () {
         return res.data.news;
       });
     }
+
+    //DEVULEVO LOS MUNDOS DE CADA NOTICIA PARA EL FILTRO
+    // getWorld(){
+    //   return this._$http({
+    //     url: this._AppConstants.api + '/news',
+    //     method: "GET"
+    //   }).then(res => {
+    //     console.log(res.data.newss);
+    //     return res.data.newss;
+    //   });
+    // }
 
     // favorite(slug) {
     //   return this._$http({

@@ -265,6 +265,7 @@ router.post('/:news/comments', auth.required, function(req, res, next) {
   }).catch(next);
 });
 
+//DELETE COMMENT
 router.delete('/:news/comments/:comment', auth.required, function(req, res, next) {
   if(req.comment.author.toString() === req.payload.id.toString()){
     req.news.comments.remove(req.comment._id);

@@ -22,7 +22,7 @@ function NewsConfig($stateProvider) {
       })
 
       .state("app.news", {
-        url: "/news",
+        url: "/news/:filter",
         controller: "News_Ctrl",
         controllerAs: "$ctrl",
         templateUrl: "news/news.html",

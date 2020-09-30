@@ -1,7 +1,8 @@
 class AuthCtrl {
   constructor(User, $state, auth, Toastr) {
     'ngInject';
-    console.log('entra en auth controller');
+
+    //console.log('entra en auth controller');
     this._User = User;
     this._$state = $state;
     this.title = $state.current.title;

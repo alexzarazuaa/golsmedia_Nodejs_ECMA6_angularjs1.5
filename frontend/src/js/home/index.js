@@ -1,4 +1,5 @@
 import angular from 'angular';
+//import de inifiti scroll
 
 // Create the module where our functionality can attach to
 let homeModule = angular.module('app.home', []);

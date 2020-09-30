@@ -1,14 +1,14 @@
 
 class HomeCtrl {
-  constructor(AppConstants, $scope, newss,Tags,User) {
+  constructor(AppConstants, $scope, world,Tags,User) {
     'ngInject';
 
     //COMPROBAR PRIMERO ESTE CONSOLE LOG DE NEWS
-    console.log(newss)
+    console.log(world)
 
     //scope de neewss
-      this.newss=newss;
-      $scope.news = this.newss;
+      this.world=world;
+     
 
 
     this.appName = AppConstants.appName;
@@ -25,13 +25,21 @@ class HomeCtrl {
         }
       );
 
+      if(world){
+        $scope.infoWorld = world.slice(0,3);
+      }else{
+        $scope.infoWorld = 'error';
+      }
+
    
     // Set current list to either feed or all, depending on auth status.
     this.listConfig = {
       type: User.current ? 'feed' : 'all'
     };
 
-  }
+
+
+  }//end_constructor
 
   changeList(newList) {
     this._$scope.$broadcast('setListTo', newList);

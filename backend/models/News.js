@@ -46,7 +46,7 @@ NewsSchema.methods.toJSONFor = function(user){
     title: this.title,
     description: this.description,
     body: this.body,
-    world:String,
+    world:this.world,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
     tagList: this.tagList,
