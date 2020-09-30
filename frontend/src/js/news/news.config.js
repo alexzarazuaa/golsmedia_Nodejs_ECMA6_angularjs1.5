@@ -39,7 +39,7 @@ function NewsConfig($stateProvider) {
         url: "/news_:filter",
         controller: "FilterWorldCtrl",
         controllerAs: "$ctrl",
-        templateUrl: "news/worldFilter",
+        templateUrl: "news/worldFilter.html",
         title: "News",
         resolve: {
           newss: function(News) {

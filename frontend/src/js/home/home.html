@@ -47,8 +47,8 @@
           <!-- List the current news -->
           <h2>GOSLMEDIA</h2>
           <p>DEPORTES</p>
-          <div ng-repeat="c in $ctrl.world">
-            <button ui-sref="app.filterWorld({filter:c})">{{ c }}</button>
+          <div ng-repeat="world in $ctrl.world">
+            <button ui-sref="app.filterWorld({filter:world})">{{ world }}</button>
           </div><br><br>
              
         </div> 
