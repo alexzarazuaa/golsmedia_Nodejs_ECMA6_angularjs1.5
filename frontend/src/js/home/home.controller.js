@@ -25,11 +25,11 @@ class HomeCtrl {
         }
       );
 
-      if(world){
-        $scope.infoWorld = world.slice(0,3);
-      }else{
-        $scope.infoWorld = 'error';
-      }
+      // if(world){
+      //   $scope.infoWorld = world.slice(0,3);
+      // }else{
+      //   $scope.infoWorld = 'error';
+      // }
 
    
     // Set current list to either feed or all, depending on auth status.

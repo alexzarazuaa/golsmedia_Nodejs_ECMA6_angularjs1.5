@@ -3,11 +3,11 @@ var uniqueValidator = require('mongoose-unique-validator');
 var slug = require('slug');
 var User = mongoose.model('User');
 
+  //PONER TAMBIEN IMAGENES PARA CUANDO SUBA LAS NOTICIAS HAYAN IMAGENES.
 var NewsSchema = new mongoose.Schema({
   slug: {type: String, lowercase: true, unique: true},
   title: String,
   description: String,
-  //PONER TAMBIEN IMAGENES PARA CUANDO SUBA LAS NOTICIAS HAYAN IMAGENES.
   body: String,
   world:String,
   favoritesCount: {type: Number, default: 0},

@@ -12,21 +12,8 @@ class News_Ctrl {
 
     this.filter = $stateParams.filter;
 
-    if (newss) {
-      if ($stateParams.filter) {
-        this.showFilter = true;
-        this.filter = $stateParams.filter;
-        this.infoWorld = $filter('filter')(newss.this.filter);
-      } else {
-        this.infoWorld = newss;
-        this.showFilter = false;
-      }
+ 
 
-
-    } else {
-
-        this.infoWorld = "error";
-    }//end_if_newss
 
 
   }//end_constructor

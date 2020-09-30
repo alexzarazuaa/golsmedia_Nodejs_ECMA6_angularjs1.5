@@ -18,15 +18,7 @@ router.param('news', function(req, res, next, slug) {
     }).catch(next);
 });
 
-router.param('comment', function(req, res, next, id) {
-  Comment.findById(id).then(function(comment){
-    if(!comment) { return res.sendStatus(404); }
 
-    req.comment = comment;
-
-    return next();
-  }).catch(next);
-});
 // return all news
 router.get('/', auth.optional, function(req, res, next) {
   var query = {};
@@ -86,6 +78,16 @@ router.get('/', auth.optional, function(req, res, next) {
   }).catch(next);
 });
 //
+
+router.param('comment', function(req, res, next, id) {
+  Comment.findById(id).then(function(comment){
+    if(!comment) { return res.sendStatus(404); }
+
+    req.comment = comment;
+
+    return next();
+  }).catch(next);
+});
 
 router.get('/feed', auth.required, function(req, res, next) {
   var limit = 20;
@@ -148,6 +150,14 @@ router.get('/:news', auth.optional, function(req, res, next) {
     var user = results[0];
 
     return res.json({news: req.news.toJSONFor(user)});
+  }).catch(next);
+});
+
+// return a list of world
+router.get('/news/world', function(req, res, next) {
+  News.find().distinct('world').then(function(world){
+    //console.log(world);
+    return res.json({world: world});
   }).catch(next);
 });
 

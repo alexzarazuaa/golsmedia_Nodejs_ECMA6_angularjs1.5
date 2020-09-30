@@ -33,11 +33,9 @@ export default class Newss {
 
   getWorld(){
     return this._$http({
-      url: this._AppConstants.api + "/news",
+      url: this._AppConstants.api + "/news/news/world",
       method: "GET"
     }).then(res => {
-      console.log(res.data.world);
-     
       return res.data.world;
      
     });

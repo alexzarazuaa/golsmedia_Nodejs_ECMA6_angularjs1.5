@@ -45,8 +45,11 @@
           </div>
   
           <!-- List the current news -->
- 
-              <news-list  limit="10"  newss="$ctrl.newss"></news-list>
+          <h2>GOSLMEDIA</h2>
+          <p>DEPORTES</p>
+          <div ng-repeat="c in $ctrl.world">
+            <button ui-sref="app.filterWorld({filter:c})">{{ c }}</button>
+          </div><br><br>
              
         </div> 
     

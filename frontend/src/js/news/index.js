@@ -15,5 +15,9 @@ newsModule.controller('News_Ctrl', News_Ctrl);
 import DetailsNews_Ctrl from './detailsnews.controller';
 newsModule.controller('DetailsNews_Ctrl',DetailsNews_Ctrl);
 
+import FilterWorldCtrl from './worldFilter.controller';
+newsModule.controller('FilterWorldCtrl', FilterWorldCtrl);
+
+
 
 export default newsModule;

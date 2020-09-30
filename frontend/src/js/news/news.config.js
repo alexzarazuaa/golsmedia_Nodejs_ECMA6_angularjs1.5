@@ -22,7 +22,7 @@ function NewsConfig($stateProvider) {
       })
 
       .state("app.news", {
-        url: "/news/:filter",
+        url: "/news",
         controller: "News_Ctrl",
         controllerAs: "$ctrl",
         templateUrl: "news/news.html",
@@ -30,6 +30,19 @@ function NewsConfig($stateProvider) {
         resolve: {
           newss: function(News) { 
             console.log('noticias confign')//newss the name that are in json of server
+            return News.getNews().then(news => news);
+          }
+        }
+      })
+
+      .state("app.filterWorld", {
+        url: "/news_:filter",
+        controller: "FilterWorldCtrl",
+        controllerAs: "$ctrl",
+        templateUrl: "news/worldFilter",
+        title: "News",
+        resolve: {
+          newss: function(News) {
             return News.getNews().then(news => news);
           }
         }
