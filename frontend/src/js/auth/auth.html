@@ -1,3 +1,4 @@
+
 <div class="auth-page">
   <div class="container page">
     <div class="row">
@@ -19,7 +20,7 @@
         <form name="formData" ng-submit="$ctrl.submitForm()">
           <fieldset ng-disabled="$ctrl.isSubmitting">
 
-            <fieldset class="form-group" ng-show="$ctrl.authType === 'register'">
+            <fieldset  required class="form-group" ng-show="$ctrl.authType === 'register'" ng-disabled="$ctrl.authType != 'register'">
               <input required class="form-control form-control-lg" type="text" placeholder="Username"
                 ng-model="$ctrl.formData.username" name="Username" ng-minlength="4" ng-maxlength="20"
                 autocomplete=false />
