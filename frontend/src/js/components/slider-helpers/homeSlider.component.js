@@ -14,7 +14,7 @@ class homeSliderCtrl {
 
 let homeSlider = {
     controller: homeSliderCtrl,
-    templateUrl: 'home/homeSlider.html'
+    templateUrl: 'components/slider-helpers/homeSlider.html'
 };
 
 export default homeSlider;

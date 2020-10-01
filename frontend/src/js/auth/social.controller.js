@@ -15,15 +15,17 @@ class SocialCtrl {
     this._User.attemptAuth(this.authType, null).then(
 
       (res) => {
-        
-         // alert("redirecto home sociallogin")
-          location.reload();
-          this._toastr.showToastr('success','Successfully Logged In');
-          this._$state.go('app.home');
+
+        // alert("redirecto home sociallogin")
+
+        this._toastr.showToastr('success', 'Successfully Logged In');
+        location.reload();
+        this._$state.go('app.home');
+
       },
       (err) => {
         console.log(err);
-        this._toastr.showToastr('error','Error trying to login');
+        this._toastr.showToastr('error', 'Error trying to login');
         this._$state.go('app.home');
       }
     )

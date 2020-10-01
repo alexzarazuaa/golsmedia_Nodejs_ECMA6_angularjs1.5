@@ -30,6 +30,11 @@ componentsModule.component('favoriteBtn', FavoriteBtn);
 import ListPagination from './article-helpers/list-pagination.component';
 componentsModule.component('listPagination', ListPagination);
 
+//Slider components
+import HomeSlider from './slider-helpers/homeSlider.component';
+componentsModule.component('homeSlider',HomeSlider)
+
+
 
 
 
