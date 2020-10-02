@@ -50871,7 +50871,7 @@ componentsModule.component('favoriteBtn', _favoriteBtn2.default);
 
 componentsModule.component('listPagination', _listPagination2.default);
 
-//Slider components
+//slider components
 
 componentsModule.component('homeSlider', _homeSlider2.default);
 
