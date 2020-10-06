@@ -4,7 +4,7 @@
     <br>
     <br>
     <h4>{{ $ctrl.news.body}}</h4>
-    <p class="author">AUTHOR : {{ $ctrl.news.author.username}} <br> Noticia Creada : {{ $ctrl.news.createdAt}} </p>
+    <p class="author">AUTHOR : {{ $ctrl.news.author.username}} <br> Noticia Creada : {{ $ctrl.news.createdAt | date: 'longDate'}} </p>
     <!-- FAVORITE BTN -->
     <favorite-btn news="$ctrl.news" class="pull-xs-left">
         {{$ctrl.news.favoritesCount}}

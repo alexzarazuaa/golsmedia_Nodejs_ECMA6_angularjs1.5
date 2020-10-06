@@ -1,8 +1,10 @@
 let NewsPreview = {
     bindings: {
-        newss: '='
+        news: '='
     },
     templateUrl: 'components/news-helpers/news-preview.html'
 };
+
+
 
 export default NewsPreview;
