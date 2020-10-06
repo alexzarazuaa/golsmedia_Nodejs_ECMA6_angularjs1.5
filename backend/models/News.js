@@ -52,6 +52,7 @@ NewsSchema.methods.toJSONFor = function(user) {
         tagList: this.tagList,
         favorited: user ? user.isFavorite(this._id) : false,
         favoritesCount: this.favoritesCount,
+        comments: this.comments,
         author: this.author.toProfileJSONFor(user)
     };
 };

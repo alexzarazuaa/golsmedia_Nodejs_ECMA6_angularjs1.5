@@ -1,20 +1,19 @@
 function HomeConfig($stateProvider) {
-  'ngInject';
+    'ngInject';
 
-  $stateProvider
-  .state('app.home', {
-    url: '/',
-    controller: 'HomeCtrl',
-    controllerAs: '$ctrl',
-    templateUrl: 'home/home.html',
-    title: 'Home',
-      resolve: {
-        world: function(News) { //newss the name that are in json of server
-          //console.log('noticias resolve news')
-          return News.getWorld().then(world => world);
-        }//end_resolve_news
-    }//end_resolve
-  });
+    $stateProvider
+        .state('app.home', {
+            url: '/',
+            controller: 'HomeCtrl',
+            controllerAs: '$ctrl',
+            templateUrl: 'home/home.html',
+            title: 'Home',
+            resolve: {
+                world: function(News) { //world the name that are in json of server
+                        return News.getWorld().then(world => world);
+                    } //end_resolve_world
+            } //end_resolve
+        });
 
 };
 

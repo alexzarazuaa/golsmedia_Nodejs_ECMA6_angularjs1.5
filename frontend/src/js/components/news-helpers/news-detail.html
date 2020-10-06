@@ -1,9 +1,19 @@
 <div class="news">
-  <h1>{{ $ctrl.news.title}}</h1>
-  <span>{{ $ctrl.news.description}}</span>
-  <br>
-  <br>
-  <h4>{{ $ctrl.news.body}}</h4>
-  <p class="author">AUTHOR : {{ $ctrl.news.author.username}} <br>  Noticia Creada : {{ $ctrl.news.createdAt}} </p>
-  <button ui-sref="app.news">VOLVER A NOTICIAS</button>
+    <h1>{{ $ctrl.news.title}}</h1>
+    <span>{{ $ctrl.news.description}}</span>
+    <br>
+    <br>
+    <h4>{{ $ctrl.news.body}}</h4>
+    <p class="author">AUTHOR : {{ $ctrl.news.author.username}} <br> Noticia Creada : {{ $ctrl.news.createdAt}} </p>
+    <!-- FAVORITE BTN -->
+    <favorite-btn news="$ctrl.news" class="pull-xs-left">
+        {{$ctrl.news.favoritesCount}}
+    </favorite-btn>
+    <!--FOLLOW BTN-->
+
+    <follow-btn user="$ctrl.news.author">
+    </follow-btn>
+
+
+    <button ui-sref="app.news">VOLVER A NOTICIAS</button>
 </div>

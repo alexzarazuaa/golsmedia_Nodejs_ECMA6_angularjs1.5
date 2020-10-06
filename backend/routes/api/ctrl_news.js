@@ -208,7 +208,7 @@ router.delete('/:news', auth.required, function(req, res, next) {
 // Favorite  noticia
 router.post('/:news/favorite', auth.required, function(req, res, next) {
     var newsId = req.news._id;
-
+    console.log(req.news._id);
     User.findById(req.payload.id).then(function(user) {
         if (!user) { return res.sendStatus(401); }
 

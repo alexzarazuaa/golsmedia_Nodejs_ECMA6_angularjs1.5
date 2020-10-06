@@ -3,15 +3,14 @@ var uniqueValidator = require('mongoose-unique-validator');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 const { resolveSrv } = require('dns');
+const { strict } = require('assert');
 //const { type } = require('os');
 var secret = require('../config').secret;
 
 var UserSchema = new mongoose.Schema({
-    idsocial: String,
+    idsocial: { type: String, unique: true },
     username: String,
     email: String,
-    //username: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
-    //email: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
     image: String,
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
@@ -87,7 +86,6 @@ UserSchema.methods.isFavorite = function(id) {
 //follow,unfollow,isfollowing
 UserSchema.methods.follow = function(id) {
     if (this.following.indexOf(id) === -1) {
-        console.log(id)
         this.following = this.following.concat([id]);
     }
     return this.save();
