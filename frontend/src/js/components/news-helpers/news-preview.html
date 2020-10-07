@@ -1,11 +1,18 @@
-<div class="news">
-    <favorite-btn news="$ctrl.news" class="pull-xs-right ">
-        {{$ctrl.news.favoritesCount}}
-    </favorite-btn>
-    <h1>{{$ctrl.news.title}}</h1>
-    <h1>{{$ctrl.news.description}}</h1>
-    <button ui-sref="app.detailsNews({slug:$ctrl.news.slug})">Read more...</button>
+<div class="news-preview">
+    <news-meta news="$ctrl.news">
+        <favorite-btn news="$ctrl.news" class="pull-xs-right ">
+            {{$ctrl.news.favoritesCount}}
+        </favorite-btn>
+    </news-meta>
+
+    <a ui-sref="app.detailsNews({slug:$ctrl.news.slug})" class="preview-link">
+        <h1>{{$ctrl.news.title}}</h1>
+        <h3><strong>{{$ctrl.news.description}}</strong></h3>
+        <span>Read more...</span>
+
+    </a>
 
 
 
 </div>
+<hr>

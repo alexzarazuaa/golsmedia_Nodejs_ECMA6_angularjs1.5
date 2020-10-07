@@ -1,0 +1,14 @@
+<div class="news-meta">
+    <a ui-sref="app.profile.main({ username:$ctrl.news.author.username })">
+        <img ng-src="{{$ctrl.news.author.image}}" />
+    </a>
+
+    <div class="info">
+        <a class="author" ui-sref="app.profile.main({ username:$ctrl.news.author.username })" ng-bind="$ctrl.news.author.username">
+        </a>
+        <span class="date" ng-bind="$ctrl.news.createdAt | date: 'longDate' ">
+      </span>
+    </div>
+
+    <ng-transclude></ng-transclude>
+</div>

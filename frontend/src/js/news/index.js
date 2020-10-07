@@ -13,10 +13,18 @@ import News_Ctrl from './news.controller';
 newsModule.controller('News_Ctrl', News_Ctrl);
 
 import DetailsNews_Ctrl from './detailsnews.controller';
-newsModule.controller('DetailsNews_Ctrl',DetailsNews_Ctrl);
+newsModule.controller('DetailsNews_Ctrl', DetailsNews_Ctrl);
 
 import FilterWorldCtrl from './worldFilter.controller';
 newsModule.controller('FilterWorldCtrl', FilterWorldCtrl);
+
+//ACTIONS AND COMMENTS COMPONENTS
+
+import NewsActionsCtrl from './news-actions.component';
+newsModule.component('newsActionsCtrl', NewsActionsCtrl)
+
+import CommentCtrl from './comment.component';
+newsModule.component('commentCtrl', CommentCtrl)
 
 
 

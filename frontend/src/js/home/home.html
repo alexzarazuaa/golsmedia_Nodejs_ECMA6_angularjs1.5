@@ -1,94 +1,92 @@
 <div class="home-page">
-  <home-slider></home-slider>
-  <!-- Splash banner that only shows when not logged in -->
-  <div class="banner" show-authed="false">
-    <div class="container">
-      <h1 class="logo-font" ng-bind="::$ctrl.appName | lowercase"></h1>
-      <p>DIARIO ONLINE LÍDER REGIONAL</p>
+    <home-slider></home-slider>
+    <!-- Splash banner that only shows when not logged in -->
+    <div class="banner" show-authed="false">
+        <div class="container">
+            <h1 class="logo-font" ng-bind="::$ctrl.appName | lowercase"></h1>
+            <p>DIARIO ONLINE LÍDER REGIONAL</p>
+        </div>
     </div>
-  </div>
 
-  <div class="container page">
-    <div class="row">
+    <div class="container page">
+        <div class="row">
 
 
-      <!-- Main view - contains tabs & news list -->
-      <div class="col-md-9">
-        <!-- Tabs for toggling between feed, news lists -->
-        <div class="feed-toggle">
-          <ul class="nav nav-pills outline-active">
+            <!-- Main view - contains tabs & news list -->
+            <div class="col-md-9">
+                <!-- Tabs for toggling between feed, news lists -->
+                <div class="feed-toggle">
+                    <ul class="nav nav-pills outline-active">
 
-            <li class="nav-item" show-authed="true">
-              <a href="" class="nav-link" ng-class="{ active: $ctrl.listConfig.type === 'feed' }"
-                ng-click="$ctrl.changeList({ type: 'feed' })">
+                        <li class="nav-item" show-authed="true">
+                            <a href="" class="nav-link" ng-class="{ active: $ctrl.listConfig.type === 'feed' }" ng-click="$ctrl.changeList({ type: 'feed' })">
                 Your Feed
               </a>
-            </li>
+                        </li>
 
-            <li class="nav-item">
-              <a href="" class="nav-link"
-                ng-class="{ active: $ctrl.listConfig.type === 'all' && !$ctrl.listConfig.filters }"
-                ng-click="$ctrl.changeList({ type: 'all' })">
+                        <li class="nav-item">
+                            <a href="" class="nav-link" ng-class="{ active: $ctrl.listConfig.type === 'all' && !$ctrl.listConfig.filters }" ng-click="$ctrl.changeList({ type: 'all' })">
                 Global Feed
               </a>
-            </li>
+                        </li>
 
-            <li class="nav-item" ng-show="$ctrl.listConfig.filters.tag">
-              <a href="" class="nav-link active">
-                <i class="ion-pound"></i> {{$ctrl.listConfig.filters.tag}}
-              </a>
-            </li>
+                        <li class="nav-item" ng-show="$ctrl.listConfig.filters.tag">
+                            <a href="" class="nav-link active">
+                                <i class="ion-pound"></i> {{$ctrl.listConfig.filters.tag}}
+                            </a>
+                        </li>
 
-          </ul>
-        </div>
+                    </ul>
+                </div>
 
-        <!-- List the current news -->
+                <!-- List the current news -->
 
 
-        <h2>GOSLMEDIA</h2>
-        <p>DEPORTES</p>
+                <h2>GOSLMEDIA</h2>
+                <p>DEPORTES</p>
 
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-4" ng-repeat="world in $ctrl.world">
-              <div class="panel panel-info">
-                  <button ui-sref="app.filterWorld({filter:world})">{{ world }}</button>
-                </div><br><br>
-              </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4" ng-repeat="world in $ctrl.world">
+                            <div class="panel panel-info">
+                                <button ui-sref="app.filterWorld({filter:world})">{{ world }}</button>
+                            </div><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <news-list newss="$ctrl.newss">
+                </news-list> -->
+
+
+
             </div>
-          </div>
-    
 
 
+            <!-- Sidebar where popular tags are listed -->
+            <div class="col-md-3">
+                <div class="sidebar">
+
+                    <p>Popular Tags</p>
+
+                    <div class="tag-list" ng-show="$ctrl.tags">
+                        <a href="" class="tag-default tag-pill" ng-click="$ctrl.changeList({ type: 'all', filters: { tag: tagName } })" ng-repeat="tagName in $ctrl.tags" ng-bind="tagName">
+                        </a>
+                    </div>
+
+                    <div ng-show="!$ctrl.tagsLoaded">
+                        Loading tags...
+                    </div>
+
+                    <div class="post-preview" ng-show="$ctrl.tagsLoaded && !$ctrl.tags.length">
+                        No tags are here... yet.
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- End the row & container divs -->
+        </div>
     </div>
-
-
-    <!-- Sidebar where popular tags are listed -->
-    <div class="col-md-3">
-      <div class="sidebar">
-
-        <p>Popular Tags</p>
-
-        <div class="tag-list" ng-show="$ctrl.tags">
-          <a href="" class="tag-default tag-pill"
-            ng-click="$ctrl.changeList({ type: 'all', filters: { tag: tagName } })" ng-repeat="tagName in $ctrl.tags"
-            ng-bind="tagName">
-          </a>
-        </div>
-
-        <div ng-show="!$ctrl.tagsLoaded">
-          Loading tags...
-        </div>
-
-        <div class="post-preview" ng-show="$ctrl.tagsLoaded && !$ctrl.tags.length">
-          No tags are here... yet.
-        </div>
-
-      </div>
-    </div>
-
-    <!-- End the row & container divs -->
-  </div>
-</div>
 
 </div>

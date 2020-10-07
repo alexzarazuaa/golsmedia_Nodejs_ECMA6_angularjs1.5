@@ -1,4 +1,73 @@
+<div class="article-page">
 
-    <news-detail news="$ctrl.news"></news-detail>
+    <!-- Banner for article title, action buttons -->
+    <div class="banner">
+        <div class="container">
 
-    
+            <h1>{{$ctrl.news.title}}</h1>
+
+            <!-- Show author info + favorite & follow buttons -->
+            <news-actions news="$ctrl.news">
+            </news-actions>
+
+
+        </div>
+    </div>
+
+
+
+    <!-- Main view. Contains article html and comments -->
+    <div class="container page">
+
+        <!-- Article's HTML & tags rendered here -->
+        <div class="row article-content">
+            <div class="col-xs-12">
+
+                <div>{{$ctrl.news.body}}</div>
+
+
+
+            </div>
+        </div>
+
+        <hr />
+
+
+
+        <!-- Comments section -->
+        <div class="row">
+            <div class="col-xs-12 col-md-8 offset-md-2">
+
+                <div show-authed="true">
+                    <list-errors from="$crl.commentForm.errors"></list-errors>
+                    <form class="card comment-form" ng-submit="$ctrl.addComment()">
+                        <fieldset ng-disabled="$ctrl.commentForm.isSubmitting">
+                            <div class="card-block">
+                                <textarea class="form-control" placeholder="Write a comment..." rows="3" ng-model="$ctrl.commentForm.body"></textarea>
+                            </div>
+                            <div class="card-footer">
+                                <img ng-src="{{::$ctrl.currentUser.image}}" class="comment-author-img" />
+                                <button class="btn btn-sm btn-primary" type="submit">
+                   Post Comment
+                  </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div show-authed="false">
+                    <a ui-sref="app.login">Sign in</a> or <a ui-sref="app.register">sign up</a> to add comments on this article.
+                </div>
+
+                <comment ng-repeat="cmt in $ctrl.comments" data="cmt" delete-deletecomment="$ctrl.deleteComment(cmt.id, $index)">
+                </comment>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
