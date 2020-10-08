@@ -7,7 +7,6 @@ let newsModule = angular.module('app.news', []);
 import NewsConfig from './news.config';
 newsModule.config(NewsConfig);
 
-
 // Controllers
 import News_Ctrl from './news.controller';
 newsModule.controller('News_Ctrl', News_Ctrl);
@@ -19,12 +18,11 @@ import FilterWorldCtrl from './worldFilter.controller';
 newsModule.controller('FilterWorldCtrl', FilterWorldCtrl);
 
 //ACTIONS AND COMMENTS COMPONENTS
+import NewsActions from './news-actions.component';
+newsModule.component('newsActions', NewsActions)
 
-import NewsActionsCtrl from './news-actions.component';
-newsModule.component('newsActionsCtrl', NewsActionsCtrl)
-
-import CommentCtrl from './comment.component';
-newsModule.component('commentCtrl', CommentCtrl)
+import Comment from './comment.component';
+newsModule.component('commentCtrl', Comment)
 
 
 

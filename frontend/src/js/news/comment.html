@@ -1,8 +1,9 @@
 <div class="card">
     <div class="card-block">
-        <p class="card-text" ng-bind="::$ctrl.data.body"></p>
+         <p class="card-text">{{$ctrl.data.body}}</p> 
+        <!-- <p class="card-text" ng-bind="::$ctrl.data.body"></p> -->
     </div>
-    <div class="card-footer">
+     <div class="card-footer">
         <a class="comment-author" ui-sref="app.profile.main({ username: $ctrl.data.author.username })">
             <img ng-src="{{::$ctrl.data.author.image}}" class="comment-author-img" />
         </a>
@@ -14,5 +15,5 @@
         <span class="mod-options" ng-show="$ctrl.canModify">
         <i class="ion-trash-a" ng-click="$ctrl.deletecomment()"></i>
       </span>
-    </div>
+    </div> 
 </div>

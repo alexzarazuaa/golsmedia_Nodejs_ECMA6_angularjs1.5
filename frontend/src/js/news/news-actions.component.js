@@ -1,19 +1,21 @@
 class NewsActionsCtrl {
-    constructor(User, News, $scope) {
+    constructor(User, News) {
             'ngInject';
 
-            this.News = News;
+    
+            this._News = News;
+            this.$onInit = () =>{
 
-            setTimeout(() => {
                 if (User.current) {
-                    this.canModify = (User.current.username === this.article.author.username);
+                    this.canModify = (User.current.username === this.news.author.username);
                 } else {
                     this.canModify = false;
                 }
-                $scope.apply();
-            }, 1000);
+               
+            }
 
-
+         
+           
 
 
         } //end constructor

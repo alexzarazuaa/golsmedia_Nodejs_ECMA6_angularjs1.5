@@ -13,11 +13,13 @@ function NewsConfig($stateProvider) {
         title: "Details News",
         resolve: {
             news: function(News, $stateParams) {
-                console.log("RESOLVE DE UNA NOTICIA");
-                console.log(News);
                 return News.getNeui($stateParams.slug).then(news => news); //recibo 1 news
+            },
+            comments: function(Comments, $stateParams) {
+                return Comments.getAll($stateParams.slug).then(comment => comment);//recibir los comentarios
             }
-        }
+        },
+
     })
 
     .state("app.news", {
@@ -27,8 +29,7 @@ function NewsConfig($stateProvider) {
         templateUrl: "news/news.html",
         title: "Lista de Noticias",
         resolve: {
-            newss: function(News) {
-                console.log('noticias confign') //newss the name that are in json of server
+            newss: function(News) { //newss the name that are in json of server
                 return News.getNews().then(news => news);
             }
         }

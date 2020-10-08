@@ -1,33 +1,7 @@
-<news-meta news="news">
+
 
     <span ng-show="$ctrl.canModify">
-          <a class="btn btn-sm btn-outline-secondary"
-            ui-sref="app.editor({ slug: $ctrl.article.slug })">
-            <i class="ion-edit"></i> Edit Article
-          </a>
-      
-          <button class="btn btn-sm btn-outline-danger"
-            ng-class="{disabled: $ctrl.isDeleting}"
-            ng-click="$ctrl.deleteArticle()">
-            <i class="ion-trash-a"></i> Delete Article
-          </button>
-        </span> -
-
-    <span ng-hide="$ctrl.canModify"> 
-    <follow-btn user="$ctrl.news.author">
-    </follow-btn>
-
-    <favorite-btn news="news" class="pull-xs-left">
-        {{$ctrl.news.favoritesCount}}
-    </favorite-btn>
-   </span>
-
-</news-meta>
-
-<news-meta news="$ctrl.news">
-
-    <span ng-show="$ctrl.canModify">
-    <a class="btn btn-sm btn-outline-secondary"
+     <a class="btn btn-sm btn-outline-secondary"
       ui-sref="app.editor({ slug: $ctrl.news.slug })">
       <i class="ion-edit"></i> Edit news
     </a>
@@ -37,13 +11,16 @@
       ng-click="$ctrl.deleteNews()">
       <i class="ion-trash-a"></i> Delete news
     </button>
+    
   </span>
 
     <span ng-hide="$ctrl.canModify">
+      <span>AUTHOR:</span><a class="comment-author" ui-sref="app.profile.main({ username: $ctrl.news.author.username })" ng-bind="$ctrl.news.author.username">
+      </a>
+  
     <follow-btn user="$ctrl.news.author"></follow-btn>
     <favorite-btn news="$ctrl.news">
-      {{ $ctrl.news.favorited ? 'Unfavorite' : 'Favorite' }} news <span class="counter">({{$ctrl.news.favoritesCount}})</span>
+      {{ $ctrl.news.favorited ? 'Unfavorite' : 'Favorite' }} news 
+      <span class="counter">({{$ctrl.news.favoritesCount}})</span>
     </favorite-btn>
     </span>
-
-</news-meta>

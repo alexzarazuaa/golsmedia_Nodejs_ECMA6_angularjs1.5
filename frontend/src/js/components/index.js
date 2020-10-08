@@ -27,8 +27,8 @@ componentsModule.component('newsPreview', NewsPreview);
 import HomeSlider from './slider-helpers/homeSlider.component';
 componentsModule.component('homeSlider', HomeSlider)
 
-import NewsMeta from './news-helpers/news-meta.component';
-componentsModule.component('newsMeta', NewsMeta);
+// import NewsMeta from './news-helpers/news-meta.component';
+// componentsModule.component('newsMeta', NewsMeta);
 
 
 export default componentsModule;

@@ -7,13 +7,15 @@
             <h1>{{$ctrl.news.title}}</h1>
 
             <!-- Show author info + favorite & follow buttons -->
-            <news-actions news="$ctrl.news">
-            </news-actions>
-
+     
+                <!-- Show author info + favorite & follow buttons -->
+                <news-actions news="$ctrl.news">
+                </news-actions>
+          
 
         </div>
     </div>
-
+    <!-- //Banner for article title, action buttons -->
 
 
     <!-- Main view. Contains article html and comments -->
@@ -26,13 +28,14 @@
                 <div>{{$ctrl.news.body}}</div>
 
 
-
             </div>
         </div>
 
         <hr />
 
-
+            <!-- Show author info + favorite & follow buttons -->
+ 
+       
 
         <!-- Comments section -->
         <div class="row">
@@ -48,8 +51,8 @@
                             <div class="card-footer">
                                 <img ng-src="{{::$ctrl.currentUser.image}}" class="comment-author-img" />
                                 <button class="btn btn-sm btn-primary" type="submit">
-                   Post Comment
-                  </button>
+                 Post Comment
+                </button>
                             </div>
                         </fieldset>
                     </form>
@@ -59,14 +62,19 @@
                     <a ui-sref="app.login">Sign in</a> or <a ui-sref="app.register">sign up</a> to add comments on this article.
                 </div>
 
-                <comment ng-repeat="cmt in $ctrl.comments" data="cmt" delete-deletecomment="$ctrl.deleteComment(cmt.id, $index)">
+                <comment ng-repeat="cmt in $ctrl.comments" 
+                data="cmt" 
+                delete-deletecomment="$ctrl.deleteComment(cmt.id, $index)">
                 </comment>
 
 
             </div>
         </div>
 
+        <!--// Comments section -->
+
     </div>
+    <!-- //Main view. Contains article html and comments -->
 
 
 

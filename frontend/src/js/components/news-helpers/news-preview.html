@@ -1,9 +1,10 @@
 <div class="news-preview">
-    <news-meta news="$ctrl.news">
-        <favorite-btn news="$ctrl.news" class="pull-xs-right ">
+    <div news="$ctrl.news">
+        <favorite-btn 
+        news="$ctrl.news" class="pull-xs-right ">
             {{$ctrl.news.favoritesCount}}
         </favorite-btn>
-    </news-meta>
+    </div>
 
     <a ui-sref="app.detailsNews({slug:$ctrl.news.slug})" class="preview-link">
         <h1>{{$ctrl.news.title}}</h1>
