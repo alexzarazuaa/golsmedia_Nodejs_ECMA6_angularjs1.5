@@ -21,7 +21,7 @@ class NewsActionsCtrl {
 
               
         deleteNews() {
-            console.log('entra',this.news.slug)
+           // console.log('entra',this.news.slug)
             this.isDeleting = true;
             this._News.destroy(this.news.slug).then(
               (success) => this._$state.go('app.home'),

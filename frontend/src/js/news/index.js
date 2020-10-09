@@ -22,7 +22,7 @@ import NewsActions from './news-actions.component';
 newsModule.component('newsActions', NewsActions)
 
 import Comment from './comment.component';
-newsModule.component('commentCtrl', Comment)
+newsModule.component('comment', Comment)
 
 
 

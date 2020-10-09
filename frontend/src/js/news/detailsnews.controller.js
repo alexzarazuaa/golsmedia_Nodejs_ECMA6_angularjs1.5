@@ -1,11 +1,12 @@
 class DetailsNews_Ctrl {
-    constructor(news, comments, User, $scope) {
+    constructor(news, Comments, comments,User, $scope) {
 
         "ngInject";
 
         this._$scope = $scope;
         this.news = news;
-        this._comments = comments;
+        this._Comments = Comments;
+        this.comments = comments;
         console.log('comentarios',comments)
 
 
@@ -29,6 +30,7 @@ class DetailsNews_Ctrl {
 
 
     addComment() {
+        console.log("entra")
         this.commentForm.isSubmitting = true;
         this._Comments.add(this.news.slug, this.commentForm.body).then(
             (comment) => {
@@ -44,7 +46,7 @@ class DetailsNews_Ctrl {
 
 
     deleteComment(commentId, index) {
-        console.log('boton pulsado')
+        console.log('entra');
         this._Comments.destroy(commentId, this.news.slug).then(
             (success) => {
                 this.comment.splice(index, 1)

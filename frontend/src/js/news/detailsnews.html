@@ -7,11 +7,11 @@
             <h1>{{$ctrl.news.title}}</h1>
 
             <!-- Show author info + favorite & follow buttons -->
-     
-                <!-- Show author info + favorite & follow buttons -->
-                <news-actions news="$ctrl.news">
-                </news-actions>
-          
+
+            <!-- Show author info + favorite & follow buttons -->
+            <news-actions news="$ctrl.news">
+            </news-actions>
+
 
         </div>
     </div>
@@ -33,9 +33,9 @@
 
         <hr />
 
-            <!-- Show author info + favorite & follow buttons -->
- 
-       
+        <!-- Show author info + favorite & follow buttons -->
+
+
 
         <!-- Comments section -->
         <div class="row">
@@ -46,25 +46,27 @@
                     <form class="card comment-form" ng-submit="$ctrl.addComment()">
                         <fieldset ng-disabled="$ctrl.commentForm.isSubmitting">
                             <div class="card-block">
-                                <textarea class="form-control" placeholder="Write a comment..." rows="3" ng-model="$ctrl.commentForm.body"></textarea>
+                                <textarea class="form-control" placeholder="Write a comment..." rows="3"
+                                    ng-model="$ctrl.commentForm.body"></textarea>
                             </div>
                             <div class="card-footer">
                                 <img ng-src="{{::$ctrl.currentUser.image}}" class="comment-author-img" />
                                 <button class="btn btn-sm btn-primary" type="submit">
-                 Post Comment
-                </button>
+                                    Post Comment
+                                </button>
                             </div>
                         </fieldset>
                     </form>
                 </div>
 
                 <div show-authed="false">
-                    <a ui-sref="app.login">Sign in</a> or <a ui-sref="app.register">sign up</a> to add comments on this article.
+                    <a ui-sref="app.login">Sign in</a> or <a ui-sref="app.register">sign up</a> to add comments on this
+                    article.
                 </div>
 
-                <comment ng-repeat="cmt in $ctrl.comments" 
-                data="cmt" 
-                delete-deletecomment="$ctrl.deleteComment(cmt.id, $index)">
+
+                <comment ng-repeat="cmt in $ctrl.comments" data="cmt"
+                    delete-deletec="$ctrl.deleteComment(cmt.id, $index)">
                 </comment>
 
 

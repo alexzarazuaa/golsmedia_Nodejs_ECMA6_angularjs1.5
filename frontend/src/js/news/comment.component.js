@@ -7,7 +7,7 @@ class CommentCtrl {
             this.$onInit = () =>{
 
                 if (User.current) {
-                    this.canModify = (User.current.username === this.news.author.username);
+                    this.canModify = (User.current.username === this.data.author.username);
                 } else {
                     this.canModify = false;
                 }
@@ -26,7 +26,7 @@ let Comment = {
 
     bindings: {
         data: '=',
-        deletecomment: '&'
+        deletec: '&'
     },
     controller: CommentCtrl,
     templateUrl: 'news/comment.html'

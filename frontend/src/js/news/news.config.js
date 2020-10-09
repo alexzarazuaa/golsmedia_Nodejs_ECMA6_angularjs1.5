@@ -3,8 +3,6 @@ function NewsConfig($stateProvider) {
 
     $stateProvider
 
-    //MAS ADELANTE LA FILTRACION DE NOTICIAS
-
         .state("app.detailsNews", {
         url: "/news/:slug",
         controller: "DetailsNews_Ctrl", //name of class inside controller js
