@@ -1,9 +1,10 @@
 class NewsActionsCtrl {
-    constructor(User, News) {
+    constructor(User, News,$state) {
             'ngInject';
 
     
             this._News = News;
+            this._$state = $state;
             this.$onInit = () =>{
 
                 if (User.current) {
@@ -14,11 +15,19 @@ class NewsActionsCtrl {
                
             }
 
-         
-           
 
 
         } //end constructor
+
+              
+        deleteNews() {
+            console.log('entra',this.news.slug)
+            this.isDeleting = true;
+            this._News.destroy(this.news.slug).then(
+              (success) => this._$state.go('app.home'),
+              (err) => this._$state.go('app.home')
+            )
+          }
 
 } //end_class
 

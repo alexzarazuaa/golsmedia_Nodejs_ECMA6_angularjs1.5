@@ -51574,6 +51574,7 @@ var DetailsNews_Ctrl = function () {
         value: function deleteComment(commentId, index) {
             var _this2 = this;
 
+            console.log('boton pulsado');
             this._Comments.destroy(commentId, this.news.slug).then(function (success) {
                 _this2.comment.splice(index, 1);
             });
@@ -51652,28 +51653,49 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var NewsActionsCtrl = function NewsActionsCtrl(User, News) {
-    'ngInject';
+var NewsActionsCtrl = function () {
+    NewsActionsCtrl.$inject = ["User", "News", "$state"];
+    function NewsActionsCtrl(User, News, $state) {
+        'ngInject';
 
-    var _this = this;
+        var _this = this;
 
-    _classCallCheck(this, NewsActionsCtrl);
+        _classCallCheck(this, NewsActionsCtrl);
 
-    this._News = News;
-    this.$onInit = function () {
+        this._News = News;
+        this._$state = $state;
+        this.$onInit = function () {
 
-        if (User.current) {
-            _this.canModify = User.current.username === _this.news.author.username;
-        } else {
-            _this.canModify = false;
+            if (User.current) {
+                _this.canModify = User.current.username === _this.news.author.username;
+            } else {
+                _this.canModify = false;
+            }
+        };
+    } //end constructor
+
+
+    _createClass(NewsActionsCtrl, [{
+        key: 'deleteNews',
+        value: function deleteNews() {
+            var _this2 = this;
+
+            console.log('entra', this.news.slug);
+            this.isDeleting = true;
+            this._News.destroy(this.news.slug).then(function (success) {
+                return _this2._$state.go('app.home');
+            }, function (err) {
+                return _this2._$state.go('app.home');
+            });
         }
-    };
-} //end constructor
+    }]);
 
-;
-NewsActionsCtrl.$inject = ["User", "News"]; //end_class
+    return NewsActionsCtrl;
+}(); //end_class
 
 var NewsActions = {
 
@@ -52192,17 +52214,16 @@ var Newss = function () {
             });
         }
 
-        // query(config) {
-        //   // Create the $http object for this request
-        //   let request = {
-        //     url: this._AppConstants.api + '/news' + ((config.type === 'feed') ? '/feed' : ''),
-        //     method: 'GET',
-        //     params: config.filters ? config.filters : null
-        //   };
-        //   return this._$http(request).then((res) => res.data);
-        // }
+        //delete news
 
-
+    }, {
+        key: "destroy",
+        value: function destroy(slug) {
+            return this._$http({
+                url: this._AppConstants.api + '/news/' + slug,
+                method: 'DELETE'
+            });
+        }
     }, {
         key: "save",
         value: function save(news) {

@@ -41,17 +41,15 @@ export default class Newss {
         });
     }
 
-    // query(config) {
-    //   // Create the $http object for this request
-    //   let request = {
-    //     url: this._AppConstants.api + '/news' + ((config.type === 'feed') ? '/feed' : ''),
-    //     method: 'GET',
-    //     params: config.filters ? config.filters : null
-    //   };
-    //   return this._$http(request).then((res) => res.data);
-    // }
 
-
+    //delete news
+    destroy(slug) {
+        return this._$http({
+          url: this._AppConstants.api + '/news/' + slug,
+          method: 'DELETE'
+        })
+      }
+    
 
     save(news) {
         let request = {};

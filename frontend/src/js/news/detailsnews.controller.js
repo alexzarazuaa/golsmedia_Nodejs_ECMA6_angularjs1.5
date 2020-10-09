@@ -44,6 +44,7 @@ class DetailsNews_Ctrl {
 
 
     deleteComment(commentId, index) {
+        console.log('boton pulsado')
         this._Comments.destroy(commentId, this.news.slug).then(
             (success) => {
                 this.comment.splice(index, 1)
