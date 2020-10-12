@@ -1,10 +1,15 @@
 <div class="article-page">
 
-    <!-- Banner for article title, action buttons -->
+    <!-- Banner for news title, action buttons -->
     <div class="banner">
         <div class="container">
-
-            <h1>{{$ctrl.news.title}}</h1>
+              <div class="info">
+                <span class="date"
+                  ng-bind="$ctrl.news.createdAt | date: 'longDate' ">
+                </span>
+                <h1>{{$ctrl.news.title}}</h1>
+              </div>
+          
 
             <!-- Show author info + favorite & follow buttons -->
 
@@ -15,10 +20,10 @@
 
         </div>
     </div>
-    <!-- //Banner for article title, action buttons -->
+    <!-- //Banner for news title, action buttons -->
 
 
-    <!-- Main view. Contains article html and comments -->
+    <!-- Main view. Contains news html and comments -->
     <div class="container page">
 
         <!-- Article's HTML & tags rendered here -->
@@ -32,11 +37,6 @@
         </div>
 
         <hr />
-
-        <!-- Show author info + favorite & follow buttons -->
-
-
-
         <!-- Comments section -->
         <div class="row">
             <div class="col-xs-12 col-md-8 offset-md-2">
@@ -65,8 +65,7 @@
                 </div>
 
 
-                <comment ng-repeat="cmt in $ctrl.comments" data="cmt"
-                    delete-deletec="$ctrl.deleteComment(cmt.id, $index)">
+                <comment ng-repeat="cmt in $ctrl.comments" data="cmt" delete-Cm="$ctrl.deleteComment(cmt.id, $index)">
                 </comment>
 
 
@@ -76,7 +75,7 @@
         <!--// Comments section -->
 
     </div>
-    <!-- //Main view. Contains article html and comments -->
+    <!-- //Main view. Contains news html and comments -->
 
 
 

@@ -1,23 +1,39 @@
 class News_Ctrl {
-    constructor(newss, $scope, $stateParams, $filter) {
-            "ngInject";
+    constructor(AppConstants,newss, $scope, $stateParams, Tags, User, $filter) {
+        "ngInject";
 
-            console.log('llega al controler de news')
-            this._$scope = $scope;
+        console.log('llega al controler de news')
+        this._$scope = $scope;
+
+        this.appName = AppConstants.appName;
+        this.newss = newss;
+        this.filter = $stateParams.filter;
+        // Get list of all tags
+        Tags
+            .getAll()
+            .then(
+                (tags) => {
+                    this.tagsLoaded = true;
+                    this.tags = tags
+                }
+            );
 
 
-            this.newss = newss;
+        // Set current list to either feed or all, depending on auth status.
+        this.listConfig = {
+            type: User.current ? 'feed' : 'all'
+        };
 
 
-            this.filter = $stateParams.filter;
+
+
+    } //end_constructor
 
 
 
-
-
-        } //end_constructor
-
-
+    changeList(newList) {
+        this._$scope.$broadcast('setListTo', newList);
+    }
 
 } //end_classs
 

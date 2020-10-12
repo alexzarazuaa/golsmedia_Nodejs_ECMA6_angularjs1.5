@@ -1,5 +1,5 @@
 class HomeCtrl {
-    constructor(AppConstants, $scope, world, Tags, User) {
+    constructor( $scope, world) {
             'ngInject';
 
             //COMPROBAR PRIMERO ESTE CONSOLE LOG DE NEWS
@@ -10,19 +10,11 @@ class HomeCtrl {
 
 
 
-            this.appName = AppConstants.appName;
+       
             this._$scope = $scope;
 
 
-            // Get list of all tags
-            Tags
-                .getAll()
-                .then(
-                    (tags) => {
-                        this.tagsLoaded = true;
-                        this.tags = tags
-                    }
-                );
+       
 
             if (world) {
                 $scope.infoWorld = world.slice(0, 3);
@@ -31,18 +23,10 @@ class HomeCtrl {
             }
 
 
-            // Set current list to either feed or all, depending on auth status.
-            this.listConfig = {
-                type: User.current ? 'feed' : 'all'
-            };
 
 
 
         } //end_constructor
-
-    changeList(newList) {
-        this._$scope.$broadcast('setListTo', newList);
-    }
 
 
 

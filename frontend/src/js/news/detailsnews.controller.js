@@ -7,9 +7,6 @@ class DetailsNews_Ctrl {
         this.news = news;
         this._Comments = Comments;
         this.comments = comments;
-        console.log('comentarios',comments)
-
-
         this.currentUser = User.current
 
         //
@@ -17,7 +14,7 @@ class DetailsNews_Ctrl {
         this.resetCommentForm();
 
 
-    }
+    }//end_construtor
 
 
     resetCommentForm() {
@@ -30,7 +27,7 @@ class DetailsNews_Ctrl {
 
 
     addComment() {
-        console.log("entra")
+        console.log("entra en add comment")
         this.commentForm.isSubmitting = true;
         this._Comments.add(this.news.slug, this.commentForm.body).then(
             (comment) => {
@@ -46,13 +43,17 @@ class DetailsNews_Ctrl {
 
 
     deleteComment(commentId, index) {
-        console.log('entra');
+        // console.log('entra en delete comment');
+        // console.log('id',commentId);
         this._Comments.destroy(commentId, this.news.slug).then(
             (success) => {
-                this.comment.splice(index, 1)
+                this.comments.splice(index, 1)
             }
         )
 
     }
-}
+
+
+
+}//end_ctrl
 export default DetailsNews_Ctrl;
