@@ -30,5 +30,8 @@ componentsModule.component('homeSlider', HomeSlider)
 // import NewsMeta from './news-helpers/news-meta.component';
 // componentsModule.component('newsMeta', NewsMeta);
 
+import ListPagination from './news-helpers/list-pagination.component';
+componentsModule.component('listPagination', ListPagination);
+
 
 export default componentsModule;

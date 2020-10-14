@@ -26,11 +26,11 @@ function NewsConfig($stateProvider) {
         controllerAs: "$ctrl",
         templateUrl: "news/news.html",
         title: "Lista de Noticias",
-        resolve: {
-            newss: function(News) { //newss the name that are in json of server
-                return News.getNews().then(news => news);
-            }
-        }
+        // resolve: {
+        //     newss: function(News) { //newss the name that are in json of server
+        //         return News.getNews().then(news => news);
+        //     }
+        // }
     })
 
     .state("app.filterWorld", {

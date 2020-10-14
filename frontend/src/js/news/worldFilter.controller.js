@@ -5,6 +5,7 @@ class FilterWorldCtrl {
       this._$scope = $scope;
 
       this.newss=newss;
+  
 
       this.filter = $stateParams.filter;
 
@@ -16,6 +17,7 @@ class FilterWorldCtrl {
         }
       });
       this.worlds = worlds;
+
 
   
     }

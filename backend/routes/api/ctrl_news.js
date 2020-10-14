@@ -77,18 +77,8 @@ router.get('/', auth.optional, function(req, res, next) {
         });
     }).catch(next);
 });
-//
 
-router.param('comment', function(req, res, next, id) {
-    Comment.findById(id).then(function(comment) {
-        if (!comment) { return res.sendStatus(404); }
-
-        req.comment = comment;
-
-        return next();
-    }).catch(next);
-});
-
+//Return feed news 
 router.get('/feed', auth.required, function(req, res, next) {
     var limit = 20;
     var offset = 0;
@@ -124,6 +114,18 @@ router.get('/feed', auth.required, function(req, res, next) {
         }).catch(next);
     });
 });
+
+//
+router.param('comment', function(req, res, next, id) {
+    Comment.findById(id).then(function(comment) {
+        if (!comment) { return res.sendStatus(404); }
+
+        req.comment = comment;
+
+        return next();
+    }).catch(next);
+});
+
 
 ///create noticias
 router.post('/', auth.required, function(req, res, next) {

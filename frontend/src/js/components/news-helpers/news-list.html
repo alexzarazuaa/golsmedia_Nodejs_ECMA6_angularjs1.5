@@ -1,2 +1,15 @@
-<news-preview news="news" ng-repeat="news in $ctrl.newss">
+<news-preview news="news" ng-repeat="news in $ctrl.list">
 </news-preview>
+
+
+<div class="news-preview" ng-hide="!$ctrl.loading">
+    Cargando Noticias...
+</div>
+
+<div class="news-preview" ng-show="!$ctrl.loading && !$ctrl.list.length">
+  Aún no hay noticias...
+</div>
+
+<list-pagination total-pages="$ctrl.listConfig.totalPages" current-page="$ctrl.listConfig.currentPage"
+    ng-hide="$ctrl.listConfig.totalPages <= 1">
+</list-pagination>

@@ -1,14 +1,14 @@
 export default class Newss {
     constructor(AppConstants, $http, $q) {
-            'ngInject';
+        'ngInject';
 
-            this._AppConstants = AppConstants;
-            this._$http = $http;
-            this._$q = $q;
+        this._AppConstants = AppConstants;
+        this._$http = $http;
+        this._$q = $q;
 
 
-        }
-        //DEVULVE TODAS LAS NOTICIAS
+    }
+    //DEVULVE TODAS LAS NOTICIAS
     getNews() {
         return this._$http({
             url: this._AppConstants.api + "/news",
@@ -21,13 +21,23 @@ export default class Newss {
         });
     }
 
+    //http object for the request
+    query(config) {
+        let request = {
+            url: this._AppConstants.api + '/news' + ((config.type == 'feed') ? '/feed' : ''),
+            method: 'GET',
+            params: config.filters ? config.filters : null
+        };
+        return this._$http(request).then((res) => res.data);
+    }
+
     //RECIBIR UNA NOTICIA
 
     getNeui(slug) {
         return this._$http({
-                url: this._AppConstants.api + "/news/" + slug,
-                method: "GET"
-            })
+            url: this._AppConstants.api + "/news/" + slug,
+            method: "GET"
+        })
             .then(res => res.data.news);
     }
 
@@ -45,11 +55,11 @@ export default class Newss {
     //delete news
     destroy(slug) {
         return this._$http({
-          url: this._AppConstants.api + '/news/' + slug,
-          method: 'DELETE'
+            url: this._AppConstants.api + '/news/' + slug,
+            method: 'DELETE'
         })
-      }
-    
+    }
+
 
     save(news) {
         let request = {};

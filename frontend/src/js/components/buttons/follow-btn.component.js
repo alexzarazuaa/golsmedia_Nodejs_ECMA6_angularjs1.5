@@ -4,9 +4,17 @@ class FollowBtnCtrl {
 
         this._Profile = Profile;
         this._User = User;
-
         this._$state = $state;
-    }
+
+        this.$onInit = () => {
+            if (User.current) {
+              this.canModify = (User.current.username === this.user.username);
+            } else {
+              this.canModify = false;
+            }
+          }
+        
+    }//end_constructor
 
     submit() {
         this.isSubmitting = true;

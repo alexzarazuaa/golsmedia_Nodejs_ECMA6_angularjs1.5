@@ -1,12 +1,12 @@
 class News_Ctrl {
-    constructor(AppConstants,newss, $scope, $stateParams, Tags, User, $filter) {
+    constructor(AppConstants, $scope,$state, $stateParams, Tags, User) {
         "ngInject";
 
         console.log('llega al controler de news')
         this._$scope = $scope;
 
         this.appName = AppConstants.appName;
-        this.newss = newss;
+        // this.newss = newss;
         this.filter = $stateParams.filter;
         // Get list of all tags
         Tags
@@ -23,17 +23,18 @@ class News_Ctrl {
         this.listConfig = {
             type: User.current ? 'feed' : 'all'
         };
+    
+        console.log(this.listConfig)
+
 
 
 
 
     } //end_constructor
 
-
-
     changeList(newList) {
         this._$scope.$broadcast('setListTo', newList);
-    }
+    };
 
 } //end_classs
 
