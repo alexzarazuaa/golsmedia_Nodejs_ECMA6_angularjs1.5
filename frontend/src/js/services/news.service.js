@@ -77,6 +77,7 @@ export default class Newss {
         request.data = { news: news };
 
         return this._$http(request).then((res) => res.data.news);
+        console.log(news)
     }
 
 

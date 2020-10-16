@@ -12,7 +12,10 @@ function HomeConfig($stateProvider) {
                 world: function(News) { //world the name that are in json of server
                         return News.getWorld().then(world => world);
                     } //end_resolve_world
-            } //end_resolve
+            }, //end_resolve
+            // resolve:{
+            //     images : function
+            // }
         });
 
 };

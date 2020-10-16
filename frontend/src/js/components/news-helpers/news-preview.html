@@ -7,11 +7,17 @@
     </div>
 
     <a ui-sref="app.detailsNews({slug:$ctrl.news.slug})" class="preview-link">
-        <h1>{{$ctrl.news.title}}</h1>
-        <h3><strong>{{$ctrl.news.description}}</strong></h3>
+        <h1 ng-bind="$ctrl.news.title"></h1>
+        <p ng-bind="$ctrl.news.description"></p>
         <span>Read more...</span>
-
+        <ul class="tag-list">
+            <li class="tag-default tag-pill tag-outline"
+              ng-repeat="tag in $ctrl.news.tagList">
+              {{tag}}
+            </li>
+          </ul>
     </a>
+
 
 
 

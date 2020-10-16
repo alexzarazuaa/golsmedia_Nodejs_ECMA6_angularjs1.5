@@ -63,12 +63,12 @@ class NewsListCtrl {
       .query(queryConfig)
       .then(
         (res) => {
+          console.log('console res in run query',res)
           this.loading = false;
-
           // Update list and total pages
           this.list = res.newss;
-
-          this.listConfig.totalPages = Math.ceil(res.newsCount / this.limit);
+          console.log('console res in run query news',res.newss)
+          this.listConfig.totalPages = Math.ceil(res.newssCount / this.limit);
         }
       );
   }

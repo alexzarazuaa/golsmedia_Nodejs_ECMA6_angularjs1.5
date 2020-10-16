@@ -10,10 +10,11 @@ class EditorCtrl {
         title: '',
         description: '',
         body: '',
+        world:'',
         tagList: []
       }
     } else {
-      this.news = news;
+      this.newss = news;
     }
 
   }
@@ -22,8 +23,24 @@ class EditorCtrl {
     if (!this.news.tagList.includes(this.tagField)) {
       this.news.tagList.push(this.tagField);
       this.tagField = '';
+      
     }
+    console.log('tags',this.news.tagList)
   }
+
+  addWorld(){
+    console.log('enytra en addworld')
+    if(!this.news.world.includes(this.WorldName)){
+      this.news.world.push(this.WorldName);
+      this.WorldName = '';
+    }
+    console.log('',this.WorldName)
+  }
+
+  removeWorld(newsWorld){
+    this.news.world = this.news.world.filter((slug)=>slug != newsWorld);
+  }
+
 
   removeTag(tagName) {
     this.news.tagList = this.news.tagList.filter((slug) => slug != tagName);

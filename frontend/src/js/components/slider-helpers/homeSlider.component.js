@@ -13,6 +13,10 @@ class homeSliderCtrl {
 }//end_class
 
 let homeSlider = {
+    bindings:{
+        
+
+    },
     controller: homeSliderCtrl,
     templateUrl: 'components/slider-helpers/homeSlider.html'
 };
