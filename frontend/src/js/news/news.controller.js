@@ -8,6 +8,7 @@ class News_Ctrl {
         this.appName = AppConstants.appName;
         // this.newss = newss;
         this.filter = $stateParams.filter;
+        
         // Get list of all tags
         Tags
             .getAll()

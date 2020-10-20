@@ -3,7 +3,7 @@
     <span ng-show="$ctrl.canModify">
      <a class="btn btn-sm btn-outline-secondary"
       ui-sref="app.editor({ slug: $ctrl.newss.slug })">
-      <i class="ion-edit"></i> Edit news
+      <i class="ion-edit"></i> Edit news  
     </a>
 
     <button class="btn btn-sm btn-outline-danger"
@@ -15,7 +15,7 @@
   </span>
 
     <span ng-hide="$ctrl.canModify">
-      <span>AUTHOR:</span><a class="comment-author" ui-sref="app.profile.main({ username: $ctrl.news.author.username })" ng-bind="$ctrl.news.author.username">
+      <span>AUTHOR:</span><a class="comment-author" ui-sref=" .main({ username: $ctrl.news.author.username })" ng-bind="$ctrl.news.author.username">
       </a>
   
     <follow-btn user="$ctrl.news.author"></follow-btn>
