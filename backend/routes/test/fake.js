@@ -1,54 +1,27 @@
+console.log('CARGA EL FAKE')
+
 let router = require('express').Router();
 let faker = require('faker');
+// sets locale to de
+faker.locale = "es";
 let mongoose = require('mongoose');
-let News = require('News');
-var User = mongoose.model('User');
-var utils = require('./utils');
+let News = mongoose.model('News');
+let User = mongoose.model('User');
+let utils = require('./utils');
 
-const router = express.Router();
-
-// router.post('/news/:qty', async (req,res,next) =>{
-
-//     try{
-
-//         for (let i = 0; i < req.params.qty; i++) {
-//             var news = await new News();
-//              console.log(news);
-//              news.title = faker.Lorem.sentence();
-//              news.description = faker.Lorem.sentence();
-//              news.body = faker.Lorem.paragraph();
-//              news.world = faker.Lorem.words();
-//              news.tagList = faker.Lorem.words();
-//              var check = await News.find(
-//                  {$or:[
-//                      {'title':news.title},
-//                      {'description':news.description}
-//                  ]})
-//              if(!check[0]){
-//                 console.log(news);
-//             }
-//             await console.log(check);
-//             await news.save();
-//             //a cada nuevo usuario le metemos 5 YUKS
-//             //await createyuks(user.email,5);
-
-
-//         }//end_for
-
-//     }catch(e){
-
-//     }//end_catch
-
-// })//end_Route
 
 //FAKER DE USUARIOS
 router.post('/users/:qty', async function (req, res, next) {
+    console.log('entra')
     try {
+        //console.log(req.params.qty)
         for (let i = 0; i < req.params.qty; i++) {
+            console.log('entra for')
+       
             let user = await new User();
             console.log(user);
-            user.idsocial = user.username + faker.random.number();
             user.username = faker.internet.userName();
+            user.idsocial = user.username;
             user.email = faker.internet.email();
             user.setPassword("password");
 
@@ -56,11 +29,13 @@ router.post('/users/:qty', async function (req, res, next) {
             let check = await User.find({ $or: [{ 'email': user.email }, { 'idsocial': user.idsocial }] });
             if (!check[0]) {
                 console.log(user);
+                await user.save();
             }
-            await console.log(check);
-            await user.save();
-            //a cada nuevo usuario le metemos 5 YUKS
-            await createyuks(user.email, 5);
+      
+            console.log(check);
+
+            //creamos dos noticias por usuario
+            await createNews(user.email, 2);
         }
         return res.sendStatus(200);
     } catch (e) {
@@ -70,24 +45,24 @@ router.post('/users/:qty', async function (req, res, next) {
 
 
 //CREATE NEWS
-
 async function createNews(email, qty) {
+    console.log('entra create news')
     try {
         //recogemos el email
         var email = email
         //primero obtenemos un usuario (en mi caso el que contiene este correo)
-        var user = await utils.SearchUser(email);
+        var user = await utils.Searchuser(email);
         //hacemos un bucle por la cantidad
         for (let i = 0; i < qty; i++) {
-            //ahora creamos la estructura de un yuk
+            //ahora creamos la estructura de una noticia
             var news = await new News({
-                title = faker.Lorem.sentence(),
-                description = faker.Lorem.sentence(),
-                body = faker.Lorem.paragraph(),
-                world = faker.Lorem.words(),
-                tagList = faker.Lorem.words(),
+                title : faker.lorem.sentence(),
+                description : faker.lorem.sentence(),
+                body : faker.lorem.paragraph(),
+                world : faker.lorem.words(),
+                tagList : faker.lorem.words(),
                 author: "",
-                tagList: faker.Lorem.words(number, 4)
+                tagList: faker.lorem.words()
             })
             //añadimos el usuario al campo author
             news.author = user;
@@ -102,5 +77,4 @@ async function createNews(email, qty) {
 }
 
 
-
-export default router;
+module.exports = router;

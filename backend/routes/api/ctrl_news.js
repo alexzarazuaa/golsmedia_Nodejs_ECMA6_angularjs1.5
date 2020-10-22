@@ -130,6 +130,7 @@ router.param('comment', function(req, res, next, id) {
 ///create noticias
 router.post('/', auth.required, function(req, res, next) {
     User.findById(req.payload.id).then(function(user) {
+        console.log(user)
         if (!user) { return res.sendStatus(401); }
 
         var news = new News(req.body.news);
