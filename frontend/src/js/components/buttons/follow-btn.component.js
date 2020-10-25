@@ -29,6 +29,7 @@ class FollowBtnCtrl {
                 () => {
                     this.isSubmitting = false;
                     this.user.following = false;
+                    this.user.followersCount--;
                 }
 
             )
@@ -39,6 +40,7 @@ class FollowBtnCtrl {
                 () => {
                     this.isSubmitting = false;
                     this.user.following = true;
+                    this.user.followersCount++;
                 }
             )
         }

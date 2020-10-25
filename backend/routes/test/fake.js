@@ -8,6 +8,11 @@ let User = mongoose.model('User');
 let utils = require('./utils');
 
 
+///////////////////////////////////////////////
+//POST http://0.0.0.0:3000/test/fake/users/1 //
+////////////////////////////////////////////////
+
+
 //FAKER DE USUARIOS
 router.post('/users/:qty', async function (req, res, next) {
     console.log('entra')

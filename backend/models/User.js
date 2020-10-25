@@ -14,10 +14,13 @@ var UserSchema = new mongoose.Schema({
     image: String,
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    followersCount: { type: Number, default: 0 },
     hash: String,
     salt: String,
     type: String
 }, { timestamps: true });
+
+const User = mongoose.model('user', UserSchema)
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
@@ -101,6 +104,21 @@ UserSchema.methods.isFollowing = function(id) {
         return followId.toString() === id.toString();
     });
 };
+
+
+
+// UserSchema.methods.updatefollowersCount =  () => {
+//     var user = this;
+
+  
+//     return User.count({ following: { $in: [user._id] } }).then(function (count) {
+   
+//       user.followersCount = count;
+  
+//       return user.save();
+//     })
+//   };
+  
 
 
 mongoose.model('User', UserSchema);

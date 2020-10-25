@@ -5,9 +5,9 @@ class homeSliderCtrl {
         this.myInterval = 5000;
         this.noWrapSlides = false;
 
-        this.slides = [{ image: 'images/vlcf.jpg', text: "Uros Racic Renueva hasta 2024.", id: 0 },
-        { image: 'images/hamilton.jpg', text: "Hamilton consigue una pole más.", id: 1 }
-            , { image: 'images/suarez_atm.jpg', text: "Suarez ya brilla con el Atletico", id: 2 }];
+        this.slides = [{ image: 'images/nba.jpg', text: "NBA.", id: 0 },
+        { image: 'images/ELClasico.jpg', text: "El Clásico lo gana el Real Madrid.", id: 1 }
+            , { image: 'images/maxiVlfc.jpg', text: "Reducción del valor de la plantilla", id: 2 }];
 
     }//end_constructor
 }//end_class

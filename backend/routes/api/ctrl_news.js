@@ -4,12 +4,13 @@ var News = mongoose.model('News');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var auth = require('../auth');
+let utils = require('../utils/UsersUtils')
 
 // Preload news objects on routes with ':news'
-router.param('news', function(req, res, next, slug) {
+router.param('news', function (req, res, next, slug) {
     News.findOne({ slug: slug })
         .populate('author')
-        .then(function(news) {
+        .then(function (news) {
             if (!news) { return res.sendStatus(404); }
 
             req.news = news;
@@ -20,7 +21,7 @@ router.param('news', function(req, res, next, slug) {
 
 
 // return all news
-router.get('/', auth.optional, function(req, res, next) {
+router.get('/', auth.optional, function (req, res, next) {
     var query = {};
     var limit = 20;
     var offset = 0;
@@ -40,7 +41,7 @@ router.get('/', auth.optional, function(req, res, next) {
     Promise.all([
         req.query.author ? User.findOne({ username: req.query.author }) : null,
         req.query.favorited ? User.findOne({ username: req.query.favorited }) : null
-    ]).then(function(results) {
+    ]).then(function (results) {
         var author = results[0];
         var favoriter = results[1];
 
@@ -56,20 +57,20 @@ router.get('/', auth.optional, function(req, res, next) {
 
         return Promise.all([
             News.find(query)
-            .limit(Number(limit))
-            .skip(Number(offset))
-            .sort({ createdAt: 'desc' })
-            .populate('author')
-            .exec(),
+                .limit(Number(limit))
+                .skip(Number(offset))
+                .sort({ createdAt: 'desc' })
+                .populate('author')
+                .exec(),
             News.count(query).exec(),
             req.payload ? User.findById(req.payload.id) : null,
-        ]).then(function(results) {
+        ]).then(function (results) {
             var newss = results[0];
             var newssCount = results[1];
             var user = results[2];
 
             return res.json({
-                newss: newss.map(function(news) {
+                newss: newss.map(function (news) {
                     return news.toJSONFor(user);
                 }),
                 newssCount: newssCount
@@ -79,7 +80,7 @@ router.get('/', auth.optional, function(req, res, next) {
 });
 
 //Return feed news 
-router.get('/feed', auth.required, function(req, res, next) {
+router.get('/feed', auth.required, function (req, res, next) {
     var limit = 20;
     var offset = 0;
 
@@ -91,22 +92,22 @@ router.get('/feed', auth.required, function(req, res, next) {
         offset = req.query.offset;
     }
 
-    User.findById(req.payload.id).then(function(user) {
+    User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401); }
 
         Promise.all([
             News.find({ author: { $in: user.following } })
-            .limit(Number(limit))
-            .skip(Number(offset))
-            .populate('author')
-            .exec(),
+                .limit(Number(limit))
+                .skip(Number(offset))
+                .populate('author')
+                .exec(),
             News.count({ author: { $in: user.following } })
-        ]).then(function(results) {
+        ]).then(function (results) {
             var newss = results[0];
             var newssCount = results[1];
 
             return res.json({
-                newss: newss.map(function(news) {
+                newss: newss.map(function (news) {
                     return news.toJSONFor(user);
                 }),
                 newssCount: newssCount
@@ -116,8 +117,8 @@ router.get('/feed', auth.required, function(req, res, next) {
 });
 
 //
-router.param('comment', function(req, res, next, id) {
-    Comment.findById(id).then(function(comment) {
+router.param('comment', function (req, res, next, id) {
+    Comment.findById(id).then(function (comment) {
         if (!comment) { return res.sendStatus(404); }
 
         req.comment = comment;
@@ -128,8 +129,8 @@ router.param('comment', function(req, res, next, id) {
 
 
 ///create noticias
-router.post('/', auth.required, function(req, res, next) {
-    User.findById(req.payload.id).then(function(user) {
+router.post('/', auth.required, function (req, res, next) {
+    User.findById(req.payload.id).then(function (user) {
         console.log(user)
         if (!user) { return res.sendStatus(401); }
 
@@ -137,19 +138,90 @@ router.post('/', auth.required, function(req, res, next) {
 
         news.author = user;
 
-        return news.save().then(function() {
+        return news.save().then(function () {
             console.log(news.author);
             return res.json({ news: news.toJSONFor(user) });
         });
     }).catch(next);
 });
 
+
+
+// CREAR NOTICIAS CON EL ASYNC Y EL AWAIT ADEMAS DE UTILIZAR LA FUNCION DE SI ES ADMIN
+//SOLO PUEDE CREAR NOTICIAS SI ES ADMIN
+
+
+
+// router.post('/', auth.required, async (req, res, next) => {
+//     try {
+//         let admin = await utils.IsAdminUser(req.payload.email);
+
+//       await User.findById(req.payload.id).then(function (user) {
+//             console.log(user)
+//             if (!user) { return res.sendStatus(401); }
+//             else {
+//                 console.log('+++++++++++++++++', admin)
+//                 if (admin ) {
+
+//                     let news = new News(req.body.news);
+
+//                     news.author = user;
+
+//                     return news.save().then(function () {
+//                         // console.log(news.author);
+//                         return res.json({ news: news.toJSONFor(user) });
+//                     });
+//                 }
+//                 else {
+//                     console.log('unauthorized')
+//                     return res.status(422).json('error');
+//                 }
+//             }
+//         }).catch(next);
+
+
+//     } catch (e) {
+//         next(e);
+//     }
+// });
+
+
+// router.post('/', auth.required, async (req, res, next) => {
+//     try {
+//         // Comprobar datos obligatorios
+//         if (!await utils.IsAdminUser(req.payload.email))
+//             return res.status(401).json({ error: 'Unauthorized' });
+//         User.findById(req.payload.id).then( async function  (user) {
+//             console.log(user)
+//             if (!user) { return res.sendStatus(401); }
+
+//             var news = new News(req.body.news);
+
+//             news.author = user;
+
+//             // Crear recurso
+//             var news = new News();
+//             news.title = req.body.news.title;
+//             news.type = type;
+//             news.description = req.body.news.description;
+//             news.body = req.body.news.body;
+//             news.world = req.body.news.world;
+//             news.tagList = req.body.news.tagList;
+//             await news.save();
+//             return res.status(201).send({ news });
+//         });
+//     } catch (e) {
+//         next(e);
+//     }
+// });
+
+
 // return a new
-router.get('/:news', auth.optional, function(req, res, next) {
+router.get('/:news', auth.optional, function (req, res, next) {
     Promise.all([
         req.payload ? User.findById(req.payload.id) : null,
         req.news.populate('author').execPopulate()
-    ]).then(function(results) {
+    ]).then(function (results) {
         var user = results[0];
 
         return res.json({ news: req.news.toJSONFor(user) });
@@ -157,16 +229,16 @@ router.get('/:news', auth.optional, function(req, res, next) {
 });
 
 // return a list of world
-router.get('/news/world', function(req, res, next) {
-    News.find().distinct('world').then(function(world) {
+router.get('/news/world', function (req, res, next) {
+    News.find().distinct('world').then(function (world) {
         //console.log(world);
         return res.json({ world: world });
     }).catch(next);
 });
 
 // update noticia
-router.put('/:news', auth.required, function(req, res, next) {
-    User.findById(req.payload.id).then(function(user) {
+router.put('/:news', auth.required, function (req, res, next) {
+    User.findById(req.payload.id).then(function (user) {
         if (req.news.author._id.toString() === req.payload.id.toString()) {
             if (typeof req.body.news.title !== 'undefined') {
                 req.news.title = req.body.news.title;
@@ -184,7 +256,7 @@ router.put('/:news', auth.required, function(req, res, next) {
                 req.news.tagList = req.body.news.tagList
             }
 
-            req.news.save().then(function(news) {
+            req.news.save().then(function (news) {
                 return res.json({ news: news.toJSONFor(user) });
             }).catch(next);
         } else {
@@ -214,14 +286,14 @@ router.delete('/:news', auth.required, function (req, res, next) {
 
 
 // Favorite  noticia
-router.post('/:news/favorite', auth.required, function(req, res, next) {
+router.post('/:news/favorite', auth.required, function (req, res, next) {
     var newsId = req.news._id;
     console.log(req.news._id);
-    User.findById(req.payload.id).then(function(user) {
+    User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401); }
 
-        return user.favorite(newsId).then(function() {
-            return req.news.updateFavoriteCount().then(function(news) {
+        return user.favorite(newsId).then(function () {
+            return req.news.updateFavoriteCount().then(function (news) {
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
@@ -229,14 +301,14 @@ router.post('/:news/favorite', auth.required, function(req, res, next) {
 });
 
 // Unfavorite  noticia
-router.delete('/:news/favorite', auth.required, function(req, res, next) {
+router.delete('/:news/favorite', auth.required, function (req, res, next) {
     var newsId = req.news._id;
 
-    User.findById(req.payload.id).then(function(user) {
+    User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401); }
 
-        return user.unfavorite(newsId).then(function() {
-            return req.news.updateFavoriteCount().then(function(news) {
+        return user.unfavorite(newsId).then(function () {
+            return req.news.updateFavoriteCount().then(function (news) {
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
@@ -244,8 +316,8 @@ router.delete('/:news/favorite', auth.required, function(req, res, next) {
 });
 
 // return an news's comments
-router.get('/:news/comments', auth.optional, function(req, res, next) {
-    Promise.resolve(req.payload ? User.findById(req.payload.id) : null).then(function(user) {
+router.get('/:news/comments', auth.optional, function (req, res, next) {
+    Promise.resolve(req.payload ? User.findById(req.payload.id) : null).then(function (user) {
         return req.news.populate({
             path: 'comments',
             populate: {
@@ -256,9 +328,9 @@ router.get('/:news/comments', auth.optional, function(req, res, next) {
                     createdAt: 'desc'
                 }
             }
-        }).execPopulate().then(function(news) {
+        }).execPopulate().then(function (news) {
             return res.json({
-                comments: req.news.comments.map(function(comment) {
+                comments: req.news.comments.map(function (comment) {
                     return comment.toJSONFor(user);
                 })
             });
@@ -267,32 +339,38 @@ router.get('/:news/comments', auth.optional, function(req, res, next) {
 });
 
 // create a new comment
-router.post('/:news/comments', auth.required, function(req, res, next) {
-    User.findById(req.payload.id).then(function(user) {
+router.post('/:news/comments', auth.required, function (req, res, next) {
+    User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401); }
 
         var comment = new Comment(req.body.comment);
         comment.news = req.news;
         comment.author = user;
 
-        return comment.save().then(function() {
+        return comment.save().then(function () {
             req.news.comments = req.news.comments.concat([comment])
 
-            return req.news.save().then(function(news) {
-                res.json({ comment: comment.toJSONFor(user) });
+            return req.news.save().then(function (news) {
+                req.news.updateCommentsCount().then(function (){
+                    res.json({ comment: comment.toJSONFor(user) });
+                })
+               
             });
         });
     }).catch(next);
 });
 
 //DELETE COMMENT
-router.delete('/:news/comments/:comment', auth.required, function(req, res, next) {
-    if ((req.comment.author.toString() === req.payload.id.toString() )|| (req.news.author._id.toString() === req.payload.id.toString())) {
+router.delete('/:news/comments/:comment', auth.required, function (req, res, next) {
+    if ((req.comment.author.toString() === req.payload.id.toString()) || (req.news.author._id.toString() === req.payload.id.toString())) {
         req.news.comments.remove(req.comment._id);
         req.news.save()
             .then(Comment.find({ _id: req.comment._id }).remove().exec())
-            .then(function() {
-                res.sendStatus(204);
+            .then(function () {
+                req.news.updateCommentsCount().then(function (){
+                    res.sendStatus(204);
+                })
+             
             });
     } else {
         res.sendStatus(403);

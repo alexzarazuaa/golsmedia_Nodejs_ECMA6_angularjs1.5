@@ -12,9 +12,13 @@ var NewsSchema = new mongoose.Schema({
     world: String,
     favoritesCount: { type: Number, default: 0 },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    CommentsCount: { type: Number, default: 0 },
     tagList: [{ type: String }],
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
+
+
+const News = mongoose.model('new', NewsSchema)
 
 NewsSchema.plugin(uniqueValidator, { message: 'is already taken' });
 
@@ -40,6 +44,17 @@ NewsSchema.methods.updateFavoriteCount = function() {
     });
 };
 
+NewsSchema.methods.updateCommentsCount = () =>{
+
+    let news = this;
+
+
+    return News.find({ _id: news._id }, { comments: 1, _id: 0 }).then(function(data){
+      news.commentsCount = data[0].comments.length;
+      return news.save();
+    })
+}
+
 NewsSchema.methods.toJSONFor = function(user) {
     return {
         slug: this.slug,
@@ -56,5 +71,7 @@ NewsSchema.methods.toJSONFor = function(user) {
         author: this.author.toProfileJSONFor(user)
     };
 };
+
+
 
 mongoose.model('News', NewsSchema);

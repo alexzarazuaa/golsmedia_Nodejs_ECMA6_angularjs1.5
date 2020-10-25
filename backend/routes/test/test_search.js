@@ -1,13 +1,18 @@
-var router = require('express').Router();
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var utils = require('./utils');
+
+let router = require('express').Router();
+let mongoose = require('mongoose');
+let User = mongoose.model('User');
+let utils = require('./utils');
+
+////////////////////////////////////////////////////////////////////
+//get http://0.0.0.0:3000/test/test_search/test2/alexzs@gmail.com //
+////////////////////////////////////////////////////////////////////
 
 
 router.get('/test1/:email', async function (req, res) {
- //console.log('dfd')
+ console.log('dfd')
  
-    var user = await utils.Searchuser(req.params);
+    let user = await utils.Searchuser(req.params);
     console.log(user)
   
     user
@@ -24,7 +29,7 @@ router.get('/test1/:email', async function (req, res) {
 })
 
 router.get('/test2/:email', async function (req, res) {
-    var user = await User.findOne(req.params);
+    let user = await User.findOne(req.params);
 
     user
     ? (() => {
