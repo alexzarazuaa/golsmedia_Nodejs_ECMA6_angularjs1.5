@@ -1,15 +1,15 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Conduit API",
+    "description": "GOLSMEDIA API",
     "version": "1.0.0",
-    "title": "Conduit API",
+    "title": "GOLSMEDIA API",
     "contact": {
-      "name": "RealWorld",
+      "name": "GOLSMEDIA",
       "url": "https://realworld.io"
     },
     "license": {
-      "name": "MIT License",
+      "name": "Alex License",
       "url": "https://opensource.org/licenses/MIT"
     }
   },

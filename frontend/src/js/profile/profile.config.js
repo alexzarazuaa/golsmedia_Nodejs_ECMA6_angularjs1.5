@@ -8,14 +8,14 @@ function ProfileConfig($stateProvider) {
     controller: 'ProfileCtrl',
     controllerAs: '$ctrl',
     templateUrl: 'profile/profile.html',
-    // resolve: {
-    //   profile: function(Profile, $state, $stateParams) {
-    //     return Profile.get($stateParams.username).then(
-    //       (profile) => profile,
-    //       (err) => $state.go('app.home')
-    //     )
-      // }
-    //}
+    resolve: {
+      profile: function(Profile, $state, $stateParams) {
+        return Profile.get($stateParams.username).then(
+          (profile) => profile,
+          (err) => $state.go('app.home')
+        )
+      }
+    }
 
   })
 

@@ -1,8 +1,6 @@
-console.log('CARGA EL FAKE')
 
 let router = require('express').Router();
 let faker = require('faker');
-// sets locale to de
 faker.locale = "es";
 let mongoose = require('mongoose');
 let News = mongoose.model('News');

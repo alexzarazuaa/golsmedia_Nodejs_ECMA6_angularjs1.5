@@ -193,13 +193,16 @@ router.put('/:news', auth.required, function(req, res, next) {
     });
 });
 
-// delete noticia
-router.delete('/:news', auth.required, function(req, res, next) {
-    User.findById(req.payload.id).then(function(user) {
+// BORRAR LOS COMENTARIOS DE LA NOTICIA Y DESPUES BORRA LA NOTICIA
+router.delete('/:news', auth.required, function (req, res, next) {
+    User.findById(req.payload.id).then(async function (user) {
         if (!user) { return res.sendStatus(401); }
-
         if (req.news.author._id.toString() === req.payload.id.toString()) {
-            return req.news.remove().then(function() {
+            //buscamos los commentarios y los borramos  y despues  borramos la noticia
+            if (req.news.comments.length !== 0) {
+                await req.news.comments.remove()
+            }
+            return await req.news.remove().then(function () {
                 return res.sendStatus(204);
             });
         } else {
@@ -207,6 +210,8 @@ router.delete('/:news', auth.required, function(req, res, next) {
         }
     }).catch(next);
 });
+
+
 
 // Favorite  noticia
 router.post('/:news/favorite', auth.required, function(req, res, next) {
@@ -282,7 +287,7 @@ router.post('/:news/comments', auth.required, function(req, res, next) {
 
 //DELETE COMMENT
 router.delete('/:news/comments/:comment', auth.required, function(req, res, next) {
-    if (req.comment.author.toString() === req.payload.id.toString()) {
+    if ((req.comment.author.toString() === req.payload.id.toString() )|| (req.news.author._id.toString() === req.payload.id.toString())) {
         req.news.comments.remove(req.comment._id);
         req.news.save()
             .then(Comment.find({ _id: req.comment._id }).remove().exec())

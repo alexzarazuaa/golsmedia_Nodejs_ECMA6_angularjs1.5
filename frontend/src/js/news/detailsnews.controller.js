@@ -43,8 +43,8 @@ class DetailsNews_Ctrl {
 
 
     deleteComment(commentId, index) {
-        // console.log('entra en delete comment');
-        // console.log('id',commentId);
+        console.log('entra en delete comment');
+        console.log('id',commentId);
         this._Comments.destroy(commentId, this.news.slug).then(
             (success) => {
                 this.comments.splice(index, 1)
