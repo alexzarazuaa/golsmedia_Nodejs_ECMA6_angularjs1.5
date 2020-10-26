@@ -17,7 +17,8 @@ var UserSchema = new mongoose.Schema({
     followersCount: { type: Number, default: 0 },
     hash: String,
     salt: String,
-    type: String
+    type: String,
+    karma : { type: Number, default: 0 }
 }, { timestamps: true });
 
 const User = mongoose.model('user', UserSchema)
@@ -54,7 +55,8 @@ UserSchema.methods.toAuthJSON = function() {
         token: this.generateJWT(),
         image: this.image,
         following: this.following,
-        type: this.type
+        type: this.type,
+        karma : this.karma
     };
 };
 
@@ -63,7 +65,8 @@ UserSchema.methods.toProfileJSONFor = function(user) {
         idsocial: this.idsocial,
         username: this.username,
         image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
-        following: user ? user.isFollowing(this._id) : false
+        following: user ? user.isFollowing(this._id) : false,
+        karma : this.karma
     };
 };
 
@@ -122,3 +125,5 @@ UserSchema.methods.isFollowing = function(id) {
 
 
 mongoose.model('User', UserSchema);
+
+

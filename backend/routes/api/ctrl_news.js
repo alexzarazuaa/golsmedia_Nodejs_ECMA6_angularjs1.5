@@ -129,6 +129,7 @@ router.param('comment', function (req, res, next, id) {
 
 
 ///create noticias
+//INCREMENTAMOS EL KARMA DE UN USUARIO CADA VEZ QUE CREE UNA NOTICIA
 router.post('/', auth.required, function (req, res, next) {
     User.findById(req.payload.id).then(function (user) {
         console.log(user)
@@ -140,6 +141,7 @@ router.post('/', auth.required, function (req, res, next) {
 
         return news.save().then(function () {
             console.log(news.author);
+            utils.increaseKarmaByUserId(user.id,25);
             return res.json({ news: news.toJSONFor(user) });
         });
     }).catch(next);
@@ -286,6 +288,7 @@ router.delete('/:news', auth.required, function (req, res, next) {
 
 
 // Favorite  noticia
+//CADA VEZ QUE UN USUARIO DE LIKE SE LE AUMENTARA EL KARMA EN 10
 router.post('/:news/favorite', auth.required, function (req, res, next) {
     var newsId = req.news._id;
     console.log(req.news._id);
@@ -294,6 +297,7 @@ router.post('/:news/favorite', auth.required, function (req, res, next) {
 
         return user.favorite(newsId).then(function () {
             return req.news.updateFavoriteCount().then(function (news) {
+                utils.increaseKarmaByUserId(user.id,10)
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
@@ -301,6 +305,7 @@ router.post('/:news/favorite', auth.required, function (req, res, next) {
 });
 
 // Unfavorite  noticia
+//CADA VEZ QUE UN USUARIO DE LIKE SE LE RESTARÁ EL KARMA EN 10
 router.delete('/:news/favorite', auth.required, function (req, res, next) {
     var newsId = req.news._id;
 
@@ -309,6 +314,7 @@ router.delete('/:news/favorite', auth.required, function (req, res, next) {
 
         return user.unfavorite(newsId).then(function () {
             return req.news.updateFavoriteCount().then(function (news) {
+                utils.increaseKarmaByUserId(user.id,-10)
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
@@ -339,6 +345,7 @@ router.get('/:news/comments', auth.optional, function (req, res, next) {
 });
 
 // create a new comment
+//CADA VEZ QUE UN USUARIO CREE UN COMENTARIO SE LE AUMENTARA EL KARMA EN 10
 router.post('/:news/comments', auth.required, function (req, res, next) {
     User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401); }
@@ -352,6 +359,7 @@ router.post('/:news/comments', auth.required, function (req, res, next) {
 
             return req.news.save().then(function (news) {
                 req.news.updateCommentsCount().then(function (){
+                    utils.increaseKarmaByUserId(user.id,10)
                     res.json({ comment: comment.toJSONFor(user) });
                 })
                
