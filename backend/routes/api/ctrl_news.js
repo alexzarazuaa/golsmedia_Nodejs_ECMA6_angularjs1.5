@@ -141,7 +141,7 @@ router.post('/', auth.required, function (req, res, next) {
 
         return news.save().then(function () {
             console.log(news.author);
-            utils.increaseKarmaByUserId(user.id,25);
+            utils.increaseKarmaByUserId(user.id, 25);
             return res.json({ news: news.toJSONFor(user) });
         });
     }).catch(next);
@@ -297,7 +297,7 @@ router.post('/:news/favorite', auth.required, function (req, res, next) {
 
         return user.favorite(newsId).then(function () {
             return req.news.updateFavoriteCount().then(function (news) {
-                utils.increaseKarmaByUserId(user.id,10)
+                utils.increaseKarmaByUserId(user.id, 10)
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
@@ -314,7 +314,7 @@ router.delete('/:news/favorite', auth.required, function (req, res, next) {
 
         return user.unfavorite(newsId).then(function () {
             return req.news.updateFavoriteCount().then(function (news) {
-                utils.increaseKarmaByUserId(user.id,-10)
+                utils.increaseKarmaByUserId(user.id, -10)
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
@@ -358,11 +358,14 @@ router.post('/:news/comments', auth.required, function (req, res, next) {
             req.news.comments = req.news.comments.concat([comment])
 
             return req.news.save().then(function (news) {
-                req.news.updateCommentsCount().then(function (){
-                    utils.increaseKarmaByUserId(user.id,10)
-                    res.json({ comment: comment.toJSONFor(user) });
+                utils.increaseKarmaByUserId(user.id, 10).then(function () {
+                    req.news.updateCommentsCount().then(function () {
+
+                        res.json({ comment: comment.toJSONFor(user) });
+                    })
+
                 })
-               
+
             });
         });
     }).catch(next);
@@ -375,10 +378,10 @@ router.delete('/:news/comments/:comment', auth.required, function (req, res, nex
         req.news.save()
             .then(Comment.find({ _id: req.comment._id }).remove().exec())
             .then(function () {
-                req.news.updateCommentsCount().then(function (){
+                req.news.updateCommentsCount().then(function () {
                     res.sendStatus(204);
                 })
-             
+
             });
     } else {
         res.sendStatus(403);

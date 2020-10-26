@@ -5,6 +5,7 @@ class DetailsNews_Ctrl {
 
         this._$scope = $scope;
         this.news = news;
+        console.log(this.news)
         this._Comments = Comments;
         this.comments = comments;
         this.currentUser = User.current
@@ -25,14 +26,15 @@ class DetailsNews_Ctrl {
         }
     }
 
-
     addComment() {
-        console.log("entra en add comment")
         this.commentForm.isSubmitting = true;
         this._Comments.add(this.news.slug, this.commentForm.body).then(
             (comment) => {
+                this.news.CommentsCount++;
                 this.comments.unshift(comment);
                 this.resetCommentForm();
+
+
             },
             (err) => {
                 this.comment.isSubmitting = false;
@@ -41,12 +43,12 @@ class DetailsNews_Ctrl {
         )
     }
 
-
     deleteComment(commentId, index) {
         console.log('entra en delete comment');
         console.log('id',commentId);
         this._Comments.destroy(commentId, this.news.slug).then(
             (success) => {
+                this.news.CommentsCount--;
                 this.comments.splice(index, 1)
             }
         )

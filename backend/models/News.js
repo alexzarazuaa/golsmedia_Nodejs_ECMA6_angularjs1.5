@@ -44,14 +44,18 @@ NewsSchema.methods.updateFavoriteCount = function() {
     });
 };
 
-NewsSchema.methods.updateCommentsCount = () =>{
+NewsSchema.methods.updateCommentsCount = function(){
 
     let news = this;
+    console.log('---------',news)
+    console.log('+-------+-+-+-+-+--------------------------');
+  //  return true;
 
 
     return News.find({ _id: news._id }, { comments: 1, _id: 0 }).then(function(data){
-      news.commentsCount = data[0].comments.length;
+      news.CommentsCount = data[0].comments.length;
       return news.save();
+      //return true;
     })
 }
 
@@ -68,6 +72,7 @@ NewsSchema.methods.toJSONFor = function(user) {
         favorited: user ? user.isFavorite(this._id) : false,
         favoritesCount: this.favoritesCount,
         comments: this.comments,
+        CommentsCount:this.CommentsCount,
         author: this.author.toProfileJSONFor(user)
     };
 };
