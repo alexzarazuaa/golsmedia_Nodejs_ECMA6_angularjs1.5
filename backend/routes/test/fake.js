@@ -9,7 +9,7 @@ let utils = require('./utils');
 
 
 ///////////////////////////////////////////////
-//POST http://0.0.0.0:3000/test/fake/users/1 //
+//POST http://0.0.0.0:3000/test/fake/users/1  //
 ////////////////////////////////////////////////
 
 
@@ -21,7 +21,7 @@ router.post('/users/:qty', async function (req, res, next) {
         for (let i = 0; i < req.params.qty; i++) {
             console.log('entra for')
        
-            let user = await new User();
+            let user = new User();
             console.log(user);
             user.username = faker.internet.userName();
             user.idsocial = user.username;

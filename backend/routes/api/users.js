@@ -1,24 +1,32 @@
+const e = require('express');
 var mongoose = require('mongoose');
 var router = require('express').Router();
 var passport = require('passport');
 var User = mongoose.model('User');
 var auth = require('../auth');
 
-router.get('/user', auth.required, function(req, res, next) {
-    User.findById(req.payload.id)
-        .then(function(user) {
-            if (!user) {
-                return res.sendStatus(401).json('The user was not Registered yet');
-            }
+router.get('/user', auth.required, async function (req, res, next) {
 
-            return res.json({ user: user.toAuthJSON() });
-        }).catch(next);
+    try {
+
+        let user = await User.findById(req.payload.id)
+        if (!user) {
+            return res.sendStatus(401).json('The user was not Registered yet');
+        }
+        return res.json({ user: user.toAuthJSON() });
+
+    } catch (error) {
+        next(error)
+    }
+
+
+
 });
 
 
 
-router.put('/user', auth.required, function(req, res, next) {
-    User.findById(req.payload.id).then(function(user) {
+router.put('/user', auth.required, function (req, res, next) {
+    User.findById(req.payload.id).then(function (user) {
         if (!user) { return res.sendStatus(401).json('The user was not found'); }
 
         // only update fields that were actually passed...
@@ -35,13 +43,13 @@ router.put('/user', auth.required, function(req, res, next) {
             user.setPassword(req.body.user.password);
         }
 
-        return user.save().then(function() {
+        return user.save().then(function () {
             return res.json({ user: user.toAuthJSON() });
         });
     }).catch(next);
 });
 
-router.post('/users/login', function(req, res, next) {
+router.post('/users/login', function (req, res, next) {
     if (!req.body.user.email) {
         return res.status(422).json({ errors: { email: "can't be blank" } });
     }
@@ -50,7 +58,7 @@ router.post('/users/login', function(req, res, next) {
         return res.status(422).json({ errors: { password: "can't be blank" } });
     }
 
-    passport.authenticate('local', { session: false }, function(err, user, info) {
+    passport.authenticate('local', { session: false }, function (err, user, info) {
         console.log('router login', user)
         if (err) { return next(err); }
 
@@ -65,49 +73,52 @@ router.post('/users/login', function(req, res, next) {
 });
 
 
-router.post("/users/register", function(req, res, next) {
-    User.find({
-        $or: [{ email: req.body.user.email }, { username: req.body.user.username }],
-    }).then(function(user) {
+router.post("/users/register", async (req, res, next) => {
+    try {
+        let user = await User.find({
+            $or: [{ email: req.body.user.email }, { username: req.body.user.username }],
+        })
         //console.log("user register",user);
         if (user[0]) {
             return res.status(422).json("The email or username are already created");
         } else {
-            var user = new User();
-            user.idsocial = req.body.user.username;
-            user.username = req.body.user.username;
-            user.email = req.body.user.email;
+            user = new User();
+            user.idsocial = await req.body.user.username;
+            user.username = await req.body.user.username;
+            user.email = await req.body.user.email;
             user.type = "client";
             user.setPassword(req.body.user.password);
-            user
-                .save()
-                .then(function() {
-                    return res.json({ user: user.toAuthJSON() });
-                })
-                .catch(next);
+            await user.save();
+
+            return res.json({ user: user.toAuthJSON() });
+
         }
-    });
+
+    } catch (error) {
+        next(error);
+    }
+
 });
 
 
 
-router.post('/users', function(req, res, next) {
-    var user = new User();
+router.post('/users', async (req, res, next) => {
+    let user = new User();
 
-    user.idsocial = req.body.user.username;
-    user.username = req.body.user.username;
-    user.email = req.body.user.email;
+    user.idsocial = await req.body.user.username;
+    user.username = await req.body.user.username;
+    user.email = await req.body.user.email;
     // user.type = "client";
     user.setPassword(req.body.user.password);
 
-    user.save().then(function() {
-        return res.json({ user: user.toAuthJSON() });
-    }).catch(next);
+    await user.save()
+    return res.json({ user: user.toAuthJSON() });
+
 });
 
 //socialLogin
 
-router.post("/users/sociallogin", function(req, res, next) {
+router.post("/users/sociallogin", function (req, res, next) {
 
     let memorystore = req.sessionStore;
     let sessions = memorystore.sessions;
@@ -116,7 +127,7 @@ router.post("/users/sociallogin", function(req, res, next) {
         sessionUser = JSON.parse(sessions[key]).passport.user;
     }
 
-    User.find({ _id: sessionUser }, function(err, user) {
+    User.find({ _id: sessionUser }, function (err, user) {
         user = user[0];
 
         if (err) return done(err);

@@ -30,7 +30,7 @@ NewsSchema.pre('validate', function(next) {
     next();
 });
 
-NewsSchema.methods.slugify = function() {
+NewsSchema.methods.slugify = () =>{
     this.slug = slug(this.title) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
 };
 
@@ -44,7 +44,7 @@ NewsSchema.methods.updateFavoriteCount = function() {
     });
 };
 
-NewsSchema.methods.updateCommentsCount = function(){
+NewsSchema.methods.updateCommentsCount = ()=>{
 
     let news = this;
     console.log('---------',news)
@@ -59,7 +59,7 @@ NewsSchema.methods.updateCommentsCount = function(){
     })
 }
 
-NewsSchema.methods.toJSONFor = function(user) {
+NewsSchema.methods.toJSONFor = function (user) {
     return {
         slug: this.slug,
         title: this.title,

@@ -5,6 +5,7 @@ var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 var auth = require('../auth');
 let utils = require('../utils/UsersUtils')
+let NewsUtils = require('../utils/NewsUtils')
 
 // Preload news objects on routes with ':news'
 router.param('news', function (req, res, next, slug) {
@@ -130,29 +131,33 @@ router.param('comment', function (req, res, next, id) {
 
 ///create noticias
 //INCREMENTAMOS EL KARMA DE UN USUARIO CADA VEZ QUE CREE UNA NOTICIA
-router.post('/', auth.required, function (req, res, next) {
-    User.findById(req.payload.id).then(function (user) {
+router.post('/', auth.required, async function (req, res, next) {
+    try {
+        let user = await User.findById(req.payload.id)
         console.log(user)
         if (!user) { return res.sendStatus(401); }
 
-        var news = new News(req.body.news);
+        let news = News(req.body.news);
 
         news.author = user;
 
-        return news.save().then(function () {
-            console.log(news.author);
-            utils.increaseKarmaByUserId(user.id, 25);
-            return res.json({ news: news.toJSONFor(user) });
-        });
-    }).catch(next);
+        await news.save();
+
+        console.log(news.author);
+        await utils.increaseKarmaByUserId(user.id, 25);
+        return res.json({ news: news.toJSONFor(user) });
+    } catch (error) {
+        next(error);
+    }
+
+
+
 });
 
 
 
 // CREAR NOTICIAS CON EL ASYNC Y EL AWAIT ADEMAS DE UTILIZAR LA FUNCION DE SI ES ADMIN
 //SOLO PUEDE CREAR NOTICIAS SI ES ADMIN
-
-
 
 // router.post('/', auth.required, async (req, res, next) => {
 //     try {
@@ -267,32 +272,34 @@ router.put('/:news', auth.required, function (req, res, next) {
     });
 });
 
-// BORRAR LOS COMENTARIOS DE LA NOTICIA Y DESPUES BORRA LA NOTICIA
-router.delete('/:news', auth.required, function (req, res, next) {
-    User.findById(req.payload.id).then(async function (user) {
+/**  BORRAR LOS COMENTARIOS DE LA NOTICIA Y DESPUES BORRA LA NOTICIA*/
+
+router.delete('/:news', auth.required, async function (req, res, next) {
+
+    try {
+        let user = await User.findById(req.payload.id)
         if (!user) { return res.sendStatus(401); }
         if (req.news.author._id.toString() === req.payload.id.toString()) {
             //buscamos los commentarios y los borramos  y despues  borramos la noticia
-            if (req.news.comments.length !== 0) {
-                await req.news.comments.remove()
-            }
-            return await req.news.remove().then(function () {
-                return res.sendStatus(204);
-            });
+            let deleted = await NewsUtils.DeleteNews(req.news)
+            if (deleted) return res.sendStatus(204);
         } else {
             return res.sendStatus(403);
         }
-    }).catch(next);
+    } catch (error) {
+        next(error);
+    }
 });
 
 
 
 // Favorite  noticia
 //CADA VEZ QUE UN USUARIO DE LIKE SE LE AUMENTARA EL KARMA EN 10
-router.post('/:news/favorite', auth.required, function (req, res, next) {
-    var newsId = req.news._id;
-    console.log(req.news._id);
-    User.findById(req.payload.id).then(function (user) {
+router.post('/:news/favorite', auth.required, async function (req, res, next) {
+    try {
+        var newsId = await req.news._id;
+        console.log(req.news._id);
+        let user = await User.findById(req.payload.id)
         if (!user) { return res.sendStatus(401); }
 
         return user.favorite(newsId).then(function () {
@@ -301,15 +308,21 @@ router.post('/:news/favorite', auth.required, function (req, res, next) {
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
-    }).catch(next);
+
+    } catch (error) {
+        next(error)
+
+    }
+
 });
 
 // Unfavorite  noticia
-//CADA VEZ QUE UN USUARIO DE LIKE SE LE RESTARÁ EL KARMA EN 10
-router.delete('/:news/favorite', auth.required, function (req, res, next) {
-    var newsId = req.news._id;
+//CADA VEZ QUE UN USUARIO BORRE UN  LIKE SE LE RESTARÁ EL KARMA EN 10
+router.delete('/:news/favorite', auth.required, async function (req, res, next) {
 
-    User.findById(req.payload.id).then(function (user) {
+    try {
+        let newsId = await req.news._id;
+        let user = await User.findById(req.payload.id);
         if (!user) { return res.sendStatus(401); }
 
         return user.unfavorite(newsId).then(function () {
@@ -318,7 +331,11 @@ router.delete('/:news/favorite', auth.required, function (req, res, next) {
                 return res.json({ news: news.toJSONFor(user) });
             });
         });
-    }).catch(next);
+    } catch (error) {
+        next(error)
+    }
+
+
 });
 
 // return an news's comments
@@ -344,32 +361,33 @@ router.get('/:news/comments', auth.optional, function (req, res, next) {
     }).catch(next);
 });
 
-// create a new comment
-//CADA VEZ QUE UN USUARIO CREE UN COMENTARIO SE LE AUMENTARA EL KARMA EN 10
-router.post('/:news/comments', auth.required, function (req, res, next) {
-    User.findById(req.payload.id).then(function (user) {
+/** CREATE NEW COMMENT 
+ * CADA VEZ QUE UN USUARIO CREE UN COMENTARIO SE LE AUMENTARA EL KARMA EN 10
+ */
+router.post('/:news/comments', auth.required, async function (req, res, next) {
+
+    try {
+        let user = await User.findById(req.payload.id);
         if (!user) { return res.sendStatus(401); }
 
-        var comment = new Comment(req.body.comment);
+        let comment = new Comment(req.body.comment);
         comment.news = req.news;
         comment.author = user;
 
-        return comment.save().then(function () {
-            req.news.comments = req.news.comments.concat([comment])
+        await comment.save();
+        req.news.comments = req.news.comments.concat([comment]);
 
-            return req.news.save().then(function (news) {
-                utils.increaseKarmaByUserId(user.id, 10).then(function () {
-                    req.news.updateCommentsCount().then(function () {
+        await req.news.save();
 
-                        res.json({ comment: comment.toJSONFor(user) });
-                    })
+        await utils.increaseKarmaByUserId(user.id, 10);
+        await req.news.updateCommentsCount();
 
-                })
+        res.json({ comment: comment.toJSONFor(user) });
+    } catch (error) {
+        next(error);
+    }
 
-            });
-        });
-    }).catch(next);
-});
+})
 
 //DELETE COMMENT
 router.delete('/:news/comments/:comment', auth.required, function (req, res, next) {
