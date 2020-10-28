@@ -4,8 +4,8 @@ backend/node_modules
 frontend/node_modules
 
 #CREDENTIALS
-backend/graphql/key
-backend/rest/key
+backend/graphql/key/apiKey.json
+backend/rest/key/apiKey.json
 
 #IMAGES
 frontend/src/images
