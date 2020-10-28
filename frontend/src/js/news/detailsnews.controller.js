@@ -22,6 +22,7 @@ class DetailsNews_Ctrl {
         this.commentForm = {
             isSubmitting: false,
             body: '',
+            CommentsCount:0,
             errors: []
         }
     }
@@ -48,8 +49,8 @@ class DetailsNews_Ctrl {
         console.log('id',commentId);
         this._Comments.destroy(commentId, this.news.slug).then(
             (success) => {
+                this.comments.splice(index, 1);
                 this.news.CommentsCount--;
-                this.comments.splice(index, 1)
             }
         )
 

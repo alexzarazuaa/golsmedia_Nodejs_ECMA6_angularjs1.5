@@ -376,12 +376,15 @@ router.post('/:news/comments', auth.required, async function (req, res, next) {
 
         await comment.save();
         req.news.comments = req.news.comments.concat([comment]);
+        req.news.CommentsCount += 1;
+
 
         await req.news.save();
 
         await utils.increaseKarmaByUserId(user.id, 10);
-        await req.news.updateCommentsCount();
+        console.log(req.news.CommentsCount);
 
+        // await req.news.updateCommentsCount();
         res.json({ comment: comment.toJSONFor(user) });
     } catch (error) {
         next(error);
@@ -390,17 +393,16 @@ router.post('/:news/comments', auth.required, async function (req, res, next) {
 })
 
 //DELETE COMMENT
-router.delete('/:news/comments/:comment', auth.required, function (req, res, next) {
+router.delete('/:news/comments/:comment', auth.required, async function (req, res, next) {
     if ((req.comment.author.toString() === req.payload.id.toString()) || (req.news.author._id.toString() === req.payload.id.toString())) {
-        req.news.comments.remove(req.comment._id);
-        req.news.save()
-            .then(Comment.find({ _id: req.comment._id }).remove().exec())
-            .then(function () {
-                req.news.updateCommentsCount().then(function () {
-                    res.sendStatus(204);
-                })
 
-            });
+        await req.news.comments.remove(req.comment._id);
+        req.news.CommentsCount--;
+        await req.news.save();
+
+        await Comment.find({ _id: req.comment._id }).remove().exec();
+        res.sendStatus(204);
+
     } else {
         res.sendStatus(403);
     }

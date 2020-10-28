@@ -22,7 +22,7 @@ const News = mongoose.model('new', NewsSchema)
 
 NewsSchema.plugin(uniqueValidator, { message: 'is already taken' });
 
-NewsSchema.pre('validate', function(next) {
+NewsSchema.pre('validate', function (next) {
     if (!this.slug) {
         this.slugify();
     }
@@ -30,34 +30,33 @@ NewsSchema.pre('validate', function(next) {
     next();
 });
 
-NewsSchema.methods.slugify = () =>{
+NewsSchema.methods.slugify = function() {
     this.slug = slug(this.title) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
 };
 
-NewsSchema.methods.updateFavoriteCount = function() {
+NewsSchema.methods.updateFavoriteCount = function () {
     var news = this;
 
-    return User.count({ favorites: { $in: [news._id] } }).then(function(count) {
+    return User.count({ favorites: { $in: [news._id] } }).then(function (count) {
         news.favoritesCount = count;
 
         return news.save();
     });
 };
 
-NewsSchema.methods.updateCommentsCount = ()=>{
+// NewsSchema.methods.updateCommentsCount = async () => {
+//     console.log('---------', news)
+//     let news = this;
 
-    let news = this;
-    console.log('---------',news)
-    console.log('+-------+-+-+-+-+--------------------------');
-  //  return true;
+//     console.log('+-------+-+-+-+-+--------------------------');
+//     //  return true;
 
+//     news = await News.find({ _id: news._id }, { comments: 1, _id: 0 })
+//     news.CommentsCount = data[0].comments.length;
+//     return news.save();
+//     //return true;
 
-    return News.find({ _id: news._id }, { comments: 1, _id: 0 }).then(function(data){
-      news.CommentsCount = data[0].comments.length;
-      return news.save();
-      //return true;
-    })
-}
+// }
 
 NewsSchema.methods.toJSONFor = function (user) {
     return {
@@ -72,7 +71,7 @@ NewsSchema.methods.toJSONFor = function (user) {
         favorited: user ? user.isFavorite(this._id) : false,
         favoritesCount: this.favoritesCount,
         comments: this.comments,
-        CommentsCount:this.CommentsCount,
+        CommentsCount: this.CommentsCount,
         author: this.author.toProfileJSONFor(user)
     };
 };
