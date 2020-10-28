@@ -1,11 +1,12 @@
 # Dependency directorys
 node_modules
-backend/node_modules
+backend/graphql/node_modules
+backend/rest/node_modules
 frontend/node_modules
 
 #CREDENTIALS
-backend/graphql/key/apiKey.json
-backend/rest/key/apiKey.json
+backend/graphql
+backend/rest
 
 #IMAGES
 frontend/src/images
