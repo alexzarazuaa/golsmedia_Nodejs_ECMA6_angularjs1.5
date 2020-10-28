@@ -1,9 +1,0 @@
-{
-    "GITHUB_CLIENT_ID" : "ebf8220381aca47760d6",
-    "GITHUB_CLIENT_SECRET" : "ad55235b927cf21385053446aeef14cf19fa2170",
-    "GITHUB_CALLBACK" : "http://localhost:3000/api/auth/github/callback",
-
-    "GOOGLE_CLIENT_ID" : "741128329867-ro0dhpf0gqnu6jk48niomo6n3kjqcdb1.apps.googleusercontent.com",
-    "GOOGLE_CLIENT_SECRET" : "eUIj-TxjQPjfUoO7tM3AwqeB",
-    "GOOGLE_CALLBACK" : "http://localhost:3000/api/auth/google/callback"
-}
