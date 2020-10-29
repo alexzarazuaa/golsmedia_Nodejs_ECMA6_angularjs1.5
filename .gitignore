@@ -5,9 +5,8 @@ backend/rest/node_modules
 frontend/node_modules
 
 #CREDENTIALS
-#backend/rest/key/apiKey.json
 apiKey.json
-
+#apiKey.json
 
 #IMAGES
 frontend/src/images
