@@ -1,9 +1,10 @@
-var router = require('express').Router();
 
-router.use('/', require('./users'));
-router.use('/profiles', require('./profiles'));
-router.use('/news', require('./ctrl_news'));
-router.use('/tags', require('./tags'));
+var router = require('express').Router();
+var SERVERS = require('./graphql');
+
+router.use('/graphqlauth', require('../auth').required);
+SERVERS.graphqlauth.applyMiddleware({ app: router, path:'/graphqlauth'});
+SERVERS.graphql.applyMiddleware({ app: router, path:'/graphql' });
 
 router.use(function(err, req, res, next){
   if(err.name === 'ValidationError'){

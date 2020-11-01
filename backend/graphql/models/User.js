@@ -2,10 +2,8 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
-const { resolveSrv } = require('dns');
-const { strict } = require('assert');
-//const { type } = require('os');
 var secret = require('../config').secret;
+
 
 var UserSchema = new mongoose.Schema({
     idsocial: { type: String, unique: true },
