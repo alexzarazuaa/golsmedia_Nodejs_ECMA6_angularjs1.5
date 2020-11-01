@@ -6,13 +6,12 @@ let slug = require('slug');
 let OpinionsSchema = new mongoose.Schema({
     slug: { type: String, unique: true },
     id: { type: Number , unique : true},
-    slug: String,
     type: String,
     category:String,
     description:String,
     body:String,
     user:{ type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    publishDate:Date
+    publishDate:String
 }, {
     timestamps: true,
     usePushEach: true
@@ -36,7 +35,6 @@ OpinionsSchema.methods.toJSONFor = function (user) {
     return {
         slug : this.slug,
         id : this.id,
-        slug:this.slug,
         type:this.type,
         category:this.category,
         description:this.description,

@@ -3,7 +3,7 @@ var router = require('express').Router();
 
 router.use('/api', require('./api'));
 //test_search
-router.use('/test',require('./test'));
+//router.use('/test',require('./test'));
 
 
 

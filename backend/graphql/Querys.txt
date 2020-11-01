@@ -1,0 +1,44 @@
+http://localhost:3002/api/graphql
+--------------------------GET ONE----------------------------------------------------------------
+{
+  opinion(slug:"Critica#9754") {
+    category
+    description
+    body
+    publishDate
+  }
+}
+
+-------------------------GET ALL-------------------------------------------------------
+{
+  opinions {
+	slug
+    category
+    description
+    body
+    publishDate
+  }
+}
+-----------------------Insert ONE-------------------------------------------------
+mutation createOpinion($input: OpinionInput) {
+  createOpinion(input: $input) {
+slug
+type
+category
+description
+body
+publishDate
+  }
+}
+
+---------------------------------- QUERY VARIABLES ---------------------------------------------
+
+{
+  "input": {
+    "type": "Critica",
+    "category" :"sport",
+    "description":"clasico muy aburrido",
+    "body":"a falta de galactivos en el clasico",
+    "publishDate":"1-11-2020"
+  }
+}

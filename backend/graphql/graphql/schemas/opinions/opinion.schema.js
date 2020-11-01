@@ -15,14 +15,14 @@ const typeDefs = gql`
         category:String
         description:String
         body:String
-        publishDate:Date
+        publishDate:String
     } 
     input OpinionInput {
         type: String
         category:String
         description:String
         body:String
-        publishDate:Date
+        publishDate:String
     }
 `;
 
