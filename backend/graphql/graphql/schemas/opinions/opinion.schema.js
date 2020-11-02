@@ -15,6 +15,7 @@ const typeDefs = gql`
         category:String
         description:String
         body:String
+        user:User
         publishDate:String
     } 
     input OpinionInput {
@@ -23,6 +24,7 @@ const typeDefs = gql`
         description:String
         body:String
         publishDate:String
+        user:String
     }
 `;
 

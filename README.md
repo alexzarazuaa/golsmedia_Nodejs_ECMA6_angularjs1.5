@@ -9,15 +9,22 @@
 ## INDEX
 
 * About this project
-* Built With
-* Features
-* License
+* PREVIEW
+* Requirements
 
          
 ## ABOUT THIS PROJECT 
 
- It is a web application where you can view all the news related to the world of sport.
-In relation to the football news you can choose your favorite team to be up to date with all the last hours
+GolsMedia is an application made during the second course of DAW (Development of web applications).
+
+In GolsMedia you will be able to see all the news related to the sport, in addition to being able to make comments, follow the authors of the news and other users, in addition to saving the news you want as favorites to always have it on your profile
+And see opinions on the latest news.
+
+## Requirements
+- Clone this repo
+- First of all : You'll have to install node and npm 
+
+  `apt install nodejs && apt install npm`
 
 ## BUILT WITH
 
