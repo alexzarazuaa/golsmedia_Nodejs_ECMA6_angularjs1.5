@@ -36,13 +36,10 @@ componentsModule.component('listPagination', ListPagination);
 
 // OPINIONS COMPONENTS
 
-import OpinionMeta from './opinions-helpers/restaurant-meta.component';
-componentsModule.component('restaurantMeta', RestaurantMeta);
+import OpinionPreview from './opinions-helpers/opinion-preview.component';
+componentsModule.component('opinionPreview', OpinionPreview);
 
-import RestaurantPreview from './restaurant-helpers/restaurant-preview.component';
-componentsModule.component('restaurantPreview', RestaurantPreview);
-
-import RestaurantList from './restaurant-helpers/restaurant-list.component';
-componentsModule.component('restaurantList', RestaurantList);
+import OpiniontList from './opinions-helpers/opinion-list.component';
+componentsModule.component('opiniontList', OpiniontList);
 
 export default componentsModule;

@@ -5,7 +5,6 @@ let slug = require('slug');
 
 let OpinionsSchema = new mongoose.Schema({
     slug: { type: String, unique: true },
-    id: { type: Number , unique : true},
     type: String,
     category:String,
     description:String,

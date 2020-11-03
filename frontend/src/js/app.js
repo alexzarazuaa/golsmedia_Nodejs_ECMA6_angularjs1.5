@@ -16,6 +16,7 @@ import './components'; //adding components
 import './home';
 import './profile';
 import './news';  // add first model news
+import './opinions'; //add Opinions model
 import './services';
 import './auth';
 import './settings';
@@ -31,7 +32,8 @@ const requires = [
   'app.components', //adding components
   'app.home',
   'app.profile',
-  'app.news', // add first model news, carregara cuando den click en el menu
+  'app.news', // add first model news
+  'app.opinions',//model opinions
   'app.services',
   'app.auth',
   'app.settings',

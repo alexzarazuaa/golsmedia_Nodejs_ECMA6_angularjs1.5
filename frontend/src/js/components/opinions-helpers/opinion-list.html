@@ -1,0 +1,8 @@
+
+<opinion-preview opinion="opinion" ng-repeat="opinion in $ctrl.list"></opinion-preview>
+
+<list-pagination total-pages="$ctrl.listConfig.totalPages" current-page="$ctrl.listConfig.currentPage"
+    ng-hide="$ctrl.listConfig.totalPages <= 1">
+</list-pagination>
+
+
