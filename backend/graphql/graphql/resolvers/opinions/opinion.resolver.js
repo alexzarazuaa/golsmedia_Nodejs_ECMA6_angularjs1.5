@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Opinion = mongoose.model('Opinion');
 //const User = mongoose.model('User');
-//const City = mongoose.model('City');
 
 const resolvers = {
   Query: {
@@ -13,12 +12,12 @@ const resolvers = {
     }
   },
   Mutation: {
-    createOpinion: async (root, { input }) => {
+    createOpinion: (root, { input }) => {
       const opinion = new Opinion(input);
-      console.log('++++++++++++++++++++++++++++++++', opinion)
-      await opinion.save();
-      console.log(opinion, "entra");
-      console.log('-----------------------------', opinion.save())
+      //console.log('++++++++++++++++++++++++++++++++', opinion)
+      opinion.save();
+      //console.log(opinion, "entra");
+      //console.log('-----------------------------',opinion)
       return opinion;
     }
   }

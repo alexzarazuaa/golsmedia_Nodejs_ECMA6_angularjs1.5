@@ -34,4 +34,15 @@ import ListPagination from './news-helpers/list-pagination.component';
 componentsModule.component('listPagination', ListPagination);
 
 
+// OPINIONS COMPONENTS
+
+import OpinionMeta from './opinions-helpers/restaurant-meta.component';
+componentsModule.component('restaurantMeta', RestaurantMeta);
+
+import RestaurantPreview from './restaurant-helpers/restaurant-preview.component';
+componentsModule.component('restaurantPreview', RestaurantPreview);
+
+import RestaurantList from './restaurant-helpers/restaurant-list.component';
+componentsModule.component('restaurantList', RestaurantList);
+
 export default componentsModule;

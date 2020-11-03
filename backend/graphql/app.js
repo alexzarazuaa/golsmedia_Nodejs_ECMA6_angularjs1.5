@@ -48,7 +48,7 @@ function mongooseConnect() {
       mongoose.set('useNewUrlParser', true);
       mongoose.set('useUnifiedTopology', true);
       try {
-        mongoose.connect('mongodb://localhost/app_social_conduit_js');
+        mongoose.connect('mongodb://localhost/golsmedia');
       } catch (error) {
         console.log(error);
         process.exit(1);
