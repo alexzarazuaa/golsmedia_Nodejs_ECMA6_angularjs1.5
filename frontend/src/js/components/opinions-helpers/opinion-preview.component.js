@@ -1,5 +1,5 @@
 
-let OpinionsPreview = {
+let OpinionPreview = {
     bindings:{
 
         opinion : '='
@@ -8,4 +8,4 @@ let OpinionsPreview = {
     templateUrl:'components/opinions-helpers/opinion-preview.html'
 }
 
-export default OpinionsPreview;
+export default OpinionPreview;

@@ -14,9 +14,7 @@
 
 
             <!-- List the Categories -->
-
-
-            <h2>GOSLMEDIA</h2>
+            <h2>GOLSMEDIA WORLDS</h2>
 
             <div class="container">
                 <div class="row">
@@ -29,8 +27,20 @@
             </div>
             
 
-            <!-- <opinion-list limit="3" list-config="$ctrl.listConfig">
-            </opinion-list> -->
+            <!-- OPINIONS LIST COMPONENT -->
+            <h2>REVIEWS</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4" ng-repeat="world in $ctrl.world">
+                        <div class="panel panel-info">
+                            <opinion-list></opinion-list>
+                        </div><br><br>
+                    </div>
+                </div>
+            </div>
+            
+  
+          
 
 
 

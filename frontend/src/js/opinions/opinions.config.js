@@ -8,6 +8,11 @@ function OpinionsConfig($stateProvider) {
             controllerAs: '$ctrl',
             templateUrl: 'opinions/opinions.html',
             title: 'opinions'
+            // resolve:{
+            //     opinions: function(Opinions) {
+            //         return Opinions.all().then(opinion => opinion); //recibo 1 news
+            //     }
+            // },
         });
 
 };

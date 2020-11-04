@@ -39,7 +39,7 @@ componentsModule.component('listPagination', ListPagination);
 import OpinionPreview from './opinions-helpers/opinion-preview.component';
 componentsModule.component('opinionPreview', OpinionPreview);
 
-import OpiniontList from './opinions-helpers/opinion-list.component';
-componentsModule.component('opiniontList', OpiniontList);
+import OpinionList from './opinions-helpers/opinion-list.component';
+componentsModule.component('opinionList', OpinionList);
 
 export default componentsModule;

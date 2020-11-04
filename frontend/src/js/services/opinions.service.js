@@ -9,16 +9,11 @@ export default class Opinions {
 
   }
 
-  query(config) {
-    if (!config.filters.offset) {
-      config.filters.offset = 0;
-    }
-    if (!config.filters.limit) {
-      config.filters.limit = 8;
-    }
+  query() {
+
     let query = `
           query getOpinions {
-            opinionsAndCount(limit:${config.filters.limit},offset:${config.filters.offset}) {
+            opinions{
               id
               slug
               type
@@ -27,35 +22,27 @@ export default class Opinions {
               body
               publishDate
             }
-            opinionsCount
+             
           }
         `;
     return this._GQL.get(query);
   }
 
-  get(slug) {
-    let deferred = this._$q.defer();
-
-    if (!slug.replace(" ", "")) {
-      deferred.reject("Opinion slug is empty");
-
-      return deferred.promise;
-    }
+  all() {
 
     let query = `
-          query getOpinion {
-            opinion(slug:"${slug}") {
-                id
+          query getOpinions {
+              id
               slug
               type
               category
               description
               body
               publishDate
-            }
+            
           }
         `;
-    return this._GQL.getAuth(query);
+    return this._GQL.get(query);
   }
 
 

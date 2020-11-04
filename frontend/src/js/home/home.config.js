@@ -13,9 +13,6 @@ function HomeConfig($stateProvider) {
                         return News.getWorld().then(world => world);
                     } //end_resolve_world
             }, //end_resolve
-            // resolve:{
-            //     images : function
-            // }
         });
 
 };

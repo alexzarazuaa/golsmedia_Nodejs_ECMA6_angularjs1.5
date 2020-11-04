@@ -1,12 +1,11 @@
 class OpinionsCtrl {
-  constructor() {
+  constructor(Opinions) {
     'ngInject';
 
     console.log('esta en el ctrl de opinions');
+    this.opinions = Opinions;
+    console.log(Opinions)
 
-    this.listConfig = {
-      type: 'all'
-    }
 
   }
 }
