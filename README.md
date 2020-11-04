@@ -9,7 +9,8 @@
 ## INDEX
 
 * About this project
-* Preview / Features
+* Preview 
+* Features
 * Requirements
 * Built With and technologies
 
@@ -24,6 +25,39 @@ And see opinions on the latest news.
 
 ## PREVIEW
 
+  <a href="https://github.com/alexzarazuaa/golsmedia_Nodejs_ECMA6_angularjs1.5">
+    <img src="frontend/src/images/README.png" alt="newsList">
+    <br>
+    <img src="frontend/src/images/README_2.png" alt="profile">
+    <br>
+    <img src="frontend/src/images/README_3.png" alt="details">
+
+  </a>
+
+  
+
+## FEATURES
+
+
+| Page | Features |
+| - | - |
+| Home | Categories with MongoDB and Reviews with GraphQL |
+| News | List with MongoDB, Details with MongoDB |
+| Reviews | List with GraphQL |
+| Settings | LogOut and  User Settings |
+| Profile | User info, favourited News and  your news |
+
+<br>
+
+| Service | Features |
+| - | - |
+| Register | Regular register or login with GitHub or Google |
+| Login | Regular login or login with GitHub or Google |
+| Favourites | Favourite button with News, favourited show up on profile  |
+| Comments | Comments the news in Details |
+
+<br>
+
 
 
 
@@ -32,7 +66,11 @@ And see opinions on the latest news.
 - First of all : You'll have to install node and npm 
 
   `apt install nodejs && apt install npm`
-- RUN   `docker-compose up -d` and `docker-compose up --build ` in /backend
+- Then :
+
+    `apt install docker-compose`
+
+   `docker-compose up -d` and `docker-compose up --build ` in /backend
 
 ## BUILT WITH
 
