@@ -1,10 +1,11 @@
 class FavoriteBtnCtrl {
-    constructor(User, News, $state) {
+    constructor(User, News, $state,Toastr) {
         'ngInject';
 
         this._User = User;
         this._News = News;
         this._$state = $state;
+        this._toastr=Toastr
 
     }
 
@@ -19,6 +20,7 @@ class FavoriteBtnCtrl {
         if (this.news.favorited) {
             this._News.unfavorite(this.news.slug).then(
                 () => {
+                    this._toastr.showToastr('error', '-10 KarmaPoints');
                     this.isSubmitting = false;
                     this.news.favorited = false;
                     this.news.favoritesCount--;
@@ -27,6 +29,7 @@ class FavoriteBtnCtrl {
         } else {
             this._News.favorite(this.news.slug).then(
                 () => {
+                    this._toastr.showToastr('success', '+10 KarmaPoints');
                     this.isSubmitting = true;
                     this.news.favorited = true;
                     this.news.favoritesCount++;

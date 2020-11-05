@@ -1,6 +1,6 @@
 
-var router = require('express').Router();
-var SERVERS = require('./graphql');
+const router = require('express').Router();
+const SERVERS = require('./graphql');
 
 router.use('/graphqlauth', require('../auth').required);
 SERVERS.graphqlauth.applyMiddleware({ app: router, path:'/graphqlauth'});

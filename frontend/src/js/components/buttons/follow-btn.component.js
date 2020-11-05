@@ -1,10 +1,11 @@
 class FollowBtnCtrl {
-    constructor(Profile, User, $state) {
+    constructor(Profile, User, $state,Toastr) {
         'ngInject';
 
         this._Profile = Profile;
         this._User = User;
         this._$state = $state;
+        this._toastr = Toastr;
 
         this.$onInit = () => {
             if (User.current) {
@@ -27,6 +28,7 @@ class FollowBtnCtrl {
         if (this.user.following) {
             this._Profile.unfollow(this.user.username).then(
                 () => {
+                    this._toastr.showToastr('error', '-10 KarmaPoints');
                     this.isSubmitting = false;
                     this.user.following = false;
                     this.user.followersCount--;
@@ -38,6 +40,7 @@ class FollowBtnCtrl {
         else {
             this._Profile.follow(this.user.username).then(
                 () => {
+                    this._toastr.showToastr('success', '+10 KarmaPoints');
                     this.isSubmitting = false;
                     this.user.following = true;
                     this.user.followersCount++;

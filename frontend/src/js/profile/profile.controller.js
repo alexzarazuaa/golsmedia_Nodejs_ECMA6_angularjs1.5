@@ -4,6 +4,8 @@ class ProfileCtrl {
       console.log("ENTRA PROFILE CTRL")
     this.profile = profile;
 
+    console.log(profile,'-----------------------')
+
     if (User.current) {
       console.log(this.profile)
       this.isUser = (User.current.username === this.profile.username);

@@ -3,13 +3,12 @@
     <!-- Banner for news title, action buttons -->
     <div class="banner">
         <div class="container">
-              <div class="info">
-                <span class="date"
-                  ng-bind="$ctrl.news.createdAt | date: 'longDate' ">
+            <div class="info">
+                <span class="date" ng-bind="$ctrl.news.createdAt | date: 'longDate' ">
                 </span>
                 <h1>{{$ctrl.news.title}}</h1>
-              </div>
-          
+            </div>
+
 
             <!-- Show author info + favorite & follow buttons -->
 
@@ -51,7 +50,7 @@
                             </div>
                             <div class="card-footer">
                                 <img ng-src="{{::$ctrl.currentUser.image}}" class="comment-author-img" />
-                                <i class="fa fa-comment"  style="font-size: 20px;">{{$ctrl.news.CommentsCount}}</i>
+                                <i class="fa fa-comment" style="font-size: 20px;">{{$ctrl.news.CommentsCount}}</i>
                                 <button class="btn btn-sm btn-primary" type="submit">
                                     Post Comment
                                 </button>
@@ -66,7 +65,8 @@
                 </div>
 
 
-                <comment ng-repeat="cmt in $ctrl.comments" news='$ctrl.news' data="cmt" delete-Cm="$ctrl.deleteComment(cmt.id, $index)">
+                <comment ng-repeat="cmt in $ctrl.comments" news='$ctrl.news' data="cmt"
+                    delete-Cm="$ctrl.deleteComment(cmt.id, $index)">
                 </comment>
 
 

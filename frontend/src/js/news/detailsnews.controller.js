@@ -1,5 +1,5 @@
 class DetailsNews_Ctrl {
-    constructor(news, Comments, comments,User, $scope) {
+    constructor(news, Comments, comments,User, $scope,Toastr) {
 
         "ngInject";
 
@@ -9,6 +9,7 @@ class DetailsNews_Ctrl {
         this._Comments = Comments;
         this.comments = comments;
         this.currentUser = User.current
+        this._toastr=Toastr;
 
         //
 
@@ -31,6 +32,7 @@ class DetailsNews_Ctrl {
         this.commentForm.isSubmitting = true;
         this._Comments.add(this.news.slug, this.commentForm.body).then(
             (comment) => {
+                this._toastr.showToastr('success', '+10 KarmaPoints');
                 this.news.CommentsCount++;
                 this.comments.unshift(comment);
                 this.resetCommentForm();

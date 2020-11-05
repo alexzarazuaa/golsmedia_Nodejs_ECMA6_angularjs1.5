@@ -20,7 +20,7 @@ http://localhost:3002/api/graphql
   }
 }
 -----------------------Insert ONE-------------------------------------------------
-mutation createOpinion($input: Op
+mutation createOpinion($input: 
   createOpinion(input: $input) {
 slug
 type

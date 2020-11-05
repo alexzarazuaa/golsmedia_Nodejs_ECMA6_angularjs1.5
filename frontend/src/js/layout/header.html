@@ -1,46 +1,41 @@
 <nav class="navbar navbar-light">
   <div class="container">
 
-    <a class="navbar-brand"
-      ui-sref="app.home"
-      ng-bind="::$ctrl.appName | lowercase">
+    <a class="navbar-brand" ui-sref="app.home" ng-bind="::$ctrl.appName | lowercase">
     </a>
 
     <!-- Show this for logged out users -->
-    <ul show-authed="false"
-      class="nav navbar-nav pull-xs-right">
+    <ul show-authed="false" class="nav navbar-nav pull-xs-right">
 
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.home">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.home">
           Home
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.news">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.news">
           Noticias
         </a>
       </li>
 
 
+      <li class="nav-item">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.opinions">
+          Reviews
+        </a>
+      </li>
+
 
 
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.login">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.login">
           Sign in
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.register">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.register">
           Sign up
         </a>
       </li>
@@ -48,54 +43,42 @@
     </ul>
 
     <!-- Show this for logged in users -->
-    <ul show-authed="true"
-      class="nav navbar-nav pull-xs-right">
+    <ul show-authed="true" class="nav navbar-nav pull-xs-right">
 
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.home">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.home">
           Home
         </a>
       </li>
 
+
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.opinions">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.opinions">
           Reviews
         </a>
       </li>
 
-
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.editor">
-          <i class="ion-compose"></i>&nbsp;New Article
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.news">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.news">
           Noticias
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.settings">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.settings">
           <i class="ion-gear-a"></i>&nbsp;Settings
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link"
-          ui-sref-active="active"
-          ui-sref="app.profile.main({ username: $ctrl.currentUser.username})">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.editor">
+          <i class="ion-compose"></i>&nbsp;New Article
+        </a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link" ui-sref-active="active" ui-sref="app.profile.main({ username: $ctrl.currentUser.username})">
           <img ng-src="{{$ctrl.currentUser.image}}" class="user-pic" />
           {{ $ctrl.currentUser.username }}
         </a>

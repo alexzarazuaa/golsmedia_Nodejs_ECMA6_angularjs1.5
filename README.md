@@ -26,7 +26,7 @@ And see opinions on the latest news.
 ## PREVIEW
 
   <a href="https://github.com/alexzarazuaa/golsmedia_Nodejs_ECMA6_angularjs1.5">
-    <img src="frontend/src/images/README.png" alt="newsList">
+    <img src="images/README.png" alt="newsList">
     <br>
     <img src="frontend/src/images/README_2.png" alt="profile">
     <br>
