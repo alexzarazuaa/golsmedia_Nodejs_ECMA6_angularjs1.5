@@ -1,0 +1,48 @@
+<div class="article-page">
+
+    <!-- Banner for news title, action buttons -->
+    <div class="banner">
+        <div class="container">
+              <div class="info">
+                <span class="date"
+                  ng-bind="$ctrl.opinion.opinion.publishDate">
+                </span>
+                <h1>{{$ctrl.opinion.opinion.type}}</h1>
+              </div>
+          
+
+            <!-- Show author info + favorite & follow buttons -->
+
+    
+        </div>
+    </div>
+    <!-- //Banner for news title, action buttons -->
+
+
+    <!-- Main view. Contains news html and comments -->
+    <div class="container page">
+
+        <!-- Article's HTML & tags rendered here -->
+        <div class="row article-content">
+            <div class="col-xs-12">
+                
+                <h3>{{$ctrl.opinion.opinion.description}}</span>
+
+                <h2>{{$ctrl.opinion.opinion.body}}</h2>
+
+
+            </div>
+        </div>
+
+        <hr />
+       
+        </div>
+
+        <!--// Comments section -->
+
+    </div>
+    <!-- //Main view. Contains news html and comments -->
+
+
+
+</div>

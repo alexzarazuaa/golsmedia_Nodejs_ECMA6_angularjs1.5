@@ -1,7 +1,14 @@
 <div class="opinion-preview">
 
-
-    <h1>{{$ctrl.opinion.slug}}</h1>
+    <a ui-sref="app.DetailsOpinions({slug:$ctrl.opinion.slug})"  class="preview-link">
+        <h3>{{$ctrl.opinion.type}}</h3>
+        <h4 ng-bind="$ctrl.opinion.description"></h4>
+        <ul class="tag-list">
+            <li class="tag-default tag-pill tag-outline">
+                <h5>{{$ctrl.opinion.category}}</h5>
+            </li>
+        </ul>
+    </a>
 
 
 </div>

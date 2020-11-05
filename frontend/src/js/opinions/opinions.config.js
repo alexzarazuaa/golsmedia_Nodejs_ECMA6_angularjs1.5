@@ -2,18 +2,26 @@ function OpinionsConfig($stateProvider) {
     'ngInject';
     console.log(" opinions config")
     $stateProvider
-        .state('app.opinions', {
-            url: '/opinions',
+        .state('app.DetailsOpinions', {
+            url: '/opinions/:slug',
             controller: 'OpinionsCtrl',
             controllerAs: '$ctrl',
+            templateUrl: 'opinions/opinion.html',
+            title: 'opinion',
+            resolve: {
+                opinion: function (Opinions, $stateParams) {
+                    return Opinions.queryOne($stateParams.slug).then(opinion => opinion); 
+                },
+            },
+            
+        })
+        .state('app.opinions', {
+            url: '/opinions',
             templateUrl: 'opinions/opinions.html',
             title: 'opinions'
-            // resolve:{
-            //     opinions: function(Opinions) {
-            //         return Opinions.all().then(opinion => opinion); //recibo 1 news
-            //     }
-            // },
         });
+
+
 
 };
 

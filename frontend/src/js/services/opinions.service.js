@@ -9,6 +9,9 @@ export default class Opinions {
 
   }
 
+  /**
+   * RETURN ALL OPINIONS
+   */
   query() {
 
     let query = `
@@ -28,22 +31,32 @@ export default class Opinions {
     return this._GQL.get(query);
   }
 
-  all() {
 
+  /**
+   * 
+   * RETURN ONE OPINION
+   * 
+   */
+
+  queryOne(slug) {
     let query = `
-          query getOpinions {
-              id
-              slug
-              type
-              category
-              description
-              body
-              publishDate
-            
-          }
-        `;
-    return this._GQL.get(query);
+     query getOpinion{
+       opinion(slug:"${slug}") {
+      id
+      slug
+      type
+      category
+      description
+      body
+      publishDate
+    }
   }
+
+     `;
+     return this._GQL.get(query);
+  }
+
+
 
 
 

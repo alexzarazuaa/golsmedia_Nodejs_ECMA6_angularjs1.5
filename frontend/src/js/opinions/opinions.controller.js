@@ -1,10 +1,10 @@
 class OpinionsCtrl {
-  constructor(Opinions) {
+  constructor(opinion) {
     'ngInject';
 
-    console.log('esta en el ctrl de opinions');
-    this.opinions = Opinions;
-    console.log(Opinions)
+    console.log('esta en el ctrl de opinion');
+    this.opinion = opinion;
+    console.log('Ctrl opinion Details -----> ',opinion.opinion.slug)
 
 
   }

@@ -1,0 +1,32 @@
+<div class="home-page">
+    <!-- Splash banner that only shows when not logged in -->
+    <div class="banner" show-authed="false">
+        <div class="container">
+            <h1 class="logo-font" ng-bind="::$ctrl.appName | lowercase"></h1>
+            <p>DIARIO ONLINE LÍDER REGIONAL</p>
+        </div>
+    </div>
+
+    <div class="container page">
+        <div class="row">
+
+
+            <!-- Main view - contains tabs & news list -->
+            <div class="col-md-9">
+                <!-- Tabs for toggling between feed, news lists -->
+                <div class="feed-toggle">
+                  
+                </div>
+
+                <!-- List the current news -->
+
+
+                <opinion-list></opinion-list>
+
+            </div>
+
+            <!-- End the row & container divs -->
+        </div>
+    </div>
+
+</div>
