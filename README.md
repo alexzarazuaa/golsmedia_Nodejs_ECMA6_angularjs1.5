@@ -30,6 +30,8 @@ And see opinions on the latest news.
     <br>
     <img src="frontend/img/README.png" alt="newsList">
     <br>
+    <img src="frontend/img/readme_R.png" alt="reviews">
+    <br>
     <img src="frontend/img/README_2.png" alt="profile">
     <br>
     <img src="frontend/img/README_3.png" alt="details">
