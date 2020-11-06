@@ -32,7 +32,7 @@ And see opinions on the latest news.
     <h2>NEWS<h2>
     <img src="frontend/img/README.png" alt="newsList">
     <br>
-    <h2>RVIEWS<h2>
+    <h2>REVIEWS<h2>
     <img src="frontend/img/readme_R.png" alt="reviews">
     <br>
     <h2>PROFILE<h2>
