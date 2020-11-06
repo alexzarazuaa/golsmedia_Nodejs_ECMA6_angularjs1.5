@@ -10,9 +10,14 @@ class OpinionsCtrl {
     /**
      * PREGUNTAR EL PORQUE DE opinion.opinion
      */
-    console.log('all--------------------',opinion)
-    console.log('Ctrl opinion Details -----> ',opinion.opinion.slug)
+    console.log('all--------------------', opinion)
+    console.log('Ctrl opinion Details -----> ', opinion.opinion.slug)
 
+    this.listConfig = {
+      type:  'all'
+    };
+
+    console.log(this.listConfig)
 
   }
 }
