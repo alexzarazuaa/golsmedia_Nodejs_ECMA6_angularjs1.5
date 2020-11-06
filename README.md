@@ -26,14 +26,19 @@ And see opinions on the latest news.
 ## PREVIEW
 
   <a href="https://github.com/alexzarazuaa/golsmedia_Nodejs_ECMA6_angularjs1.5">
+    <h2>HOME<h2>
     <img src="frontend/img/README_H.png" alt="home">
     <br>
+    <h2>NEWS<h2>
     <img src="frontend/img/README.png" alt="newsList">
     <br>
+    <h2>RVIEWS<h2>
     <img src="frontend/img/readme_R.png" alt="reviews">
     <br>
+    <h2>PROFILE<h2>
     <img src="frontend/img/README_2.png" alt="profile">
     <br>
+    <h2>DETAIL NEWS<h2>
     <img src="frontend/img/README_3.png" alt="details">
 
   </a>
