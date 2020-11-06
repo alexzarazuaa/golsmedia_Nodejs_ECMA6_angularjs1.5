@@ -50,7 +50,7 @@ And see opinions on the latest news.
 
 | Page | Features |
 | - | - |
-| Home | Categories with MongoDB and Reviews with GraphQL |
+| Home | Categories with MongoDB  |
 | News | List with MongoDB, Details with MongoDB |
 | Reviews | List with GraphQL |
 | Settings | LogOut and  User Settings |
