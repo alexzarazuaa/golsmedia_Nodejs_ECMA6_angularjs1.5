@@ -1,9 +1,13 @@
+
+
 class News_Ctrl {
     constructor(AppConstants, $scope,$state, $stateParams, Tags, User) {
         "ngInject";
 
         console.log('llega al controler de news')
+        // console.log('----------->',request.getOpinions());
         this._$scope = $scope;
+     
 
         this.appName = AppConstants.appName;
         // this.newss = newss;

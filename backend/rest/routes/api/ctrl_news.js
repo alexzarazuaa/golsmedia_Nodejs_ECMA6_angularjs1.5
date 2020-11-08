@@ -6,6 +6,7 @@ var User = mongoose.model('User');
 var auth = require('../auth');
 let utils = require('../utils/UsersUtils')
 let NewsUtils = require('../utils/NewsUtils')
+let query = require('./QueryConnect');
 
 // Preload news objects on routes with ':news'
 router.param('news', function (req, res, next, slug) {
@@ -19,6 +20,8 @@ router.param('news', function (req, res, next, slug) {
             return next();
         }).catch(next);
 });
+
+
 
 
 // return all news
@@ -154,6 +157,25 @@ router.post('/', auth.required, async function (req, res, next) {
 
 });
 
+
+
+/**
+ * OPINIONS BACKEND COMUNICATION
+ * REVIEWS WITH THE SAME CATEGORY OR TYPE FROM GRAPHQL
+ */
+
+router.get('/opinions', function(req, res, next) {
+
+    const request = require('request');
+    request(`http://localhost:3002/api?query={opinions}`, function (error, response, body) {
+      if (error) {
+        console.error('error:', error); 
+      } else {
+        let results = JSON.parse(body);
+        return res.json({opinion: req.opinion.toJSONFor()});
+      }
+    });
+  });
 
 
 // CREAR NOTICIAS CON EL ASYNC Y EL AWAIT ADEMAS DE UTILIZAR LA FUNCION DE SI ES ADMIN
