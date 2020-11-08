@@ -39,7 +39,7 @@ if (!isProduction) {
 if(isProduction){
   mongoose.connect(process.env.MONGODB_URI);
 } else {
-  mongoose.connect('mongodb://mongo:27017/golsmedia'); 'mongodb://mongo:27017/golsmedia'
+  mongoose.connect('mongodb://mongo:27017/golsmedia'); //'mongodb://mongo:27017/golsmedia'
   mongoose.set('debug', true);
 }
 

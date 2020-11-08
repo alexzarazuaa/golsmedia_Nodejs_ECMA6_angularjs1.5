@@ -37,4 +37,4 @@ OpinionSchema.methods.toJSONFor = function (user) {
         publishDate: this.publishDate,
     };
 };
-mongoose.model('Company', OpinionSchema); 
+mongoose.model('Opinios', OpinionSchema); 
