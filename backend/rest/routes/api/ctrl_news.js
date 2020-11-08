@@ -139,11 +139,11 @@ router.post('/', auth.required, async function (req, res, next) {
         let user = await User.findById(req.payload.id)
         console.log(user)
         if (!user) { return res.sendStatus(401); }
-
+        let opinion= await query.OpinionsRequest(req.body.news.opinion)
         let news = News(req.body.news);
 
         news.author = user;
-
+        news.world = opinion.type
         await news.save();
 
         console.log(news.author);
@@ -164,18 +164,18 @@ router.post('/', auth.required, async function (req, res, next) {
  * REVIEWS WITH THE SAME CATEGORY OR TYPE FROM GRAPHQL
  */
 
-router.get('/opinions', function(req, res, next) {
+// router.get('/opinions', function(req, res, next) {
 
-    const request = require('request');
-    request(`http://localhost:3002/api?query={opinions}`, function (error, response, body) {
-      if (error) {
-        console.error('error:', error); 
-      } else {
-        let results = JSON.parse(body);
-        return res.json({opinion: req.opinion.toJSONFor()});
-      }
-    });
-  });
+//     const request = require('request');
+//     request(`http://localhost:3002/api?query={opinions}`, function (error, response, body) {
+//       if (error) {
+//         console.error('error:', error); 
+//       } else {
+//         let results = JSON.parse(body);
+//         return res.json({opinion: req.opinion.toJSONFor()});
+//       }
+//     });
+//   });
 
 
 // CREAR NOTICIAS CON EL ASYNC Y EL AWAIT ADEMAS DE UTILIZAR LA FUNCION DE SI ES ADMIN

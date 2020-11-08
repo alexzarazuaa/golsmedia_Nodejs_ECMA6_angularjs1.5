@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var slug = require('slug');
 var User = mongoose.model('User');
+var Opinions = mongoose.model('Opinions');
+
 
 //PONER TAMBIEN IMAGENES PARA CUANDO SUBA LAS NOTICIAS HAYAN IMAGENES.
 var NewsSchema = new mongoose.Schema({
@@ -12,13 +14,13 @@ var NewsSchema = new mongoose.Schema({
     world: String,
     favoritesCount: { type: Number, default: 0 },
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    opinions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Opinions' }],
     CommentsCount: { type: Number, default: 0 },
     tagList: [{ type: String }],
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
 
-const News = mongoose.model('new', NewsSchema)
 
 NewsSchema.plugin(uniqueValidator, { message: 'is already taken' });
 
@@ -44,19 +46,7 @@ NewsSchema.methods.updateFavoriteCount = function () {
     });
 };
 
-// NewsSchema.methods.updateCommentsCount = async () => {
-//     console.log('---------', news)
-//     let news = this;
 
-//     console.log('+-------+-+-+-+-+--------------------------');
-//     //  return true;
-
-//     news = await News.find({ _id: news._id }, { comments: 1, _id: 0 })
-//     news.CommentsCount = data[0].comments.length;
-//     return news.save();
-//     //return true;
-
-// }
 
 NewsSchema.methods.toJSONFor = function (user) {
     return {
@@ -72,6 +62,7 @@ NewsSchema.methods.toJSONFor = function (user) {
         favoritesCount: this.favoritesCount,
         comments: this.comments,
         CommentsCount: this.CommentsCount,
+        opinions:this.opinions,
         author: this.author.toProfileJSONFor(user)
     };
 };

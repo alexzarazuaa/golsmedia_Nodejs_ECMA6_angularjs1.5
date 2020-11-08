@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Opinion = mongoose.model('Opinion');
+
 //const User = mongoose.model('User');
 
 const resolvers = {
@@ -18,6 +19,8 @@ const resolvers = {
       opinion.save();
       //console.log(opinion, "entra");
       //console.log('-----------------------------',opinion)
+
+
       return opinion;
     }
   }

@@ -21,7 +21,7 @@ var UserSchema = new mongoose.Schema({
     karma : { type: Number, default: 0 }
 }, { timestamps: true });
 
-const User = mongoose.model('user', UserSchema)
+
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
