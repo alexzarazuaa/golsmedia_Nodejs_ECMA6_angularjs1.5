@@ -83,6 +83,14 @@ router.get('/', auth.optional, function (req, res, next) {
     }).catch(next);
 });
 
+
+/**
+ * CONEXION AXIOS GRAPHQL DATA
+ */
+router.all('/opinions',async  function (_, res) {
+    return res.json({ opinions: await query.OpinionsRequest() });
+});
+
 //Return feed news 
 router.get('/feed', auth.required, function (req, res, next) {
     var limit = 20;
@@ -143,7 +151,7 @@ router.post('/', auth.required, async function (req, res, next) {
         let news = News(req.body.news);
 
         news.author = user;
-        news.world = opinion.type
+         news.world = opinion.type;
         await news.save();
 
         console.log(news.author);
@@ -157,92 +165,6 @@ router.post('/', auth.required, async function (req, res, next) {
 
 });
 
-
-
-/**
- * OPINIONS BACKEND COMUNICATION
- * REVIEWS WITH THE SAME CATEGORY OR TYPE FROM GRAPHQL
- */
-
-// router.get('/opinions', function(req, res, next) {
-
-//     const request = require('request');
-//     request(`http://localhost:3002/api?query={opinions}`, function (error, response, body) {
-//       if (error) {
-//         console.error('error:', error); 
-//       } else {
-//         let results = JSON.parse(body);
-//         return res.json({opinion: req.opinion.toJSONFor()});
-//       }
-//     });
-//   });
-
-
-// CREAR NOTICIAS CON EL ASYNC Y EL AWAIT ADEMAS DE UTILIZAR LA FUNCION DE SI ES ADMIN
-//SOLO PUEDE CREAR NOTICIAS SI ES ADMIN
-
-// router.post('/', auth.required, async (req, res, next) => {
-//     try {
-//         let admin = await utils.IsAdminUser(req.payload.email);
-
-//       await User.findById(req.payload.id).then(function (user) {
-//             console.log(user)
-//             if (!user) { return res.sendStatus(401); }
-//             else {
-//                 console.log('+++++++++++++++++', admin)
-//                 if (admin ) {
-
-//                     let news = new News(req.body.news);
-
-//                     news.author = user;
-
-//                     return news.save().then(function () {
-//                         // console.log(news.author);
-//                         return res.json({ news: news.toJSONFor(user) });
-//                     });
-//                 }
-//                 else {
-//                     console.log('unauthorized')
-//                     return res.status(422).json('error');
-//                 }
-//             }
-//         }).catch(next);
-
-
-//     } catch (e) {
-//         next(e);
-//     }
-// });
-
-
-// router.post('/', auth.required, async (req, res, next) => {
-//     try {
-//         // Comprobar datos obligatorios
-//         if (!await utils.IsAdminUser(req.payload.email))
-//             return res.status(401).json({ error: 'Unauthorized' });
-//         User.findById(req.payload.id).then( async function  (user) {
-//             console.log(user)
-//             if (!user) { return res.sendStatus(401); }
-
-//             var news = new News(req.body.news);
-
-//             news.author = user;
-
-//             // Crear recurso
-//             var news = new News();
-//             news.title = req.body.news.title;
-//             news.type = type;
-//             news.description = req.body.news.description;
-//             news.body = req.body.news.body;
-//             news.world = req.body.news.world;
-//             news.tagList = req.body.news.tagList;
-//             await news.save();
-//             return res.status(201).send({ news });
-//         });
-//     } catch (e) {
-//         next(e);
-//     }
-// });
 
 
 // return a new

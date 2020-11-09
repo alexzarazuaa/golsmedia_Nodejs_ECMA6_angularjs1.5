@@ -63068,8 +63068,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var OpinionsListCtrl = function () {
-    OpinionsListCtrl.$inject = ["Opinions", "$scope"];
-    function OpinionsListCtrl(Opinions, $scope) {
+    OpinionsListCtrl.$inject = ["Opinions", "$scope", "News"];
+    function OpinionsListCtrl(Opinions, $scope, News) {
         "ngInject";
 
         var _this = this;
@@ -63078,6 +63078,7 @@ var OpinionsListCtrl = function () {
 
         console.log('---- OPINIONS LIST ----');
         this._Opinions = Opinions;
+        this._News = News;
 
         this.$onInit = function () {
             _this.setListTo(_this.listConfig);
@@ -63103,14 +63104,11 @@ var OpinionsListCtrl = function () {
             // Show the loading indicator
             this.loading = true;
             this.listConfig = this.listConfig || {};
-
             // Run the query
-            this._Opinions.query().then(function (res) {
-                console.log('console res in run query', res);
-                _this2.loading = false;
-                // Update list and total pages
+            this._News.listOpinions().then(function (res) {
+                console.log('console res in run query', res.opinions[0].category);
                 _this2.list = res.opinions;
-                console.log('console res in run query opinions -->', res.opinions);
+                console.log('console res in run query opinions -->', _this2.list);
             });
         }
     }]);
@@ -63314,12 +63312,12 @@ angular.module("templates", []).run(["$templateCache", function ($templateCache)
   $templateCache.put("profile/profile-news.html", "<news-list limit=\"3\" list-config=\"$ctrl.listConfig\">\n</news-list>");
   $templateCache.put("profile/profile.html", "<div class=\"profile-page\">\n\n    <!-- User\'s basic info & action buttons -->\n    <div class=\"user-info\">\n        <div class=\"container\">\n            <div class=\"row\">\n                <div class=\"col-xs-12 col-md-10 offset-md-1\">\n\n                    <img ng-src=\"{{::$ctrl.profile.image}}\" class=\"user-img\" />\n                    <h4 ng-bind=\"::$ctrl.profile.username\"></h4>\n                    <h4 style=\"color:blacksd; \">Karma Points : {{$ctrl.profile.karma}} </h4>\n                    <p>{{$ctrl.profile.bio}}</p>\n\n                    <a ui-sref=\"app.settings\" class=\"btn btn-sm btn-outline-secondary action-btn\" ng-show=\"$ctrl.isUser\">\n                        <i class=\"ion-gear-a\"></i> Edit Profile Settings\n                        \n                    </a>\n                   \n                    <follow-btn user=\"$ctrl.profile\" ng-hide=\"$ctrl.isUser\"></follow-btn>\n\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <!-- Container where User\'s posts & favs are list w/ toggle tabs -->\n    <div class=\"container\">\n        <div class=\"row\">\n\n            <div class=\"col-xs-12 col-md-10 offset-md-1\">\n\n                <!-- Tabs for switching between author noticias & favorites -->\n                <div class=\"articles-toggle\">\n                    <ul class=\"nav nav-pills outline-active\">\n\n                        <li class=\"nav-item\">\n                            <a class=\"nav-link active\" ui-sref-active=\"active\" ui-sref=\"app.profile.main({username: $ctrl.profile.username})\">\n                Mis Noticias\n              </a>\n                        </li>\n\n                        <li class=\"nav-item\">\n                            <a class=\"nav-link\" ui-sref-active=\"active\" ui-sref=\"app.profile.favorites({username: $ctrl.profile.username})\">\n                NOTICIAS  FAVORITAS\n              </a>\n                        </li>\n\n                    </ul>\n                </div>\n\n                <!-- List of articles -->\n                <div ui-view></div>\n\n\n            </div>\n\n            <!-- End row & container divs -->\n        </div>\n    </div>\n\n</div>");
   $templateCache.put("settings/settings.html", "<div class=\"settings-page\">\n  <div class=\"container page\">\n    <div class=\"row\">\n      <div class=\"col-md-6 offset-md-3 col-xs-12\">\n\n        <h1 class=\"text-xs-center\">Your Settings</h1>\n\n        <list-errors errors=\"$ctrl.errors\"></list-errors>\n\n        <form ng-submit=\"$ctrl.submitForm()\">\n          <fieldset ng-disabled=\"$ctrl.isSubmitting\">\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control\"\n                type=\"text\"\n                placeholder=\"URL of profile picture\"\n                ng-model=\"$ctrl.formData.image\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"text\"\n                placeholder=\"Username\"\n                ng-model=\"$ctrl.formData.username\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <textarea class=\"form-control form-control-lg\"\n                rows=\"8\"\n                placeholder=\"Short bio about you\"\n                ng-model=\"$ctrl.formData.bio\">\n              </textarea>\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"email\"\n                placeholder=\"Email\"\n                ng-model=\"$ctrl.formData.email\" />\n            </fieldset>\n\n            <fieldset class=\"form-group\">\n              <input class=\"form-control form-control-lg\"\n                type=\"password\"\n                placeholder=\"New Password\"\n                ng-model=\"$ctrl.formData.password\" />\n            </fieldset>\n\n            <button class=\"btn btn-lg btn-primary pull-xs-right\"\n              type=\"submit\">\n              Update Settings\n            </button>\n\n          </fieldset>\n        </form>\n\n        <!-- Line break for logout button -->\n        <hr />\n\n        <button class=\"btn btn-outline-danger\"\n          ng-click=\"$ctrl.logout()\">\n          Or click here to logout.\n        </button>\n\n      </div>\n    </div>\n  </div>\n</div>\n");
-  $templateCache.put("components/buttons/favorite-btn.html", "<button class=\"btn btn-sm\" ng-class=\"{ \'disabled\' : $ctrl.isSubmitting,\n              \'btn-outline-primary\': !$ctrl.news.favorited,\n              \'btn-primary\': $ctrl.news.favorited }\" ng-click=\"$ctrl.submit()\">\n  <i class=\"ion-heart\"></i> <ng-transclude></ng-transclude>\n</button>");
-  $templateCache.put("components/buttons/follow-btn.html", "<button\n  class=\"btn btn-sm action-btn\"\n  ng-class=\"{ \'disabled\': $ctrl.isSubmitting,\n              \'btn-outline-secondary\': !$ctrl.user.following,\n              \'btn-secondary\': $ctrl.user.following }\"\n  ng-click=\"$ctrl.submit()\">\n  <i class=\"ion-plus-round\"></i>\n  &nbsp;\n  {{ $ctrl.user.following ? \'Unfollow\' : \'Follow\' }} {{ $ctrl.user.username }}\n</button>\n");
   $templateCache.put("components/article-helpers/article-list.html", "<article-preview\n  article=\"article\"\n  ng-repeat=\"article in $ctrl.list\">\n</article-preview>\n\n<div class=\"article-preview\"\n  ng-hide=\"!$ctrl.loading\">\n  Loading articles...\n</div>\n\n<div class=\"article-preview\"\n  ng-show=\"!$ctrl.loading && !$ctrl.list.length\">\n  No articles are here... yet.\n</div>\n\n<list-pagination\n total-pages=\"$ctrl.listConfig.totalPages\"\n current-page=\"$ctrl.listConfig.currentPage\"\n ng-hide=\"$ctrl.listConfig.totalPages <= 1\">\n</list-pagination>\n");
   $templateCache.put("components/article-helpers/article-meta.html", "<div class=\"article-meta\">\n  <a ui-sref=\"app.profile.main({ username:$ctrl.article.author.username })\">\n    <img ng-src=\"{{$ctrl.article.author.image}}\" />\n  </a>\n\n  <div class=\"info\">\n    <a class=\"author\"\n      ui-sref=\"app.profile.main({ username:$ctrl.article.author.username })\"\n      ng-bind=\"$ctrl.article.author.username\">\n    </a>\n    <span class=\"date\"\n      ng-bind=\"$ctrl.article.createdAt | date: \'longDate\' \">\n    </span>\n  </div>\n\n  <ng-transclude></ng-transclude>\n</div>\n");
   $templateCache.put("components/article-helpers/article-preview.html", "<div class=\"article-preview\">\n  <article-meta article=\"$ctrl.article\">\n    <favorite-btn\n      article=\"$ctrl.article\"\n      class=\"pull-xs-right\">\n      {{$ctrl.article.favoritesCount}}\n    </favorite-btn>\n  </article-meta>\n\n  <a ui-sref=\"app.article({ slug: $ctrl.article.slug })\" class=\"preview-link\">\n    <h1 ng-bind=\"$ctrl.article.title\"></h1>\n    <p ng-bind=\"$ctrl.article.description\"></p>\n    <span>Read more...</span>\n    <ul class=\"tag-list\">\n      <li class=\"tag-default tag-pill tag-outline\"\n        ng-repeat=\"tag in $ctrl.article.tagList\">\n        {{tag}}\n      </li>\n    </ul>\n  </a>\n</div>\n");
   $templateCache.put("components/article-helpers/list-pagination.html", "<nav>\n  <ul class=\"pagination\">\n\n    <li class=\"page-item\"\n      ng-class=\"{active: pageNumber === $ctrl.currentPage }\"\n      ng-repeat=\"pageNumber in $ctrl.pageRange($ctrl.totalPages)\"\n      ng-click=\"$ctrl.changePage(pageNumber)\">\n\n      <a class=\"page-link\" href=\"\">{{ pageNumber }}</a>\n\n    </li>\n\n  </ul>\n</nav>\n");
+  $templateCache.put("components/buttons/favorite-btn.html", "<button class=\"btn btn-sm\" ng-class=\"{ \'disabled\' : $ctrl.isSubmitting,\n              \'btn-outline-primary\': !$ctrl.news.favorited,\n              \'btn-primary\': $ctrl.news.favorited }\" ng-click=\"$ctrl.submit()\">\n  <i class=\"ion-heart\"></i> <ng-transclude></ng-transclude>\n</button>");
+  $templateCache.put("components/buttons/follow-btn.html", "<button\n  class=\"btn btn-sm action-btn\"\n  ng-class=\"{ \'disabled\': $ctrl.isSubmitting,\n              \'btn-outline-secondary\': !$ctrl.user.following,\n              \'btn-secondary\': $ctrl.user.following }\"\n  ng-click=\"$ctrl.submit()\">\n  <i class=\"ion-plus-round\"></i>\n  &nbsp;\n  {{ $ctrl.user.following ? \'Unfollow\' : \'Follow\' }} {{ $ctrl.user.username }}\n</button>\n");
   $templateCache.put("components/news-helpers/list-pagination.html", "<nav>\n    <ul class=\"pagination\">\n  \n      <li class=\"page-item\"\n        ng-class=\"{active: pageNumber === $ctrl.currentPage }\"\n        ng-repeat=\"pageNumber in $ctrl.pageRange($ctrl.totalPages)\"\n        ng-click=\"$ctrl.changePage(pageNumber)\">\n  \n        <a class=\"page-link\" href=\"\">{{ pageNumber }}</a>\n  \n      </li>\n  \n    </ul>\n  </nav>\n  ");
   $templateCache.put("components/news-helpers/news-detail.html", "<div class=\"news\">\n    <h1>{{ $ctrl.news.title}}</h1>\n    <span>{{ $ctrl.news.description}}</span>\n    <br>\n    <br>\n    <h4>{{ $ctrl.news.body}}</h4>\n    <p class=\"author\">AUTHOR : {{ $ctrl.news.author.username}} <br> Noticia Creada : {{ $ctrl.news.createdAt | date: \'longDate\'}} </p>\n    <!-- FAVORITE BTN -->\n    <favorite-btn news=\"$ctrl.news\" class=\"pull-xs-left\">\n        {{$ctrl.news.favoritesCount}}\n    </favorite-btn>\n    <!--FOLLOW BTN-->\n\n    <follow-btn user=\"$ctrl.news.author\">\n    </follow-btn>\n\n\n    <button ui-sref=\"app.news\">VOLVER A NOTICIAS</button>\n</div>");
   $templateCache.put("components/news-helpers/news-list.html", "<news-preview news=\"news\" ng-repeat=\"news in $ctrl.list\">\n</news-preview>\n\n\n<div class=\"news-preview\" ng-hide=\"!$ctrl.loading\">\n    Cargando Noticias...\n</div>\n\n<div class=\"news-preview\" ng-show=\"!$ctrl.loading && !$ctrl.list.length\">\n  Aún no hay noticias...\n</div>\n\n<list-pagination total-pages=\"$ctrl.listConfig.totalPages\" current-page=\"$ctrl.listConfig.currentPage\"\n    ng-hide=\"$ctrl.listConfig.totalPages <= 1\">\n</list-pagination>");
@@ -63783,8 +63781,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var DetailsNews_Ctrl = function () {
-    DetailsNews_Ctrl.$inject = ["news", "Comments", "comments", "User", "$scope", "Toastr"];
-    function DetailsNews_Ctrl(news, Comments, comments, User, $scope, Toastr) {
+    DetailsNews_Ctrl.$inject = ["news", "Comments", "comments", "User", "$scope", "Toastr", "News"];
+    function DetailsNews_Ctrl(news, Comments, comments, User, $scope, Toastr, News) {
 
         "ngInject";
 
@@ -63797,8 +63795,7 @@ var DetailsNews_Ctrl = function () {
         this.comments = comments;
         this.currentUser = User.current;
         this._toastr = Toastr;
-
-        //
+        this._News = News;
 
         this.resetCommentForm();
     } //end_construtor
@@ -64813,6 +64810,18 @@ var Newss = function () {
             return this._$http({
                 url: this._AppConstants.api + '/news/' + slug + '/favorite',
                 method: 'DELETE'
+            });
+        }
+
+        // OPINIONS DATA FOMR GRAPHQL
+
+    }, {
+        key: "listOpinions",
+        value: function listOpinions() {
+            return this._$http({
+                url: this._AppConstants.api + "/news/opinions"
+            }).then(function (res) {
+                return res.data;
             });
         }
     }]);

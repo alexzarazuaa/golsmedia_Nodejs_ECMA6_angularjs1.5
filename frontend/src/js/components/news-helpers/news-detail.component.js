@@ -4,9 +4,12 @@ class NewsDetailctrl {
     "ngInject";
 
     this._$scope = $scope;
-
+   
+ 
 
   }
+
+
 }
 
 let NewsDetail = {

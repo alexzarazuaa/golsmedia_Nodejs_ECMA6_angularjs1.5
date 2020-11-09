@@ -45,9 +45,10 @@ if(isProduction){
 
 require('./models/User');
 require('./models/News');
+require('./models/Opinions');
 require('./models/Comment');
 require('./config/passport');
-requireq('./models/Opinions');
+
 
 
 app.use(passport.initialize());

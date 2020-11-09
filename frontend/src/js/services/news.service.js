@@ -81,6 +81,10 @@ export default class Newss {
     }
 
 
+
+
+
+
     // FAVORITE AND UNFAVORITE
 
     favorite(slug) {
@@ -98,5 +102,15 @@ export default class Newss {
     }
 
 
+
+    // OPINIONS DATA FOMR GRAPHQL
+
+    listOpinions() {
+        return this._$http({
+            url: this._AppConstants.api + "/news/opinions"
+        }).then(res => {
+            return res.data;
+        });
+    }
 
 }

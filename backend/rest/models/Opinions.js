@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var slug = require('slug');
-var User = mongoose.model('User');
 
 var OpinionSchema = new mongoose.Schema({
     slug: { type: String, lowercase: true, unique: true },
@@ -11,7 +10,6 @@ var OpinionSchema = new mongoose.Schema({
     body: String,
     publishDate: String,
 }, { timestamps: true });
-// console.log(OpinionSchema)
 OpinionSchema.plugin(uniqueValidator, { message: 'is already taken' });
 
 OpinionSchema.pre('validate', function (next) {
@@ -37,4 +35,4 @@ OpinionSchema.methods.toJSONFor = function (user) {
         publishDate: this.publishDate,
     };
 };
-mongoose.model('Opinios', OpinionSchema); 
+mongoose.model('Opinions', OpinionSchema); 

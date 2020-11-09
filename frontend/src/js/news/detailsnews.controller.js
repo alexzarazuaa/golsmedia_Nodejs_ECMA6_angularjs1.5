@@ -1,5 +1,5 @@
 class DetailsNews_Ctrl {
-    constructor(news, Comments, comments,User, $scope,Toastr) {
+    constructor(news, Comments, comments, User, $scope, Toastr,News) {
 
         "ngInject";
 
@@ -9,21 +9,22 @@ class DetailsNews_Ctrl {
         this._Comments = Comments;
         this.comments = comments;
         this.currentUser = User.current
-        this._toastr=Toastr;
-
-        //
-
+        this._toastr = Toastr;
+        this._News=News;
+    
         this.resetCommentForm();
 
 
     }//end_construtor
 
 
+
+
     resetCommentForm() {
         this.commentForm = {
             isSubmitting: false,
             body: '',
-            CommentsCount:0,
+            CommentsCount: 0,
             errors: []
         }
     }
@@ -48,7 +49,7 @@ class DetailsNews_Ctrl {
 
     deleteComment(commentId, index) {
         console.log('entra en delete comment');
-        console.log('id',commentId);
+        console.log('id', commentId);
         this._Comments.destroy(commentId, this.news.slug).then(
             (success) => {
                 this.comments.splice(index, 1);
@@ -58,6 +59,8 @@ class DetailsNews_Ctrl {
 
     }
 
+
+   
 
 
 }//end_ctrl

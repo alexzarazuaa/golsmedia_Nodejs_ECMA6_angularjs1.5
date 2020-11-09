@@ -1,8 +1,9 @@
 class OpinionsListCtrl {
-    constructor(Opinions, $scope) {
+    constructor(Opinions, $scope,News) {
         "ngInject";
         console.log('---- OPINIONS LIST ----');
         this._Opinions = Opinions;
+        this._News=News;
 
         this.$onInit = () => {
             this.setListTo(this.listConfig);
@@ -25,20 +26,20 @@ class OpinionsListCtrl {
         // Show the loading indicator
         this.loading = true;
         this.listConfig = this.listConfig || {};
-
         // Run the query
-        this._Opinions
-            .query()
-            .then(
-                (res) => {
-                    console.log('console res in run query', res)
-                    this.loading = false;
-                    // Update list and total pages
-                    this.list = res.opinions;
-                    console.log('console res in run query opinions -->', res.opinions)
-                }
-            );
-    }
+        this._News
+          .listOpinions()
+          .then(
+            (res) => {
+              console.log('console res in run query', res.opinions[0].category)
+              this.list = res.opinions;
+              console.log('console res in run query opinions -->', this.list)
+    
+    
+            }
+          );
+        }
+      
 
 
 }//End__OpinionsListCtrl

@@ -71,6 +71,10 @@ class NewsListCtrl {
           this.listConfig.totalPages = Math.ceil(res.newssCount / this.limit);
         }
       );
+
+
+
+      
   }
 }//end_class
 
